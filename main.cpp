@@ -4,11 +4,8 @@
 #include <QDir>
 #include <QDebug>
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sqlite3.h>
+#include <QtSql/QtSql>
 
 using namespace std;
 
@@ -30,12 +27,48 @@ int main(int argc, char *argv[])
     QDir().mkdir(meteoStoragePath); //create backup folder
     qDebug() << "created meteo folder : " + imageStoragePath;
 
+
+
+    qDebug() << "db: " << databasePath;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(databasePath);
+
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query;
+    query.prepare("CREATE TABLE IF NOT EXISTS varietes("  \
+            "ID INTEGER PRIMARY KEY," \
+            "nom            TEXT    NOT NULL," \
+            "newImageName   CHAR(80)," \
+            "tBase1         FLOAT," \
+            "tFloraison     FLOAT," \
+            "tBase2         FLOAT," \
+            "tRecolte       FLOAT" \
+            ");");
+    query.exec();
+    db.commit();
+
+    query.prepare("CREATE TABLE IF NOT EXISTS sites("  \
+                  "ID INTEGER PRIMARY KEY," \
+                  "nom            TEXT    NOT NULL," \
+                  "years   CHAR(500)     NOT NULL" \
+                  ");");
+    query.exec();
+
+
+    db.commit();
+    db.close();
+
+    /*
     sqlite3 *db;
     char *zErrMsg = 0;
     int  rc;
     char *sql;
 
-    /* Open database */
+
     rc = sqlite3_open(databasePath.toStdString().c_str(), &db);
     if( rc ){
        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -47,14 +80,14 @@ int main(int argc, char *argv[])
     sql = "CREATE TABLE IF NOT EXISTS varietes("  \
           "ID INTEGER PRIMARY KEY," \
           "nom            TEXT    NOT NULL," \
-          "newImageName   CHAR(80)     NOT NULL," \
+          "newImageName   CHAR(80)," \
           "tBase1         FLOAT," \
           "tFloraison     FLOAT," \
           "tBase2         FLOAT," \
           "tRecolte       FLOAT" \
           ");";
 
-    /* Execute SQL statements */
+
     rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK )
     {
@@ -85,6 +118,7 @@ int main(int argc, char *argv[])
 
 
     sqlite3_close(db);
+    */
 
     QApplication a(argc, argv);
 

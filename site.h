@@ -3,22 +3,23 @@
 
 #include <string>
 #include <QStringList>
+#include <QString>
 
 class Site
 {
 private:
     int idSite;
-    std::string nom;
+    QString nom;
     QStringList years;
 
 public:
     Site();
 
-    std::string getNom();
+    QString getNom();
     QStringList getYears();
     int getId();
 
-    void setNom(std::string nom);
+    void setNom(QString nom);
     void addYear(int year);
     void deleteYear(int year);
     void setYears(QStringList years);

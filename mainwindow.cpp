@@ -55,8 +55,8 @@ void MainWindow::on_ajouterVarieteBtn_clicked()
     else
     {
         VarietesAnanas* variete = new VarietesAnanas(appStoragePath, imageStoragePath);
-        variete->setImagePath(ui->imagePathLabel->text().toStdString());
-        variete->setNom(ui->varieteNomInput->text().toStdString());
+        variete->setImagePath(ui->imagePathLabel->text());
+        variete->setNom(ui->varieteNomInput->text());
         variete->setTBase1(ui->varieteTBase1Input->value());
         variete->setTFloraison(ui->varieteTFloraisonInput->value());
         variete->setTBase2(ui->varieteTBase2Input->value());
@@ -205,15 +205,15 @@ void MainWindow::on_varietesListWidget_itemSelectionChanged()
     VarietesAnanas* variete = vDbi.getVarieteWithId(key.toInt());
 
     ui->editVarieteKeyLabel->setText(key);
-    ui->editVarieteNomInput->setText(QString::fromStdString(variete->getNom()));
+    ui->editVarieteNomInput->setText(variete->getNom());
     ui->editVarieteTBase1Input->setValue(variete->getTBase1());
     ui->editVarieteTBase2Input->setValue(variete->getTBase2());
     ui->editVarieteTFloraisonInput->setValue(variete->getTFloraison());
     ui->editVarieteTRecolteInput->setValue(variete->getTRecolte());
-    ui->editVarieteNewImageNameLabel->setText(QString::fromStdString(variete->getNewImageName()));
+    ui->editVarieteNewImageNameLabel->setText(variete->getNewImageName());
     ui->editImagePathLabel->setText("");
 
-    QString imageName = QString::fromStdString(variete->getNewImageName());
+    QString imageName = variete->getNewImageName();
 
     QString imagePath = imageStoragePath + "/" + imageName + ".img";
     if(false == imageName.isEmpty())
@@ -249,18 +249,18 @@ void MainWindow::on_editAjouterVarieteBtn_clicked()
         QString key = ui->editVarieteKeyLabel->text();
 
         VarietesAnanas* variete = new VarietesAnanas(appStoragePath, imageStoragePath);
-        variete->setNom(ui->editVarieteNomInput->text().toStdString());
+        variete->setNom(ui->editVarieteNomInput->text());
         variete->setTBase1(ui->editVarieteTBase1Input->value());
         variete->setTFloraison(ui->editVarieteTFloraisonInput->value());
         variete->setTBase2(ui->editVarieteTBase2Input->value());
         variete->setTRecolte(ui->editVarieteTRecolteInput->value());
         variete->setId(key.toInt());
-        variete->setNewImageName(ui->editVarieteNewImageNameLabel->text().toStdString());
+        variete->setNewImageName(ui->editVarieteNewImageNameLabel->text());
 
         if(ui->editImagePathLabel->text().length() > 1)
         {
-            variete->setImagePath(ui->editImagePathLabel->text().toStdString());
-            variete->saveImage(key.toStdString());
+            variete->setImagePath(ui->editImagePathLabel->text());
+            variete->saveImage(key);
         }
         vDbi.saveVariete(variete);
 
@@ -281,10 +281,10 @@ void MainWindow::reloadVarieteListView()
     foreach(VarietesAnanas *variete, varieteList)
     {
         QListWidgetItem *item = new QListWidgetItem();
-        item->setText(QString::fromStdString(variete->getNom()));
+        item->setText(variete->getNom());
         item->setData(10000, QString::number(variete->getId()));
         qDebug() << "Saved data : " << item->data(10000);
-        qDebug() << "Variete nom : " << QString::fromStdString(variete->getNom());
+        qDebug() << "Variete nom : " << variete->getNom();
         ui->varietesListWidget->addItem(item);
     }
 }
@@ -423,7 +423,7 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
             }
 
             Site* site = new Site();
-            site->setNom(ui->ajouterSiteNomInput->text().toStdString());
+            site->setNom(ui->ajouterSiteNomInput->text());
             site->setYears(yearList);
             this->sDbi.saveSite(site);
         }
@@ -443,7 +443,7 @@ void MainWindow::refreshSitesTreeView()
 
     foreach(Site *site, siteList)
     {
-        QStandardItem* item = new QStandardItem(QString::fromStdString(site->getNom()));
+        QStandardItem* item = new QStandardItem(site->getNom());
         QStringList yearList = site->getYears();
 
         item->setData(QString::number(site->getId()),10000); //set key

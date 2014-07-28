@@ -1,6 +1,7 @@
 #include "site.h"
 #include <QCryptographicHash>
 #include <QDateTime>
+#include <QString>
 
 Site::Site()
 {
@@ -13,7 +14,7 @@ Site::Site()
  *
  */
 
-std::string Site::getNom()
+QString Site::getNom()
 {
     return nom;
 }
@@ -23,7 +24,7 @@ QStringList Site::getYears()
     return years;
 }
 
-void Site::setNom(std::string nom)
+void Site::setNom(QString nom)
 {
     this->nom = nom;
 }

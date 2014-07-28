@@ -1,6 +1,5 @@
 #include "sitesdatabaseinterface.h"
 #include <QDebug>
-#include <sqlite3.h>
 #include <QtSql/QtSql>
 
 SitesDatabaseInterface::SitesDatabaseInterface()
@@ -11,72 +10,58 @@ SitesDatabaseInterface::SitesDatabaseInterface()
 void SitesDatabaseInterface::setStoragePaths(QString appStoragePath, QString dbPath)
 {
     this->appStoragePath = appStoragePath;
-    char* nDbPath = new char [dbPath.size()+1];
-    strcpy(nDbPath, dbPath.toStdString().c_str());
-    this->dbPath = nDbPath;
+    this->dbPath = dbPath;
 }
 
 void SitesDatabaseInterface::saveSite(Site* site)
 {
 
     qDebug() << "db: " << this->dbPath;
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int  rc;
-    char *sql;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
 
-    /* Open database */
-    rc = sqlite3_open(this->dbPath, &db);
-    if( rc ){
-       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-       exit(0);
-    }else{
-       fprintf(stdout, "Opened database successfully\n");
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
     }
 
     //convert QStringList to CSV
-
     QString yearsCsv = site->getYears().join(";");
 
     if(0 != site->getId()) //if an id is set we update the variete in the database
     {
-        sql = sqlite3_mprintf("UPDATE sites SET nom = '%q', years = '%q' WHERE ID = '%q';",
-                              site->getNom().c_str(),
-                              yearsCsv.toStdString().c_str(),
-                              site->getId()
-                              );
+        QSqlQuery query;
+        query.prepare("UPDATE sites SET nom = :nom, years = :years WHERE ID = :id;");
+        query.bindValue(":id", site->getId());
+        query.bindValue(":nom", site->getNom());
+        query.bindValue(":years", yearsCsv);
+        if(false == query.exec())
+        {
+            qDebug() << "SQL ERROR : " << query.lastError();
+        }
     }
     else
     {
-        sql = sqlite3_mprintf("INSERT INTO sites(ID,nom,years) VALUES(NULL,'%q','%q');",
-                              site->getNom().c_str(),
-                              yearsCsv.toStdString().c_str()
-                              );
+        QSqlQuery query;
+        query.prepare("INSERT INTO sites(ID,nom,years) VALUES(NULL, :nom, :years);");
+        query.bindValue(":nom", site->getNom());
+        query.bindValue(":years", yearsCsv);
+        if(false == query.exec())
+        {
+            qDebug() << "SQL ERROR : " << query.lastError();
+        }
     }
-
-    qDebug() << "sql request : " << sql;
-
-    /* Execute SQL statement */
-    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK )
-    {
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-    }
-    else
-    {
-       fprintf(stdout, "a new variete was added in the database\n");
-    }
-    sqlite3_close(db);
+    db.commit();
+    db.close();
 }
 
 QList<Site*> SitesDatabaseInterface::getAllSites()
 {
-
+    qDebug() << "db: " << this->dbPath;
     QList<Site*> siteList;
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QString::fromUtf8(this->dbPath));
+    db.setDatabaseName(this->dbPath);
 
     if(false == db.open())
     {
@@ -93,7 +78,7 @@ QList<Site*> SitesDatabaseInterface::getAllSites()
         Site* site = new Site();
 
         site->setId(id);
-        site->setNom(nom.toStdString());
+        site->setNom(nom);
         site->setYears(yearsList);
         siteList.append(site);
     }

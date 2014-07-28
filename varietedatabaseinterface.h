@@ -8,7 +8,7 @@ class VarieteDatabaseInterface
 private:
     QString appStoragePath;
     QString imageStoragePath;
-    char* dbPath;
+    QString dbPath;
 
 public:
     VarieteDatabaseInterface();
@@ -18,8 +18,8 @@ public:
     QList<VarietesAnanas*> getAllvarietes();
     void deleteVariete(int id);
 
-    void setdbPath(char* dbPath);
-    char* getDbPath();
+    void setdbPath(QString dbPath);
+    QString getDbPath();
 };
 
 #endif // DATABASEINTERFACE_H

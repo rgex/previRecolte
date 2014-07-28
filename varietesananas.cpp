@@ -25,19 +25,20 @@ VarietesAnanas::VarietesAnanas()
 
 VarietesAnanas::VarietesAnanas(QString appStoragePath, QString imgStoragePath)
 {
-    this->imageStoragePt = imgStoragePath.toStdString();
+    this->imageStoragePt = imgStoragePath;
+    this->idVariete = 0;
 }
 
-std::string VarietesAnanas::generateId()
+QString VarietesAnanas::generateId()
 {
     QDateTime dateTime = QDateTime::currentDateTime();
     QString dateTimeString = dateTime.toString();
 
-    QString data = QString::fromStdString(nom) + QString::number(this->tFloraison) + QString::number(this->tRecolte) + dateTimeString;
+    QString data = this->nom + QString::number(this->tFloraison) + QString::number(this->tRecolte) + dateTimeString;
     QByteArray ba = QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1);
     QString out = ba.toHex();
 
-    return out.toStdString();
+    return out;
 }
 
 void VarietesAnanas::saveImage()
@@ -45,24 +46,24 @@ void VarietesAnanas::saveImage()
     this->saveImage(this->generateId());
 }
 
-void VarietesAnanas::saveImage(std::string varieteId)
+void VarietesAnanas::saveImage(QString generatedId)
 {
-    QString qsImageStoragePt = QString::fromStdString(this->imageStoragePt);
-    QString qsImagePath = QString::fromStdString(this->imagePath);
+    QString qsImageStoragePt = this->imageStoragePt;
+    QString qsImagePath = this->imagePath;
 
     //first move image if an image was set
     if(qsImagePath.length() > 1)
     {
-        this->newImageName = varieteId;
+        this->newImageName = generatedId;
 
-        QString newImagePath = qsImageStoragePt + "/" + QString::fromStdString(this->newImageName) + ".img";
+        QString newImagePath = qsImageStoragePt + "/" + this->newImageName + ".img";
         qDebug() << " imagePath : " << qsImageStoragePt;
         qDebug() << " newImagePath : " << newImagePath;
         if(QFile::exists(newImagePath))
         {
             QFile::remove(newImagePath);
         }
-        QFile::copy(QString::fromStdString(imagePath), newImagePath);
+        QFile::copy(imagePath, newImagePath);
     }
 }
 
@@ -72,12 +73,12 @@ void VarietesAnanas::saveImage(std::string varieteId)
  *
  */
 
-void VarietesAnanas::setNom(std::string nom)
+void VarietesAnanas::setNom(QString nom)
 {
     this->nom = nom;
 }
 
-void VarietesAnanas::setImagePath(std::string path)
+void VarietesAnanas::setImagePath(QString path)
 {
     this->imagePath = path;
 }
@@ -102,7 +103,7 @@ void VarietesAnanas::setTRecolte(float temp)
     this->tRecolte = temp;
 }
 
-void VarietesAnanas::setNewImageName(std::string imageName)
+void VarietesAnanas::setNewImageName(QString imageName)
 {
     this->newImageName = imageName;
 }
@@ -112,12 +113,12 @@ void VarietesAnanas::setId(int id)
     this->idVariete = id;
 }
 
-std::string VarietesAnanas::getNom()
+QString VarietesAnanas::getNom()
 {
     return this->nom;
 }
 
-std::string VarietesAnanas::getImagePath()
+QString VarietesAnanas::getImagePath()
 {
     return this->imagePath;
 }
@@ -142,7 +143,7 @@ float VarietesAnanas::getTRecolte()
     return this->tRecolte;
 }
 
-std::string VarietesAnanas::getNewImageName()
+QString VarietesAnanas::getNewImageName()
 {
     return this->newImageName;
 }

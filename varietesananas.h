@@ -8,11 +8,11 @@ class VarietesAnanas
 
 private:
     int idVariete;
-    std::string nom;
-    std::string imageStoragePt;
-    std::string imagePath;
-    std::string newImageName;
-    std::string key;
+    QString nom;
+    QString imageStoragePt;
+    QString imagePath;
+    QString newImageName;
+    QString key;
     float tBase1;
     float tFloraison;
     float tBase2;
@@ -22,21 +22,21 @@ public:
     VarietesAnanas();
     VarietesAnanas(QString appStoragePath, QString imgStoragePath);
     void saveImage();
-    void saveImage(std::string varieteId);
-    std::string  generateId();
+    void saveImage(QString generatedId);
+    QString  generateId();
 
-    void setNom(std::string nom);
-    void setImagePath(std::string path);
-    void setNewImageName(std::string imageName);
+    void setNom(QString nom);
+    void setImagePath(QString path);
+    void setNewImageName(QString imageName);
     void setTBase1(float temp);
     void setTFloraison(float temp);
     void setTBase2(float temp);
     void setTRecolte(float temp);
     void setId(int id);
 
-    std::string getNom();
-    std::string getImagePath();
-    std::string getNewImageName();
+    QString getNom();
+    QString getImagePath();
+    QString getNewImageName();
     int getId();
     float getTBase1();
     float getTFloraison();

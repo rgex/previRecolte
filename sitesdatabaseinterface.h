@@ -9,7 +9,7 @@ class SitesDatabaseInterface
 {
 private:
     QString appStoragePath;
-    char* dbPath;
+    QString dbPath;
 
 public:
     SitesDatabaseInterface();
