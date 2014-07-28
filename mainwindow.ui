@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1132</width>
+    <height>730</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1132</width>
+    <height>730</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Ananas</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabPosition">
+       <enum>QTabWidget::West</enum>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="Vari">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <attribute name="title">
+        <string>Variétés d'ananas</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Variétés d'ananas</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="varietesTabView">
+          <property name="minimumSize">
+           <size>
+            <width>618</width>
+            <height>416</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Ajouter une variété</string>
+           </attribute>
+           <widget class="QWidget" name="widget_2" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>1041</width>
+              <height>531</height>
+             </rect>
+            </property>
+            <widget class="QDoubleSpinBox" name="varieteTBase1Input">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>80</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="ajouterImageBtn">
+             <property name="geometry">
+              <rect>
+               <x>420</x>
+               <y>80</y>
+               <width>151</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Ajouter une image</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_5">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>80</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C base1</string>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="varieteTRecolteInput">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>240</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>99999999.989999994635582</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_4">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>20</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Nom</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_10">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>240</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C récolte</string>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="varieteTFloraisonInput">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>140</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="decimals">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <double>9999999.990000000223517</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_8">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>190</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C base2</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="supprimerImageBtn">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="geometry">
+              <rect>
+               <x>590</x>
+               <y>80</y>
+               <width>151</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>retirer l'image</string>
+             </property>
+            </widget>
+            <widget class="QLineEdit" name="varieteNomInput">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>20</y>
+               <width>561</width>
+               <height>31</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="varieteTBase2Input">
+             <property name="geometry">
+              <rect>
+               <x>250</x>
+               <y>190</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_9">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>140</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C floraison</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="ajouterImageLabel">
+             <property name="geometry">
+              <rect>
+               <x>430</x>
+               <y>160</y>
+               <width>371</width>
+               <height>261</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="imagePathLabel">
+             <property name="geometry">
+              <rect>
+               <x>430</x>
+               <y>120</y>
+               <width>391</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="ajouterVarieteBtn">
+             <property name="geometry">
+              <rect>
+               <x>130</x>
+               <y>300</y>
+               <width>241</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Ajouter</string>
+             </property>
+            </widget>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>Editer une variété</string>
+           </attribute>
+           <widget class="QWidget" name="widget_3" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>1051</width>
+              <height>541</height>
+             </rect>
+            </property>
+            <widget class="QDoubleSpinBox" name="editVarieteTBase1Input">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>80</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="editAjouterVarieteBtn">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>310</y>
+               <width>241</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Sauvegarder</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="editAjouterImageVarieteBtn">
+             <property name="geometry">
+              <rect>
+               <x>530</x>
+               <y>80</y>
+               <width>151</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Ajouter une image</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editTBase1Label">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>80</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C base1</string>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="editVarieteTRecolteInput">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>240</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>99999999.989999994635582</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editNomLabel">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>20</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Nom</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editTRecolteLabel">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>240</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C récolte</string>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="editVarieteTFloraisonInput">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>140</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="decimals">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <double>9999999.990000000223517</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editTBase2Label">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>190</y>
+               <width>67</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C base2</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="editSupprimerImageVariete">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="geometry">
+              <rect>
+               <x>700</x>
+               <y>80</y>
+               <width>151</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Supprimer l'image</string>
+             </property>
+            </widget>
+            <widget class="QLineEdit" name="editVarieteNomInput">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>20</y>
+               <width>561</width>
+               <height>31</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QDoubleSpinBox" name="editVarieteTBase2Input">
+             <property name="geometry">
+              <rect>
+               <x>360</x>
+               <y>190</y>
+               <width>121</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <double>999999999.990000009536743</double>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editTFloraisonLabel">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>140</y>
+               <width>101</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>T°C floraison</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editAjouterImageLabel">
+             <property name="geometry">
+              <rect>
+               <x>540</x>
+               <y>160</y>
+               <width>371</width>
+               <height>261</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editImagePathLabel">
+             <property name="geometry">
+              <rect>
+               <x>540</x>
+               <y>120</y>
+               <width>391</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+            <widget class="QListWidget" name="varietesListWidget">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>10</y>
+               <width>211</width>
+               <height>521</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editVarieteKeyLabel">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>60</y>
+               <width>691</width>
+               <height>21</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>editVarieteKeyLabel</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="supprimerVarieteBtn">
+             <property name="geometry">
+              <rect>
+               <x>240</x>
+               <y>360</y>
+               <width>241</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Supprimer la variété</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="editVarieteNewImageNameLabel">
+             <property name="geometry">
+              <rect>
+               <x>530</x>
+               <y>50</y>
+               <width>371</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>editVarieteNewImageNameLabel</string>
+             </property>
+            </widget>
+           </widget>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Sites</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Sites</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="sitesTabWidget">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab_5">
+           <attribute name="title">
+            <string>Ajouter un site</string>
+           </attribute>
+           <widget class="QPushButton" name="ajouterSiteSauvegarderBtn">
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>230</y>
+              <width>201</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Sauvergarder</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="ajouterSiteNomInput">
+            <property name="geometry">
+             <rect>
+              <x>120</x>
+              <y>30</y>
+              <width>321</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_6">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>30</y>
+              <width>67</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Nom</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_7">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>90</y>
+              <width>201</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Ajouter des données météo</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="ajouterSiteMeteoFilePath">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>140</y>
+              <width>201</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="ajouterSiteOpenMeteoFileBtn">
+            <property name="geometry">
+             <rect>
+              <x>260</x>
+              <y>140</y>
+              <width>171</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Parcourir (fichier .csv)</string>
+            </property>
+           </widget>
+           <widget class="QWebView" name="ajouterSiteWebView">
+            <property name="geometry">
+             <rect>
+              <x>459</x>
+              <y>9</y>
+              <width>581</width>
+              <height>521</height>
+             </rect>
+            </property>
+            <property name="url">
+             <url>
+              <string>about:blank</string>
+             </url>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="tab_6">
+           <attribute name="title">
+            <string>Editer un site</string>
+           </attribute>
+           <widget class="QTreeView" name="sitesTreeView">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>20</y>
+              <width>241</width>
+              <height>501</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="editSiteNameTextEdit">
+            <property name="geometry">
+             <rect>
+              <x>280</x>
+              <y>60</y>
+              <width>251</width>
+              <height>31</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="editSiteNameLabel">
+            <property name="geometry">
+             <rect>
+              <x>280</x>
+              <y>30</y>
+              <width>111</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Nom du site</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="editSiteKeyLabel">
+            <property name="geometry">
+             <rect>
+              <x>280</x>
+              <y>90</y>
+              <width>251</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Key</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="editSiteYearLabel">
+            <property name="geometry">
+             <rect>
+              <x>280</x>
+              <y>110</y>
+              <width>251</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Year</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="EditSiteSaveButton">
+            <property name="geometry">
+             <rect>
+              <x>280</x>
+              <y>130</y>
+              <width>251</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>sauvegarder</string>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Prévisions</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Prévisions</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <widget class="QDateEdit" name="dateEdit">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>30</y>
+             <width>110</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1132</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionAide"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <addaction name="menuFichier"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionAide">
+   <property name="text">
+    <string>Aide</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
