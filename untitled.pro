@@ -43,3 +43,5 @@ unix: LIBS += -lleveldb
 
 
 unix: LIBS += -lboost_serialization
+
+unix: LIBS += -lsqlite3

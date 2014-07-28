@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::initWindow()
 {
-    this->vDbi.setStoragePaths(this->appStoragePath, this->imageStoragePath);
+    this->vDbi.setStoragePaths(this->appStoragePath, this->imageStoragePath, this->dbPath);
     this->sDbi.setStoragePaths(this->appStoragePath);
 }
 
@@ -69,13 +69,6 @@ void MainWindow::on_ajouterVarieteBtn_clicked()
         variete->setTBase2(ui->varieteTBase2Input->value());
         variete->setTRecolte(ui->varieteTRecolteInput->value());
         variete->saveImage();
-        variete->setKey(variete->generateId());
-
-        std::ostringstream sStream;
-
-        boost::archive::xml_oarchive oarchive(sStream);
-
-        oarchive << BOOST_SERIALIZATION_NVP(variete);
 
         this->vDbi.saveVariete(variete);
 
@@ -178,12 +171,17 @@ void MainWindow::showEditVarieteInputs()
 
 void MainWindow::setAppStoragePath(QString path)
 {
-    appStoragePath = path;
+    this->appStoragePath = path;
 }
 
 void MainWindow::setImageStoragePath(QString path)
 {
-    imageStoragePath = path;
+    this->imageStoragePath = path;
+}
+
+void MainWindow::setDbPath(QString path)
+{
+    this->dbPath = path;
 }
 
 QString MainWindow::getAppStoragePath()
@@ -192,6 +190,11 @@ QString MainWindow::getAppStoragePath()
 }
 
 QString MainWindow::getImageStoragePath()
+{
+    return imageStoragePath;
+}
+
+QString MainWindow::getDbPath()
 {
     return imageStoragePath;
 }
@@ -206,7 +209,7 @@ void MainWindow::on_varietesListWidget_itemSelectionChanged()
     this->showEditVarieteInputs();
     QString key = ui->varietesListWidget->currentItem()->data(10000).toString();
 
-    VarietesAnanas* variete = vDbi.getVarieteWithKey(key);
+    VarietesAnanas* variete = vDbi.getVarieteWithId(key.toInt());
 
     ui->editVarieteKeyLabel->setText(key);
     ui->editVarieteNomInput->setText(QString::fromStdString(variete->getNom()));
@@ -258,7 +261,7 @@ void MainWindow::on_editAjouterVarieteBtn_clicked()
         variete->setTFloraison(ui->editVarieteTFloraisonInput->value());
         variete->setTBase2(ui->editVarieteTBase2Input->value());
         variete->setTRecolte(ui->editVarieteTRecolteInput->value());
-        variete->setKey(key.toStdString());
+        variete->setId(key.toInt());
         variete->setNewImageName(ui->editVarieteNewImageNameLabel->text().toStdString());
 
         if(ui->editImagePathLabel->text().length() > 1)
@@ -286,7 +289,7 @@ void MainWindow::reloadVarieteListView()
     {
         QListWidgetItem *item = new QListWidgetItem();
         item->setText(QString::fromStdString(variete->getNom()));
-        item->setData(10000, QString::fromStdString(variete->getKey()));
+        item->setData(10000, QString::number(variete->getId()));
         qDebug() << "Saved data : " << item->data(10000);
         qDebug() << "Variete nom : " << QString::fromStdString(variete->getNom());
         ui->varietesListWidget->addItem(item);
@@ -345,7 +348,7 @@ void MainWindow::on_supprimerVarieteBtn_clicked()
                                     QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         qDebug() << "Yes was clicked";
-        this->vDbi.deleteVariete(ui->editVarieteKeyLabel->text());
+        this->vDbi.deleteVariete(ui->editVarieteKeyLabel->text().toInt());
         this->reloadVarieteListView();
         this->hideEditVarieteInputs();
     } else {

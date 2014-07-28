@@ -1,105 +1,267 @@
 #include "varietedatabaseinterface.h"
-#include "leveldb/db.h"
 #include "varietesananas.h"
-#include <sstream>
-#include <boost/archive/xml_oarchive.hpp>
-#include <boost/archive/xml_iarchive.hpp>
+#include <string>
 #include <QDebug>
+#include <sqlite3.h>
 
 
 VarieteDatabaseInterface::VarieteDatabaseInterface()
 {
 }
 
-void VarieteDatabaseInterface::setStoragePaths(QString appStoragePath, QString imageStoragePath)
+void VarieteDatabaseInterface::setStoragePaths(QString appStoragePath, QString imageStoragePath, QString dbPath)
 {
     this->appStoragePath = appStoragePath;
     this->imageStoragePath = imageStoragePath;
 
-    QString dbPath = appStoragePath + "/varietesAnanas.db";
-    this->writeOptions = leveldb::WriteOptions();
-    this->readOptions = leveldb::ReadOptions();
-    this->options = leveldb::Options();
+    char* nDbPath = new char [dbPath.size()+1];;
+    strcpy(nDbPath, dbPath.toStdString().c_str());
 
-    this->options.create_if_missing = true;
-    this->writeOptions.sync = true;
+    qDebug() << "db: " << dbPath;
 
-    this->status = leveldb::DB::Open(this->options, dbPath.toStdString(), &this->db);
+    this->dbPath = nDbPath;
 
-    if (false == this->status.ok())
-    {
-         qDebug() << "Unable to open/create varietesAnanas database : "  << appStoragePath;
-         qDebug() << "Error msg : " << QString::fromStdString(status.ToString());
-    }
-    else
-    {
-        qDebug() << "DB status msg: " << QString::fromStdString(status.ToString());
-    }
+    qDebug() << "db: " << this->dbPath;
+
 }
 
-VarietesAnanas* VarieteDatabaseInterface::getVarieteWithKey(QString key)
+VarietesAnanas* VarieteDatabaseInterface::getVarieteWithId(int id)
 {
-    std::string value;
-
-    this->db->Get(this->readOptions, key.toStdString(), &value);
-
-    qDebug() << "LevelDb value : " << QString::fromStdString(value);
-    qDebug() << "for key : " << key;
-
     VarietesAnanas* variete = new VarietesAnanas(appStoragePath, imageStoragePath);
 
-    if(value.length() > 1)
-    {
-        std::stringstream ifStream;
-        ifStream << value;
+    qDebug() << "db: " << this->dbPath;
+    sqlite3 *db;
+    const char *zErrMsg = 0;
+    int  rc;
+    char *sql;
+    sqlite3_stmt* stmt;
+    QList<VarietesAnanas*> varieteList;
 
-        boost::archive::xml_iarchive iarchive(ifStream);
-        iarchive >> BOOST_SERIALIZATION_NVP(variete);
+    /* Open database */
+    rc = sqlite3_open(this->dbPath, &db);
+    if( rc ){
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       exit(0);
+    }else{
+       fprintf(stdout, "Opened database successfully\n");
+    }
+
+    sql = sqlite3_mprintf("SELECT * FROM varietes WHERE ID =  '%q'", QString::number(id).toStdString().c_str());
+
+    qDebug() << "sql request : " << sql;
+
+    /* Execute SQL statement */
+    rc = sqlite3_prepare_v2(db, sql, strlen(sql)+1, &stmt, &zErrMsg);
+    if( rc != SQLITE_OK )
+    {
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
     }
     else
     {
-        qDebug() << "something went wrong while recovering data from DB : ";
+       int result;
+       int ID;
+       QString nom;
+       QString newImageName;
+       float tBase1;
+       float tFloraison;
+       float tBase2;
+       float tRecolte;
+       do {
+            result = sqlite3_step(stmt);
+            if (result == SQLITE_ROW)
+            { /* can read data */
+                ID = sqlite3_column_int(stmt,0);
+                nom = QString::fromUtf8((char *)sqlite3_column_text(stmt,1));
+                newImageName = QString::fromUtf8((char *)sqlite3_column_text(stmt,2));
+                tBase1 = (float)sqlite3_column_double(stmt,3);
+                tFloraison = (float)sqlite3_column_double(stmt,4);
+                tBase2 = (float)sqlite3_column_double(stmt,5);
+                tRecolte = (float)sqlite3_column_double(stmt,6);
+
+                variete->setId(ID);
+                variete->setNom(nom.toStdString());
+                variete->setNewImageName(newImageName.toStdString());
+                variete->setTBase1(tBase1);
+                variete->setTFloraison(tFloraison);
+                variete->setTBase2(tBase2);
+                variete->setTRecolte(tRecolte);
+                varieteList.append(variete);
+            }
+       } while (result == SQLITE_ROW);
     }
+    sqlite3_close(db);
 
     return variete;
 }
 
-void VarieteDatabaseInterface::deleteVariete(QString key)
+void VarieteDatabaseInterface::deleteVariete(int id)
 {
-    this->db->Delete(this->writeOptions, key.toStdString());
+    qDebug() << "db: " << this->dbPath;
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int  rc;
+    char *sql;
+
+    /* Open database */
+    rc = sqlite3_open(this->dbPath, &db);
+    if( rc ){
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       exit(0);
+    }else{
+       fprintf(stdout, "Opened database successfully\n");
+    }
+
+    sql = sqlite3_mprintf("DELETE FROM varietes WHERE ID = '%q';",
+                          QString::number(id).toStdString().c_str()
+                          );
+
+    qDebug() << "sql request : " << sql;
+
+    /* Execute SQL statement */
+    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK )
+    {
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+    }
+    else
+    {
+       fprintf(stdout, "a new variete was added in the database\n");
+    }
+    sqlite3_close(db);
 }
 
 void VarieteDatabaseInterface::saveVariete(VarietesAnanas* variete)
 {
-    std::ostringstream sStream;
 
-    boost::archive::xml_oarchive oarchive(sStream);
-    oarchive << BOOST_SERIALIZATION_NVP(variete);
-    qDebug() << "sStream : " << QString::fromStdString(sStream.str());
+    qDebug() << "db: " << this->dbPath;
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int  rc;
+    char *sql;
 
-    this->db->Put(this->writeOptions, variete->getKey(), sStream.str());
+    /* Open database */
+    rc = sqlite3_open(this->dbPath, &db);
+    if( rc ){
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       exit(0);
+    }else{
+       fprintf(stdout, "Opened database successfully\n");
+    }
+
+    if(variete->getId()) //if an id is set we update the variete in the database
+    {
+        sql = sqlite3_mprintf("UPDATE varietes SET nom = '%q',newImageName = '%q',tBase1 = '%q',tFloraison = '%q',tBase2 = '%q',tRecolte = '%q' WHERE ID = '%q';",
+                              variete->getNom().c_str(),
+                              variete->getNewImageName().c_str(),
+                              QString::number(variete->getTBase1()).toStdString().c_str(),
+                              QString::number(variete->getTFloraison()).toStdString().c_str(),
+                              QString::number(variete->getTBase2()).toStdString().c_str(),
+                              QString::number(variete->getTRecolte()).toStdString().c_str(),
+                              QString::number(variete->getId()).toStdString().c_str()
+                              );
+    }
+    else
+    {
+        sql = sqlite3_mprintf("INSERT INTO varietes(ID,nom,newImageName,tBase1,tFloraison,tBase2,tRecolte) VALUES(NULL,'%q','%q','%q','%q','%q','%q');",
+                              variete->getNom().c_str(),
+                              variete->getNewImageName().c_str(),
+                              QString::number(variete->getTBase1()).toStdString().c_str(),
+                              QString::number(variete->getTFloraison()).toStdString().c_str(),
+                              QString::number(variete->getTBase2()).toStdString().c_str(),
+                              QString::number(variete->getTRecolte()).toStdString().c_str());
+    }
+
+    qDebug() << "sql request : " << sql;
+
+    /* Execute SQL statement */
+    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK )
+    {
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+    }
+    else
+    {
+       fprintf(stdout, "a new variete was added in the database\n");
+    }
+    sqlite3_close(db);
 }
 
 QList<VarietesAnanas*> VarieteDatabaseInterface::getAllvarietes()
 {
+
+    qDebug() << "db: " << this->dbPath;
+    sqlite3 *db;
+    const char *zErrMsg = 0;
+    int  rc;
+    char *sql;
+    sqlite3_stmt* stmt;
     QList<VarietesAnanas*> varieteList;
 
-    leveldb::Iterator* it = this->db->NewIterator(this->readOptions);
-    for (it->SeekToFirst(); it->Valid(); it->Next())
-    {
-        leveldb::Slice value = it->value();
-
-        VarietesAnanas* variete = new VarietesAnanas(this->appStoragePath, this->imageStoragePath);
-
-        std::stringstream ifStream;
-        ifStream << value.ToString();
-
-        boost::archive::xml_iarchive iarchive(ifStream);
-
-        iarchive >> BOOST_SERIALIZATION_NVP(variete);
-
-        varieteList.append(variete);
+    /* Open database */
+    rc = sqlite3_open(this->dbPath, &db);
+    if( rc ){
+       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+       exit(0);
+    }else{
+       fprintf(stdout, "Opened database successfully\n");
     }
-    delete it;
+
+    sql = "SELECT * FROM varietes";
+
+    qDebug() << "sql request : " << sql;
+
+    /* Execute SQL statement */
+    rc = sqlite3_prepare_v2(db, sql, strlen(sql)+1, &stmt, &zErrMsg);
+    if( rc != SQLITE_OK )
+    {
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    }
+    else
+    {
+       int result = sqlite3_step(stmt);
+       int ID;
+       QString nom;
+       QString newImageName;
+       float tBase1;
+       float tFloraison;
+       float tBase2;
+       float tRecolte;
+       do {
+            result = sqlite3_step (stmt);
+            if (result == SQLITE_ROW)
+            { /* can read data */
+                ID = sqlite3_column_int(stmt,0);
+                nom = QString::fromUtf8((char *)sqlite3_column_text(stmt,1));
+                newImageName = QString::fromUtf8((char *)sqlite3_column_text(stmt,2));
+                tBase1 = (float)sqlite3_column_double(stmt,3);
+                tFloraison = (float)sqlite3_column_double(stmt,4);
+                tBase2 = (float)sqlite3_column_double(stmt,5);
+                tRecolte = (float)sqlite3_column_double(stmt,6);
+
+                VarietesAnanas* variete = new VarietesAnanas(this->appStoragePath, this->imageStoragePath);
+                variete->setId(ID);
+                variete->setNom(nom.toStdString());
+                variete->setNewImageName(newImageName.toStdString());
+                variete->setTBase1(tBase1);
+                variete->setTFloraison(tFloraison);
+                variete->setTBase2(tBase2);
+                variete->setTRecolte(tRecolte);
+                varieteList.append(variete);
+            }
+       } while (result == SQLITE_ROW);
+    }
+    sqlite3_close(db);
     return varieteList;
+}
+
+void VarieteDatabaseInterface::setdbPath(char* dbPath)
+{
+    this->dbPath = dbPath;
+}
+
+char* VarieteDatabaseInterface::getDbPath()
+{
+    return this->dbPath;
 }

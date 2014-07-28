@@ -9,6 +9,7 @@ class VarieteDatabaseInterface
 private:
     QString appStoragePath;
     QString imageStoragePath;
+    char* dbPath;
     leveldb::DB* db;
     leveldb::Options options;
     leveldb::ReadOptions readOptions;
@@ -17,11 +18,14 @@ private:
 
 public:
     VarieteDatabaseInterface();
-    void setStoragePaths(QString appStoragePath, QString imageStoragePath);
+    void setStoragePaths(QString appStoragePath, QString imageStoragePath, QString dbPath);
     void saveVariete(VarietesAnanas* variete);
-    VarietesAnanas* getVarieteWithKey(QString key);
+    VarietesAnanas* getVarieteWithId(int id);
     QList<VarietesAnanas*> getAllvarietes();
-    void deleteVariete(QString key);
+    void deleteVariete(int id);
+
+    void setdbPath(char* dbPath);
+    char* getDbPath();
 };
 
 #endif // DATABASEINTERFACE_H

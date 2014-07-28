@@ -20,14 +20,16 @@ public:
 
     void setAppStoragePath(QString path);
     void setImageStoragePath(QString path);
-    void hideEditVarieteInputs();
-    void showEditVarieteInputs();
+    void setDbPath(QString path);
     QString getAppStoragePath();
     QString getImageStoragePath();
+    QString getDbPath();
     void reloadVarieteListView();
     void initWindow();
     void emptyAjouterUneVarieteFields();
     void refreshSitesTreeView();
+    void hideEditVarieteInputs();
+    void showEditVarieteInputs();
 
 private slots:
     void on_ajouterVarieteBtn_clicked();
@@ -54,6 +56,7 @@ private:
     Ui::MainWindow *ui;
     QString appStoragePath;
     QString imageStoragePath;
+    QString dbPath;
     VarieteDatabaseInterface vDbi;
     SitesDatabaseInterface sDbi;
     QList<QStringList> importTempList;

@@ -108,9 +108,9 @@ void VarietesAnanas::setNewImageName(std::string imageName)
     this->newImageName = imageName;
 }
 
-void VarietesAnanas::setKey(std::string key)
+void VarietesAnanas::setId(int id)
 {
-    this->key = key;
+    this->idVariete = id;
 }
 
 std::string VarietesAnanas::getNom()
@@ -148,8 +148,8 @@ std::string VarietesAnanas::getNewImageName()
     return this->newImageName;
 }
 
-std::string VarietesAnanas::getKey()
+int VarietesAnanas::getId()
 {
-    return this->key;
+    return this->idVariete;
 }
 

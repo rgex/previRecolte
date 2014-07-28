@@ -50,16 +50,17 @@ public:
     void setTFloraison(float temp);
     void setTBase2(float temp);
     void setTRecolte(float temp);
-    void setKey(std::string key);
+    void setId(int id);
 
     std::string getNom();
     std::string getImagePath();
     std::string getNewImageName();
+    int getId();
     float getTBase1();
     float getTFloraison();
     float getTBase2();
     float getTRecolte();
-    std::string getKey();
+
 
 };
 
