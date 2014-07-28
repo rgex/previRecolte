@@ -2,21 +2,14 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QDebug>
-#include <iostream>
-#include <sstream>
-#include <boost/archive/xml_oarchive.hpp>
-#include <boost/archive/xml_iarchive.hpp>
 #include "varietesananas.h"
 #include <QMessageBox>
-#include <istream>
-#include <fstream>
 #include <QUrl>
 #include <QStringList>
 #include <QList>
 #include "htmlchartmaker.h"
 #include "site.h"
 #include "sitesdatabaseinterface.h"
-#include <boost/foreach.hpp>
 #include <QTreeView>
 #include <QAbstractListModel>
 #include <QStandardItem>
@@ -44,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::initWindow()
 {
     this->vDbi.setStoragePaths(this->appStoragePath, this->imageStoragePath, this->dbPath);
-    this->sDbi.setStoragePaths(this->appStoragePath);
+    this->sDbi.setStoragePaths(this->appStoragePath, this->dbPath);
 }
 
 MainWindow::~MainWindow()
@@ -428,18 +421,10 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
             foreach (QString year, yearList) {
                 qDebug() << "year: " << year;
             }
-            //converting QStringList back to std::list<std::string>-
-            std::list<QString> stdQsYearList = yearList.toStdList();
-            std::list<int> stdYearList;
 
-            BOOST_FOREACH( QString year, stdQsYearList)
-            {
-                stdYearList.push_back(year.toInt());
-            }
             Site* site = new Site();
             site->setNom(ui->ajouterSiteNomInput->text().toStdString());
-            site->setKey(site->generateId());
-            site->setYears(stdYearList);
+            site->setYears(yearList);
             this->sDbi.saveSite(site);
         }
         QList<QStringList> emptyTempList;
@@ -459,16 +444,16 @@ void MainWindow::refreshSitesTreeView()
     foreach(Site *site, siteList)
     {
         QStandardItem* item = new QStandardItem(QString::fromStdString(site->getNom()));
-        std::list<int> yearList = site->getYears();
+        QStringList yearList = site->getYears();
 
-        item->setData(QString::fromStdString(site->getKey()),10000); //set key
+        item->setData(QString::number(site->getId()),10000); //set key
         item->setData(0,10001); //set year (0) is equivalent for no year
 
-        BOOST_FOREACH(int year, yearList)
+        foreach (QString year, yearList)
         {
-            QStandardItem* subItem = new QStandardItem(QString::number(year));
+            QStandardItem* subItem = new QStandardItem(year);
             subItem->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
-            subItem->setData(QString::fromStdString(site->getKey()),10000); //set key
+            subItem->setData(QString::number(site->getId()),10000); //set key
             subItem->setData(year,10001); //set year
             item->appendRow(subItem);
             item->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable

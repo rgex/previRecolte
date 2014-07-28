@@ -2,7 +2,6 @@
 #define METEODATABASEINTERFACE_H
 
 #include <QString>
-#include "leveldb/db.h"
 #include "meteo.h"
 
 class MeteoDatabaseInterface

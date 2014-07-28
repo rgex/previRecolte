@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <string>
 #include <iostream>
-#include <sstream>
 #include <QCryptographicHash>
 #include <QByteArray>
 #include <QDateTime>
@@ -21,7 +20,7 @@ float tRecolte;
 
 VarietesAnanas::VarietesAnanas()
 {
-
+    this->idVariete = 0;
 }
 
 VarietesAnanas::VarietesAnanas(QString appStoragePath, QString imgStoragePath)

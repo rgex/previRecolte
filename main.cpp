@@ -54,17 +54,36 @@ int main(int argc, char *argv[])
           "tRecolte       FLOAT" \
           ");";
 
-    /* Execute SQL statement */
+    /* Execute SQL statements */
     rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
     if( rc != SQLITE_OK )
     {
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+       fprintf(stderr, "SQL error: %s\n", zErrMsg);
        sqlite3_free(zErrMsg);
     }
     else
     {
        fprintf(stdout, "Table created successfully\n");
     }
+
+    sql = "CREATE TABLE IF NOT EXISTS sites("  \
+          "ID INTEGER PRIMARY KEY," \
+          "nom            TEXT    NOT NULL," \
+          "years   CHAR(500)     NOT NULL" \
+          ");";
+
+    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
+    if( rc != SQLITE_OK )
+    {
+       fprintf(stderr, "SQL error: %s\n", zErrMsg);
+       sqlite3_free(zErrMsg);
+    }
+    else
+    {
+       fprintf(stdout, "Table created successfully\n");
+    }
+
+
     sqlite3_close(db);
 
     QApplication a(argc, argv);

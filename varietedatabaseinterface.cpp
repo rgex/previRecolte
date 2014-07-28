@@ -149,7 +149,7 @@ void VarieteDatabaseInterface::saveVariete(VarietesAnanas* variete)
        fprintf(stdout, "Opened database successfully\n");
     }
 
-    if(variete->getId()) //if an id is set we update the variete in the database
+    if(0 != variete->getId()) //if an id is set we update the variete in the database
     {
         sql = sqlite3_mprintf("UPDATE varietes SET nom = '%q',newImageName = '%q',tBase1 = '%q',tFloraison = '%q',tBase2 = '%q',tRecolte = '%q' WHERE ID = '%q';",
                               variete->getNom().c_str(),

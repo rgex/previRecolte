@@ -2,39 +2,28 @@
 #define SITE_H
 
 #include <string>
-#include "boost/serialization/serialization.hpp"
-#include "boost/archive/text_iarchive.hpp"
-#include "boost/archive/text_oarchive.hpp"
-#include "boost/serialization/list.hpp"
+#include <QStringList>
 
 class Site
 {
 private:
+    int idSite;
     std::string nom;
-    std::string key;
-    std::list<int> years;
+    QStringList years;
 
 public:
     Site();
-    std::string generateId();
 
     std::string getNom();
-    std::string getKey();
-    std::list<int> getYears();
+    QStringList getYears();
+    int getId();
 
     void setNom(std::string nom);
-    void setKey(std::string key);
     void addYear(int year);
     void deleteYear(int year);
-    void setYears(std::list<int> years);
+    void setYears(QStringList years);
+    void setId(int id);
 
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version){
-                ar &
-                BOOST_SERIALIZATION_NVP(nom) &
-                BOOST_SERIALIZATION_NVP(key) &
-                BOOST_SERIALIZATION_NVP(years);
-    }
 };
 
 #endif // SITE_H

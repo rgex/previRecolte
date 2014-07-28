@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 QT       += webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -38,10 +38,5 @@ FORMS    += mainwindow.ui
 
 unix: CONFIG += link_pkgconfig
 
-
-unix: LIBS += -lleveldb
-
-
-unix: LIBS += -lboost_serialization
-
 unix: LIBS += -lsqlite3
+

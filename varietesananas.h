@@ -2,16 +2,12 @@
 #define VARIETESANANAS_H
 
 #include <QString>
-#include "boost/serialization/serialization.hpp"
-#include "boost/archive/text_iarchive.hpp"
-#include "boost/archive/text_oarchive.hpp"
-
 
 class VarietesAnanas
 {
 
 private:
-    int idVariete = 0;
+    int idVariete;
     std::string nom;
     std::string imageStoragePt;
     std::string imagePath;
@@ -27,20 +23,6 @@ public:
     VarietesAnanas(QString appStoragePath, QString imgStoragePath);
     void saveImage();
     void saveImage(std::string varieteId);
-    template<class Archive>
-    void serialize(Archive& ar, const unsigned int version){
-                ar &
-                BOOST_SERIALIZATION_NVP(idVariete) &
-                BOOST_SERIALIZATION_NVP(nom) &
-                BOOST_SERIALIZATION_NVP(imagePath) &
-                BOOST_SERIALIZATION_NVP(tBase1) &
-                BOOST_SERIALIZATION_NVP(tFloraison) &
-                BOOST_SERIALIZATION_NVP(tBase2) &
-                BOOST_SERIALIZATION_NVP(tRecolte) &
-                BOOST_SERIALIZATION_NVP(newImageName) &
-                BOOST_SERIALIZATION_NVP(key);
-    }
-
     std::string  generateId();
 
     void setNom(std::string nom);

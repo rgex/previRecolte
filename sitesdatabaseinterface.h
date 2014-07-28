@@ -3,22 +3,17 @@
 
 #include "site.h"
 #include <QList>
-#include "leveldb/db.h"
 #include <QString>
 
 class SitesDatabaseInterface
 {
 private:
     QString appStoragePath;
-    leveldb::DB* db;
-    leveldb::Options options;
-    leveldb::ReadOptions readOptions;
-    leveldb::WriteOptions writeOptions;
-    leveldb::Status status;
+    char* dbPath;
 
 public:
     SitesDatabaseInterface();
-    void setStoragePaths(QString appStoragePath);
+    void setStoragePaths(QString appStoragePath, QString dbPath);
     void saveSite(Site* site);
     QList<Site*> getAllSites();
 };

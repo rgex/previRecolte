@@ -1,24 +1,10 @@
 #include "site.h"
 #include <QCryptographicHash>
 #include <QDateTime>
-#include "boost/foreach.hpp"
 
 Site::Site()
 {
-
-}
-
-
-std::string Site::generateId()
-{
-    QDateTime dateTime = QDateTime::currentDateTime();
-    QString dateTimeString = dateTime.toString();
-
-    QString data = QString::fromStdString(nom) + dateTimeString;
-    QByteArray ba = QCryptographicHash::hash(data.toUtf8(), QCryptographicHash::Sha1);
-    QString out = ba.toHex();
-
-    return out.toStdString();
+    this->idSite = 0;
 }
 
 /*
@@ -32,12 +18,7 @@ std::string Site::getNom()
     return nom;
 }
 
-std::string Site::getKey()
-{
-    return key;
-}
-
-std::list<int> Site::getYears()
+QStringList Site::getYears()
 {
     return years;
 }
@@ -47,31 +28,31 @@ void Site::setNom(std::string nom)
     this->nom = nom;
 }
 
-void Site::setKey(std::string key)
-{
-    this->key = key;
-}
-
-void Site::setYears(std::list<int> years)
+void Site::setYears(QStringList years)
 {
     this->years = years;
 }
 
 void Site::addYear(int year)
 {
-    bool yearAllReadyExists = false;
-
-    BOOST_FOREACH( int y, this->years)
+    if(false == this->years.contains(QString::number(year)))
     {
-        if(y == year)
-            yearAllReadyExists = true;
+        this->years.append(QString::number(year));
+        qSort(this->years.begin(),this->years.end(),qGreater<QString>());
     }
-
-    if(false == yearAllReadyExists)
-        this->years.push_back(year);
 }
 
 void Site::deleteYear(int year)
 {
+    this->years.removeOne(QString::number(year));
+}
 
+int Site::getId()
+{
+    return this->idSite;
+}
+
+void Site::setId(int id)
+{
+    this->idSite = id;
 }
