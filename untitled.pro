@@ -40,3 +40,6 @@ unix: CONFIG += link_pkgconfig
 
 unix: LIBS += -lsqlite3
 
+RESOURCES += \
+    projectRessources.qrc
+

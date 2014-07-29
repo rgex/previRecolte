@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/icons/white">
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.check.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.delete.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.image.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.close.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.multiple.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.page.png</file>
+    </qresource>
+    <qresource prefix="/icons/black">
+        <file>WindowsIcons-master/WindowsPhone/light/appbar.edit.png</file>
+        <file>WindowsIcons-master/WindowsPhone/light/appbar.add.png</file>
+    </qresource>
+</RCC>
