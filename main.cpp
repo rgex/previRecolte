@@ -40,15 +40,18 @@ int main(int argc, char *argv[])
 
     QSqlQuery query;
     query.prepare("CREATE TABLE IF NOT EXISTS varietes("  \
-            "ID INTEGER PRIMARY KEY," \
-            "nom            TEXT    NOT NULL," \
-            "newImageName   CHAR(80)," \
-            "tBase1         FLOAT," \
-            "tFloraison     FLOAT," \
-            "tBase2         FLOAT," \
-            "tRecolte       FLOAT" \
-            ");");
-    query.exec();
+                  "ID INTEGER PRIMARY KEY," \
+                  "nom            TEXT    NOT NULL," \
+                  "newImageName   CHAR(80)," \
+                  "tBase1         FLOAT," \
+                  "tFloraison     FLOAT," \
+                  "tBase2         FLOAT," \
+                  "tRecolte       FLOAT" \
+                  ");");
+    if(false == query.exec())
+    {
+        qDebug() << "SQL ERROR : " << query.lastError();
+    }
     db.commit();
 
     query.prepare("CREATE TABLE IF NOT EXISTS sites("  \
@@ -56,69 +59,25 @@ int main(int argc, char *argv[])
                   "nom            TEXT    NOT NULL," \
                   "years   CHAR(500)     NOT NULL" \
                   ");");
-    query.exec();
-
-
+    if(false == query.exec())
+    {
+        qDebug() << "SQL ERROR : " << query.lastError();
+    }
     db.commit();
+
+    query.prepare("CREATE TABLE IF NOT EXISTS meteo("  \
+                  "ID INTEGER PRIMARY KEY," \
+                  "year INTEGER    NOT NULL," \
+                  "id_site   INTEGER   NOT NULL," \
+                  "meteo_data BLOB" \
+                  ");");
+    if(false == query.exec())
+    {
+        qDebug() << "SQL ERROR : " << query.lastError();
+    }
+    db.commit();
+
     db.close();
-
-    /*
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int  rc;
-    char *sql;
-
-
-    rc = sqlite3_open(databasePath.toStdString().c_str(), &db);
-    if( rc ){
-       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-       exit(0);
-    }else{
-       fprintf(stdout, "Opened database successfully\n");
-    }
-
-    sql = "CREATE TABLE IF NOT EXISTS varietes("  \
-          "ID INTEGER PRIMARY KEY," \
-          "nom            TEXT    NOT NULL," \
-          "newImageName   CHAR(80)," \
-          "tBase1         FLOAT," \
-          "tFloraison     FLOAT," \
-          "tBase2         FLOAT," \
-          "tRecolte       FLOAT" \
-          ");";
-
-
-    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK )
-    {
-       fprintf(stderr, "SQL error: %s\n", zErrMsg);
-       sqlite3_free(zErrMsg);
-    }
-    else
-    {
-       fprintf(stdout, "Table created successfully\n");
-    }
-
-    sql = "CREATE TABLE IF NOT EXISTS sites("  \
-          "ID INTEGER PRIMARY KEY," \
-          "nom            TEXT    NOT NULL," \
-          "years   CHAR(500)     NOT NULL" \
-          ");";
-
-    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK )
-    {
-       fprintf(stderr, "SQL error: %s\n", zErrMsg);
-       sqlite3_free(zErrMsg);
-    }
-    else
-    {
-       fprintf(stdout, "Table created successfully\n");
-    }
-
-
-    sqlite3_close(db);
-    */
 
     QApplication a(argc, argv);
 

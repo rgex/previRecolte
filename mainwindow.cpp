@@ -15,6 +15,8 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QHeaderView>
+#include "meteo.h"
+#include "meteodatabaseinterface.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -407,6 +409,7 @@ void MainWindow::on_ajouterSiteOpenMeteoFileBtn_clicked()
 
 void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
 {
+    HtmlChartMaker htmlChartMaker;
     if(ui->ajouterSiteNomInput->text().isEmpty())
     {
         QMessageBox msgBox;
@@ -414,19 +417,31 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
     }
     else
     {
+        //add site
         if(this->importTempList.count() > 0)
         {
             HtmlChartMaker htmlChartMaker;
             QStringList yearList = htmlChartMaker.getYearsWithTempData(this->importTempList);
             foreach (QString year, yearList) {
                 qDebug() << "year: " << year;
+                Meteo* meteo = new Meteo();
+                meteo->setYear(year.toInt());
+                meteo->addMeteoWithQMaps(htmlChartMaker.calculateMinDayTemp(this->importTempList),
+                                         htmlChartMaker.calculateDayTempAverage(this->importTempList),
+                                         htmlChartMaker.calculateMaxDayTemp(this->importTempList)
+                                         );
+                qDebug() << "meteo csv : " << meteo->exportMeteoAsCsv();
             }
 
             Site* site = new Site();
             site->setNom(ui->ajouterSiteNomInput->text());
             site->setYears(yearList);
             this->sDbi.saveSite(site);
+
+            //add meteo
         }
+
+
         QList<QStringList> emptyTempList;
         this->importTempList = emptyTempList;
     }

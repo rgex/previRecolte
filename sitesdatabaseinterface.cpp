@@ -86,3 +86,22 @@ QList<Site*> SitesDatabaseInterface::getAllSites()
 
     return siteList;
 }
+
+int SitesDatabaseInterface::lastInsertedRowId()
+{
+    qDebug() << "db: " << this->dbPath;
+    QList<Site*> siteList;
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
+
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query= db.exec("SELECT MAX(ID) FROM sites");
+
+    query.next();
+    return query.value(0).toInt();
+}

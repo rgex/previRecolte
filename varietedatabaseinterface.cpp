@@ -128,33 +128,6 @@ void VarieteDatabaseInterface::saveVariete(VarietesAnanas* variete)
     }
     db.commit();
     db.close();
-    /*
-
-    {
-        sql = sqlite3_mprintf("INSERT INTO varietes(ID,nom,newImageName,tBase1,tFloraison,tBase2,tRecolte) VALUES(NULL,'%q','%q','%q','%q','%q','%q');",
-                              variete->getNom().c_str(),
-                              variete->getNewImageName().c_str(),
-                              QString::number(variete->getTBase1()).toStdString().c_str(),
-                              QString::number(variete->getTFloraison()).toStdString().c_str(),
-                              QString::number(variete->getTBase2()).toStdString().c_str(),
-                              QString::number(variete->getTRecolte()).toStdString().c_str());
-    }
-
-    qDebug() << "sql request : " << sql;
-
-
-    rc = sqlite3_exec(db, sql, NULL, 0, &zErrMsg);
-    if( rc != SQLITE_OK )
-    {
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-    }
-    else
-    {
-       fprintf(stdout, "a new variete was added in the database\n");
-    }
-    sqlite3_close(db);
-    */
 }
 
 QList<VarietesAnanas*> VarieteDatabaseInterface::getAllvarietes()
