@@ -218,7 +218,7 @@ void MainWindow::on_varietesListWidget_itemSelectionChanged()
     QString imageName = variete->getNewImageName();
 
     QString imagePath = imageStoragePath + "/" + imageName + ".img";
-    if(false == imageName.isEmpty())
+    if(false == imageName.isEmpty() && QFile(imagePath).exists())
     {
         QPixmap pixMap = QPixmap(imagePath);
         float imageRatio = (float)pixMap.width() / (float)pixMap.height() ;
@@ -315,11 +315,25 @@ void MainWindow::on_editAjouterImageVarieteBtn_clicked()
 
 void MainWindow::on_editSupprimerImageVariete_clicked()
 {
-    ui->editVarieteNewImageNameLabel->setText("");
-    QPixmap pixMap = QPixmap("");
-    ui->editAjouterImageLabel->setPixmap(pixMap);
-    ui->editAjouterImageVarieteBtn->setText("Ajouter une image");
-    ui->editSupprimerImageVariete->setHidden(true);
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir supprimer cette image?",
+                                    QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        QString imagePath = imageStoragePath + "/" + ui->editVarieteNewImageNameLabel->text() + ".img";
+
+        if(true == QFile(imagePath).exists())
+        {
+            QFile(imagePath).remove();
+        }
+
+        ui->editVarieteNewImageNameLabel->setText("");
+        QPixmap pixMap = QPixmap("");
+        ui->editAjouterImageLabel->setPixmap(pixMap);
+        ui->editAjouterImageVarieteBtn->setText("Ajouter une image");
+        ui->editSupprimerImageVariete->setHidden(true);
+
+    }
 }
 
 void MainWindow::emptyAjouterUneVarieteFields()
@@ -339,7 +353,7 @@ void MainWindow::emptyAjouterUneVarieteFields()
 void MainWindow::on_supprimerVarieteBtn_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Confirmation", "Voulez-vous vraiment supprimer cette variété?",
+    reply = QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir supprimer cette variété?",
                                     QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
         qDebug() << "Yes was clicked";
