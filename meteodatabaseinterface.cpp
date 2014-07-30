@@ -16,6 +16,7 @@ void MeteoDatabaseInterface::deleteMeteo(int siteId, int year)
 
 void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)
 {
+
     qDebug() << "db: " << this->dbPath;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(this->dbPath);
@@ -45,13 +46,9 @@ void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)
     {
         QSqlQuery query;
         query.prepare("INSERT INTO meteo(ID, year, id_site, meteo_data) VALUES (NULL, :year, :siteId, :meteoCsv);");
-        query.bindValue(":year", 1222);
-        query.bindValue(":siteId", 12);
-        query.bindValue(":meteoCsv", "text");
-        /*
         query.bindValue(":year", meteo->getYear());
         query.bindValue(":siteId", meteo->getSiteId());
-        query.bindValue(":meteoCsv", meteoCsv);*/
+        query.bindValue(":meteoCsv", meteoCsv);
         query.exec();
         if(query.lastError().isValid())
         {
@@ -61,6 +58,7 @@ void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)
     }
     db.commit();
     db.close();
+
 }
 
 QList<Meteo*> MeteoDatabaseInterface::getMeteo(int siteId, int year)
@@ -68,7 +66,8 @@ QList<Meteo*> MeteoDatabaseInterface::getMeteo(int siteId, int year)
 
 }
 
-void MeteoDatabaseInterface::setMeteoStoragePath(QString meteoStoragePath)
+void MeteoDatabaseInterface::setStoragePaths(QString appStoragePath, QString dbPath)
 {
-    this->meteoStoragePath = meteoStoragePath;
+    this->appStoragePath = appStoragePath;
+    this->dbPath = dbPath;
 }

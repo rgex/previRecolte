@@ -76,6 +76,40 @@ int main(int argc, char *argv[])
     db.commit();
     db.close();
 
+
+
+
+    QSqlDatabase db2 = QSqlDatabase::addDatabase("QSQLITE");
+    db2.setDatabaseName("/home/jan/sql-ananas-cirad/ananas.db");
+
+    if(false == db2.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+        QSqlQuery query2;
+        query2.prepare("INSERT INTO meteo(ID, year, id_site, meteo_data) VALUES (NULL, :year, :siteId, :meteoCsv);");
+        query2.bindValue(":year", 1222);
+        query2.bindValue(":siteId", 12);
+        query2.bindValue(":meteoCsv", "text");
+        /*
+        query.bindValue(":year", meteo->getYear());
+        query.bindValue(":siteId", meteo->getSiteId());
+        query.bindValue(":meteoCsv", meteoCsv);*/
+        query2.exec();
+        if(query2.lastError().isValid())
+        {
+            qDebug() << "SQL QUERY : " << query2.lastQuery();
+            qDebug() << "SQL ERROR2 : " << query2.lastError();
+        }
+
+    db2.commit();
+    db2.close();
+
+
+
+
+
     QApplication a(argc, argv);
 
     MainWindow w;

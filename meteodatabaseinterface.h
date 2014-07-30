@@ -8,7 +8,7 @@
 class MeteoDatabaseInterface
 {
 private:
-    QString meteoStoragePath;
+    QString appStoragePath;
     QString dbPath;
 
 public:
@@ -17,7 +17,7 @@ public:
     void saveMeteo(Meteo* meteo);
     QList<Meteo*> getMeteo(int siteId, int year);
 
-    void setMeteoStoragePath(QString meteoStoragePath);
+    void setStoragePaths(QString appStoragePath, QString dbPath);
 };
 
 #endif // METEODATABASEINTERFACE_H

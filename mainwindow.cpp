@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->supprimerImageBtn->setHidden(true);
     this->hideEditVarieteInputs();
 
-    //set the webViews background to transparent
+    //set the webView background to transparent
     QPalette palette = ui->ajouterSiteWebView->palette();
     palette.setBrush(QPalette::Base, Qt::transparent);
     ui->ajouterSiteWebView->page()->setPalette(palette);
@@ -39,7 +39,7 @@ void MainWindow::initWindow()
 {
     this->vDbi.setStoragePaths(this->appStoragePath, this->imageStoragePath, this->dbPath);
     this->sDbi.setStoragePaths(this->appStoragePath, this->dbPath);
-    this->mDbi.setMeteoStoragePath(this->dbPath);
+    this->mDbi.setStoragePaths(this->appStoragePath, this->dbPath);
 }
 
 MainWindow::~MainWindow()

@@ -821,7 +821,7 @@ QPushButton: pressed {
         <item>
          <widget class="QTabWidget" name="sitesTabWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
