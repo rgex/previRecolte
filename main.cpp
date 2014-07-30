@@ -12,9 +12,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //on launch create application folder to store images and databases
-
     QString appStoragePath = QDir::homePath() + "/sql-ananas-cirad";
-
     QString databasePath = appStoragePath + "/ananas.db";
 
     QDir().mkdir(appStoragePath); //create app folder
@@ -68,15 +66,14 @@ int main(int argc, char *argv[])
     query.prepare("CREATE TABLE IF NOT EXISTS meteo("  \
                   "ID INTEGER PRIMARY KEY," \
                   "year INTEGER    NOT NULL," \
-                  "id_site   INTEGER   NOT NULL," \
-                  "meteo_data BLOB" \
+                  "id_site INTEGER   NOT NULL," \
+                  "meteo_data TEXT NULL" \
                   ");");
     if(false == query.exec())
     {
         qDebug() << "SQL ERROR : " << query.lastError();
     }
     db.commit();
-
     db.close();
 
     QApplication a(argc, argv);

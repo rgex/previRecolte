@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Ananas</string>
   </property>
+  <property name="locale">
+   <locale language="French" country="France"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -33,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -70,7 +73,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -995,41 +998,71 @@ QPushButton: pressed {
            <widget class="QTreeView" name="sitesTreeView">
             <property name="geometry">
              <rect>
-              <x>20</x>
+              <x>10</x>
               <y>20</y>
               <width>241</width>
-              <height>501</height>
+              <height>531</height>
              </rect>
             </property>
            </widget>
-           <widget class="QLineEdit" name="editSiteNameTextEdit">
+           <widget class="QScrollArea" name="EditSiteScrollArea">
             <property name="geometry">
              <rect>
-              <x>280</x>
-              <y>60</y>
-              <width>251</width>
-              <height>31</height>
+              <x>260</x>
+              <y>21</y>
+              <width>781</width>
+              <height>530</height>
              </rect>
             </property>
-           </widget>
-           <widget class="QLabel" name="editSiteNameLabel">
-            <property name="geometry">
-             <rect>
-              <x>280</x>
-              <y>30</y>
-              <width>111</width>
-              <height>21</height>
-             </rect>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="text">
-             <string>Nom du site</string>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>0</width>
+              <height>1000</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>779</width>
+               <height>528</height>
+              </rect>
+             </property>
+            </widget>
            </widget>
            <widget class="QLabel" name="editSiteKeyLabel">
             <property name="geometry">
              <rect>
-              <x>280</x>
-              <y>90</y>
+              <x>300</x>
+              <y>0</y>
               <width>251</width>
               <height>21</height>
              </rect>
@@ -1041,84 +1074,14 @@ QPushButton: pressed {
            <widget class="QLabel" name="editSiteYearLabel">
             <property name="geometry">
              <rect>
-              <x>280</x>
-              <y>110</y>
+              <x>580</x>
+              <y>0</y>
               <width>251</width>
               <height>21</height>
              </rect>
             </property>
             <property name="text">
              <string>Year</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="EditSiteSaveButton">
-            <property name="geometry">
-             <rect>
-              <x>280</x>
-              <y>140</y>
-              <width>251</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	background-color:#44c767;
-	border-radius:5px;
-	border:1px solid #18ab29;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding-right:10px;
-	outline: 0;
-}
-
-QPushButton:hover:!pressed {
-	background-color:#54d777;
-}
-
-QPushButton: pressed {
-	background-color:#30b252;
-}</string>
-            </property>
-            <property name="text">
-             <string>sauvegarder</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="editDeleteSiteButton">
-            <property name="geometry">
-             <rect>
-              <x>280</x>
-              <y>180</y>
-              <width>251</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	background-color:#C84444;
-	border-radius:5px;
-	border:1px solid #AB1818;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding-right:10px;
-	outline: 0;
-}
-
-QPushButton:hover:!pressed {
-	background-color:#D85454;
-}
-
-QPushButton: pressed {
-	background-color:#B83434;
-}</string>
-            </property>
-            <property name="text">
-             <string>Supprimer</string>
             </property>
            </widget>
           </widget>

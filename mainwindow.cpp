@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->supprimerImageBtn->setHidden(true);
     this->hideEditVarieteInputs();
 
-
     //set the webViews background to transparent
     QPalette palette = ui->ajouterSiteWebView->palette();
     palette.setBrush(QPalette::Base, Qt::transparent);
@@ -40,6 +39,7 @@ void MainWindow::initWindow()
 {
     this->vDbi.setStoragePaths(this->appStoragePath, this->imageStoragePath, this->dbPath);
     this->sDbi.setStoragePaths(this->appStoragePath, this->dbPath);
+    this->mDbi.setMeteoStoragePath(this->dbPath);
 }
 
 MainWindow::~MainWindow()
@@ -301,7 +301,7 @@ void MainWindow::on_editAjouterImageVarieteBtn_clicked()
     if(false == fileName.isEmpty())
     {
         QPixmap pixMap = QPixmap(fileName);
-        float imageRatio = (float)pixMap.width() / (float)pixMap.height() ;
+        float imageRatio = (float)pixMap.width() / (float)pixMap.height();
         qDebug() << "image ratio : " << imageRatio;
         float newWidth = imageRatio * ui->editAjouterImageLabel->height();
         qDebug() << "new ajouterImageLabel width is : " << (int)newWidth;
@@ -436,7 +436,14 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
         {
             HtmlChartMaker htmlChartMaker;
             QStringList yearList = htmlChartMaker.getYearsWithTempData(this->importTempList);
-            foreach (QString year, yearList) {
+
+            Site* site = new Site();
+            site->setNom(ui->ajouterSiteNomInput->text());
+            site->setYears(yearList);
+            this->sDbi.saveSite(site);
+
+            foreach (QString year, yearList)
+            {
                 qDebug() << "year: " << year;
                 Meteo* meteo = new Meteo();
                 meteo->setYear(year.toInt());
@@ -444,13 +451,11 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
                                          htmlChartMaker.calculateDayTempAverage(this->importTempList),
                                          htmlChartMaker.calculateMaxDayTemp(this->importTempList)
                                          );
-                qDebug() << "meteo csv : " << meteo->exportMeteoAsCsv();
-            }
 
-            Site* site = new Site();
-            site->setNom(ui->ajouterSiteNomInput->text());
-            site->setYears(yearList);
-            this->sDbi.saveSite(site);
+                qDebug() << "meteo csv : " << meteo->exportMeteoAsCsv();
+                meteo->setSiteId(this->sDbi.lastInsertedRowId());
+                this->mDbi.saveMeteo(meteo);
+            }
 
             //add meteo
         }
@@ -474,7 +479,6 @@ void MainWindow::refreshSitesTreeView()
     {
         QStandardItem* item = new QStandardItem(site->getNom());
         QStringList yearList = site->getYears();
-
         item->setData(QString::number(site->getId()),10000); //set key
         item->setData(0,10001); //set year (0) is equivalent for no year
 
@@ -487,19 +491,20 @@ void MainWindow::refreshSitesTreeView()
             item->appendRow(subItem);
             item->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
         }
-
         model->appendRow(item);
     }
-
     ui->sitesTreeView->setModel(model);
 }
 
 void MainWindow::on_sitesTabWidget_currentChanged(int index)
 {
     qDebug() << "new site tab index is : " << index;
+
     if(index == 1)
     {
         this->refreshSitesTreeView();
+        //editAvgMeteoForm* uiEditAvgMeteo = new editAvgMeteoForm();
+        //ui->EditSiteScrollArea->setWidget(uiEditAvgMeteo);
     }
 }
 
@@ -518,13 +523,25 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
     QString key = index.data(10000).toString();
     int year = index.data(10001).toInt();
     QString name = index.data(0).toString();
-    qDebug() << "key : " << key;
-    qDebug() << "year : " << QString::number(year);
-    qDebug() << "name : " << name;
 
-    ui->editSiteNameTextEdit->setText(name);
-    ui->editSiteKeyLabel->setText(key);
-    ui->editSiteYearLabel->setText(QString::number(year));
+    if(0 == year)
+    {
+        editAvgMeteoForm* uiEditAvgMeteo = new editAvgMeteoForm();
+        uiEditAvgMeteo->setEditSiteNameTextEditText(name);
+        ui->EditSiteScrollArea->setWidget(uiEditAvgMeteo);
+
+        qDebug() << "key  : " << key;
+        qDebug() << "year : " << QString::number(year);
+        qDebug() << "name : " << name;
+
+        ui->editSiteKeyLabel->setText(key);
+        ui->editSiteYearLabel->setText(QString::number(year));
+    }
+    else
+    {
+        editYearMeteoForm* uiEditYearMeteo = new editYearMeteoForm();
+        ui->EditSiteScrollArea->setWidget(uiEditYearMeteo);
+    }
 }
 
 void MainWindow::on_sitesTreeView_pressed(const QModelIndex &index)

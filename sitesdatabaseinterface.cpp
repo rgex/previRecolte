@@ -28,7 +28,7 @@ void SitesDatabaseInterface::saveSite(Site* site)
     //convert QStringList to CSV
     QString yearsCsv = site->getYears().join(";");
 
-    if(0 != site->getId()) //if an id is set we update the variete in the database
+    if(0 != site->getId()) //if an id is set we update the site in the database
     {
         QSqlQuery query;
         query.prepare("UPDATE sites SET nom = :nom, years = :years WHERE ID = :id;");

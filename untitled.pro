@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     htmlchartmaker.cpp \
     site.cpp \
     meteo.cpp \
-    meteodatabaseinterface.cpp
+    meteodatabaseinterface.cpp \
+    editavgmeteoform.cpp \
+    edityearmeteoform.cpp
 
 HEADERS  += mainwindow.h \
     varietesananas.h \
@@ -32,9 +34,13 @@ HEADERS  += mainwindow.h \
     htmlchartmaker.h \
     site.h \
     meteo.h \
-    meteodatabaseinterface.h
+    meteodatabaseinterface.h \
+    editavgmeteoform.h \
+    edityearmeteoform.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    editavgmeteoform.ui \
+    edityearmeteoform.ui
 
 unix: CONFIG += link_pkgconfig
 

@@ -7,7 +7,7 @@
 
 Meteo::Meteo()
 {
-
+    this->idMeteo = 0;
 }
 
 void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace)
@@ -92,4 +92,22 @@ int Meteo::getYear()
     return this->year;
 }
 
+void Meteo::setId(int id)
+{
+    this->idMeteo = id;
+}
 
+int Meteo::getId()
+{
+    return this->idMeteo;
+}
+
+void Meteo::setSiteId(int id)
+{
+    this->siteId = id;
+}
+
+int Meteo::getSiteId()
+{
+    return this->siteId;
+}

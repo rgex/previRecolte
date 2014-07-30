@@ -5,6 +5,9 @@
 #include <QString>
 #include "varietedatabaseinterface.h"
 #include "sitesdatabaseinterface.h"
+#include "meteodatabaseinterface.h"
+#include "editavgmeteoform.h"
+#include "edityearmeteoform.h"
 
 namespace Ui {
 class MainWindow;
@@ -49,7 +52,6 @@ private slots:
     void on_sitesTreeView_activated(const QModelIndex &index);
     void on_sitesTreeView_clicked(const QModelIndex &index);
     void on_sitesTreeView_pressed(const QModelIndex &index);
-
     void on_EditSiteSaveButton_clicked();
 
 private:
@@ -59,6 +61,7 @@ private:
     QString dbPath;
     VarieteDatabaseInterface vDbi;
     SitesDatabaseInterface sDbi;
+    MeteoDatabaseInterface mDbi;
     QList<QStringList> importTempList;
 
 };

@@ -11,6 +11,8 @@
 class Meteo
 {
 private:
+    int idMeteo;
+    int siteId;
     int year;
     QMap<QString, QStringList> meteo;
 
@@ -26,6 +28,12 @@ public:
     //getters and setters
     void setYear(int year);
     int getYear();
+
+    void setId(int id);
+    int getId();
+
+    void setSiteId(int id);
+    int getSiteId();
 };
 
 #endif // METEO_H
