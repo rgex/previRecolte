@@ -564,6 +564,9 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
 {
     if(index == 2) //previsions
     {
+        ui->previsionSiteSelect->clear();
+        ui->previsionVarieteSelect->clear();
+
         ui->previsionsDateEdit->setDate(QDate::currentDate());
         QList<Site*> siteList = this->sDbi.getAllSites();
         foreach(Site* site, siteList)
