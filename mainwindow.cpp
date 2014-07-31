@@ -432,15 +432,16 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
     else
     {
         //add site
+        HtmlChartMaker htmlChartMaker;
+        QStringList yearList = htmlChartMaker.getYearsWithTempData(this->importTempList);
+        Site* site = new Site();
+        site->setNom(ui->ajouterSiteNomInput->text());
+        site->setYears(yearList);
+        this->sDbi.saveSite(site);
+
+        //add meteo
         if(this->importTempList.count() > 0)
         {
-            HtmlChartMaker htmlChartMaker;
-            QStringList yearList = htmlChartMaker.getYearsWithTempData(this->importTempList);
-
-            Site* site = new Site();
-            site->setNom(ui->ajouterSiteNomInput->text());
-            site->setYears(yearList);
-            this->sDbi.saveSite(site);
 
             foreach (QString year, yearList)
             {
@@ -456,13 +457,14 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
                 meteo->setSiteId(this->sDbi.lastInsertedRowId());
                 this->mDbi.saveMeteo(meteo);
             }
-
-            //add meteo
         }
-
 
         QList<QStringList> emptyTempList;
         this->importTempList = emptyTempList;
+
+        QMessageBox msgBox;
+        msgBox.warning(this, QString("Succès"), QString("Le site a été ajouté à la base de données."));
+        ui->ajouterSiteNomInput->setText("");
     }
 }
 
@@ -556,4 +558,23 @@ void MainWindow::on_sitesTreeView_pressed(const QModelIndex &index)
 void MainWindow::on_EditSiteSaveButton_clicked()
 {
 
+}
+
+void MainWindow::on_leftTabWidget_currentChanged(int index)
+{
+    if(index == 2) //previsions
+    {
+        ui->previsionsDateEdit->setDate(QDate::currentDate());
+        QList<Site*> siteList = this->sDbi.getAllSites();
+        foreach(Site* site, siteList)
+        {
+            ui->previsionSiteSelect->addItem(site->getNom());
+        }
+
+        QList<VarietesAnanas*> varieteList = this->vDbi.getAllvarietes();
+        foreach(VarietesAnanas* variete, varieteList)
+        {
+            ui->previsionVarieteSelect->addItem(variete->getNom());
+        }
+    }
 }

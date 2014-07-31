@@ -54,6 +54,8 @@ private slots:
     void on_sitesTreeView_pressed(const QModelIndex &index);
     void on_EditSiteSaveButton_clicked();
 
+    void on_leftTabWidget_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     QString appStoragePath;

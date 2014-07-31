@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     query.prepare("CREATE TABLE IF NOT EXISTS varietes("  \
                   "ID INTEGER PRIMARY KEY," \
                   "nom            TEXT    NOT NULL," \
-                  "newImageName   CHAR(80)," \
+                  "newImageName   TEXT," \
                   "tBase1         FLOAT," \
                   "tFloraison     FLOAT," \
                   "tBase2         FLOAT," \
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     query.prepare("CREATE TABLE IF NOT EXISTS sites("  \
                   "ID INTEGER PRIMARY KEY," \
                   "nom            TEXT    NOT NULL," \
-                  "years   CHAR(500)     NOT NULL" \
+                  "years   TEXT     NULL" \
                   ");");
     if(false == query.exec())
     {
@@ -75,40 +75,6 @@ int main(int argc, char *argv[])
     }
     db.commit();
     db.close();
-
-
-
-
-    QSqlDatabase db2 = QSqlDatabase::addDatabase("QSQLITE");
-    db2.setDatabaseName("/home/jan/sql-ananas-cirad/ananas.db");
-
-    if(false == db2.open())
-    {
-        qDebug() << "can not open database";
-    }
-
-        QSqlQuery query2;
-        query2.prepare("INSERT INTO meteo(ID, year, id_site, meteo_data) VALUES (NULL, :year, :siteId, :meteoCsv);");
-        query2.bindValue(":year", 1222);
-        query2.bindValue(":siteId", 12);
-        query2.bindValue(":meteoCsv", "text");
-        /*
-        query.bindValue(":year", meteo->getYear());
-        query.bindValue(":siteId", meteo->getSiteId());
-        query.bindValue(":meteoCsv", meteoCsv);*/
-        query2.exec();
-        if(query2.lastError().isValid())
-        {
-            qDebug() << "SQL QUERY : " << query2.lastQuery();
-            qDebug() << "SQL ERROR2 : " << query2.lastError();
-        }
-
-    db2.commit();
-    db2.close();
-
-
-
-
 
     QApplication a(argc, argv);
 
