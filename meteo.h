@@ -23,7 +23,7 @@ public:
     void removeEntry(QString date);
     void sort();
     QString exportMeteoAsCsv();
-    void loadMeteoFromCSV();
+    void importMeteoFromCsv(QString meteoCsv);
 
     //getters and setters
     void setYear(int year);
@@ -34,6 +34,9 @@ public:
 
     void setSiteId(int id);
     int getSiteId();
+
+    void setMeteo(QMap<QString, QStringList> meteo);
+    QMap<QString, QStringList> getMeteo();
 };
 
 #endif // METEO_H

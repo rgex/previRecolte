@@ -23,3 +23,13 @@ void editAvgMeteoForm::setEditSiteNameTextEditText(QString text)
 {
     ui->editSiteNameTextEdit->setText(text);
 }
+
+void editAvgMeteoForm::on_editDeleteSiteButton_clicked()
+{
+
+}
+
+void editAvgMeteoForm::setWebViewHtml(QString html)
+{
+    ui->meteoChartWebView->setHtml(html);
+}

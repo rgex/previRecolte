@@ -16,6 +16,10 @@ public:
     explicit editAvgMeteoForm(QWidget *parent = 0);
     ~editAvgMeteoForm();
     void setEditSiteNameTextEditText(QString text);
+    void setWebViewHtml(QString html);
+
+private slots:
+    void on_editDeleteSiteButton_clicked();
 
 private:
     Ui::editAvgMeteoForm *ui;

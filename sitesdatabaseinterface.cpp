@@ -87,6 +87,38 @@ QList<Site*> SitesDatabaseInterface::getAllSites()
     return siteList;
 }
 
+void SitesDatabaseInterface::deleteSite(int id)
+{
+    qDebug() << "db: " << this->dbPath;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
+
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query;
+    query.prepare("DELETE FROM sites WHERE ID = :id;");
+    query.bindValue(":id", id);
+    if(false == query.exec())
+    {
+       qDebug() << "SQL ERROR : " << query.lastError();
+    }
+    db.commit();
+
+    //We have also to delete the associated weather data to this site
+    query.prepare("DELETE FROM meteo WHERE id_site = :id;");
+    query.bindValue(":id", id);
+    if(false == query.exec())
+    {
+       qDebug() << "SQL ERROR : " << query.lastError();
+    }
+
+    db.commit();
+    db.close();
+}
+
 int SitesDatabaseInterface::lastInsertedRowId()
 {
     qDebug() << "db: " << this->dbPath;

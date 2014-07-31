@@ -14,6 +14,7 @@ class editYearMeteoForm : public QWidget
 public:
     explicit editYearMeteoForm(QWidget *parent = 0);
     ~editYearMeteoForm();
+    void setWebViewHtml(QString html);
 
 private:
     Ui::editYearMeteoForm *ui;

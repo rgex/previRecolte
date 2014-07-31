@@ -16,6 +16,7 @@ public:
     void setStoragePaths(QString appStoragePath, QString dbPath);
     void saveSite(Site* site);
     QList<Site*> getAllSites();
+    void deleteSite(int id);
     int lastInsertedRowId();
 };
 

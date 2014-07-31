@@ -12,10 +12,15 @@ class HtmlChartMaker
 private:
     QString getCharJSLib();
     std::string hex_to_string(const std::string& input);
+    int height;
+    int width;
 
 public:
     HtmlChartMaker();
+    QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap);
+    QString generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap);
     QString generateHtmlChartWithTempData(QList<QStringList> temperatures);
+
     QMap<QString, float> calculateDayTempAverage(QList<QStringList> temperatures);
     QMap<QString, float> calculateMonthTempAverage(QMap<QString, float> dayTempAvgMap);
 
@@ -26,6 +31,14 @@ public:
     QMap<QString, float> calculateMinMonthTemp(QMap<QString, float> dayMinTempMap);
 
     QStringList getYearsWithTempData(QList<QStringList> temperatures);
+
+    //getters and setters
+
+    void setHeight(int height);
+    int getHeight();
+
+    void setWidth(int width);
+    int getWidth();
 };
 
 #endif // HTMLCHARTMAKER_H

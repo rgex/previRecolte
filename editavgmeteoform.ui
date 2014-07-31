@@ -22,10 +22,10 @@
   <widget class="QWebView" name="meteoChartWebView">
    <property name="geometry">
     <rect>
-     <x>9</x>
+     <x>80</x>
      <y>160</y>
-     <width>741</width>
-     <height>451</height>
+     <width>591</width>
+     <height>531</height>
     </rect>
    </property>
    <property name="url">

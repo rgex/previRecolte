@@ -249,13 +249,45 @@ QStringList HtmlChartMaker::getYearsWithTempData(QList<QStringList> temperatures
 
 QString HtmlChartMaker::generateHtmlChartWithTempData(QList<QStringList> temperatures)
 {
-    QMap<QString, float> dayTempAvgMap = this->calculateDayTempAverage(temperatures);
-    QMap<QString, float> monthTempAvgMap = this->calculateMonthTempAverage(dayTempAvgMap);
-
     QMap<QString, float> dayMaxTempMap = this->calculateMaxDayTemp(temperatures);
-    QMap<QString, float> monthMaxTempMap = this->calculateMonthTempAverage(dayMaxTempMap);
+
+    QMap<QString, float> dayTempAvgMap = this->calculateDayTempAverage(temperatures);
 
     QMap<QString, float> dayMinTempMap = this->calculateMinDayTemp(temperatures);
+
+    return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap);
+}
+
+QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> tempMap)
+{
+
+    QMap<QString, float> dayMaxTempMap;
+
+    QMap<QString, float> dayTempAvgMap;
+
+    QMap<QString, float> dayMinTempMap;
+
+    foreach(QString qMapKey, tempMap.keys())
+    {
+        QStringList tempList = tempMap.value(qMapKey);
+        ///*
+        dayMinTempMap.insert(qMapKey, tempList.at(1).toFloat());
+        dayTempAvgMap.insert(qMapKey, tempList.at(2).toFloat());
+        dayMaxTempMap.insert(qMapKey, tempList.at(3).toFloat());
+        //*/
+    }
+
+    return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap);
+}
+
+
+QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap)
+{
+
+    QMap<QString, float> monthMaxTempMap = this->calculateMonthTempAverage(dayMaxTempMap);
+
+    QMap<QString, float> monthTempAvgMap = this->calculateMonthTempAverage(dayTempAvgMap);
+
     QMap<QString, float> monthMinTempMap = this->calculateMonthTempAverage(dayMinTempMap);
 
     QString avgValues = "";
@@ -406,7 +438,25 @@ QString HtmlChartMaker::generateHtmlChartWithTempData(QList<QStringList> tempera
         return html;
 }
 
+void HtmlChartMaker::setHeight(int height)
+{
+    this->height = height;
+}
 
+int HtmlChartMaker::getHeight()
+{
+    return this->height;
+}
+
+void HtmlChartMaker::setWidth(int width)
+{
+    this->width = width;
+}
+
+int HtmlChartMaker::getWidth()
+{
+    return this->width;
+}
 
 QString HtmlChartMaker::getCharJSLib()
 {

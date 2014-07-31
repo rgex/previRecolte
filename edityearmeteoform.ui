@@ -16,49 +16,20 @@
     <height>650</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>760</width>
+    <height>650</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="EditSiteSaveButton_2">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>60</y>
-     <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-	background-color:#44c767;
-	border-radius:5px;
-	border:1px solid #18ab29;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding-right:10px;
-	outline: 0;
-}
-
-QPushButton:hover:!pressed {
-	background-color:#54d777;
-}
-
-QPushButton: pressed {
-	background-color:#30b252;
-}</string>
-   </property>
-   <property name="text">
-    <string>AJouter</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>110</y>
+     <x>10</x>
+     <y>60</y>
      <width>741</width>
      <height>41</height>
     </rect>
@@ -80,10 +51,10 @@ QPushButton: pressed {
   <widget class="QWebView" name="meteoChartWebView">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>160</y>
-     <width>741</width>
-     <height>451</height>
+     <x>90</x>
+     <y>100</y>
+     <width>591</width>
+     <height>531</height>
     </rect>
    </property>
    <property name="url">
@@ -92,71 +63,10 @@ QPushButton: pressed {
     </url>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox">
+  <widget class="QPushButton" name="editDeleteYearButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>60</y>
-     <width>111</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="maximum">
-    <number>10000</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="editSiteNameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>111</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Nom du site</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="EditSiteSaveButton">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>20</y>
-     <width>151</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-	background-color:#44c767;
-	border-radius:5px;
-	border:1px solid #18ab29;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding-right:10px;
-	outline: 0;
-}
-
-QPushButton:hover:!pressed {
-	background-color:#54d777;
-}
-
-QPushButton: pressed {
-	background-color:#30b252;
-}</string>
-   </property>
-   <property name="text">
-    <string>sauvegarder</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="editDeleteSiteButton">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
+     <x>550</x>
      <y>20</y>
      <width>191</width>
      <height>31</height>
@@ -185,17 +95,152 @@ QPushButton: pressed {
 }</string>
    </property>
    <property name="text">
-    <string>Supprimer le site</string>
+    <string>Supprimer l'année</string>
+   </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.delete.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.delete.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
    </property>
   </widget>
-  <widget class="QLineEdit" name="editSiteNameTextEdit">
+  <widget class="QPushButton" name="ajouterImageBtn">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>10</x>
      <y>20</y>
-     <width>281</width>
+     <width>161</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#445CC8;
+	border-radius:5px;
+	border:1px solid #1833AB;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#546CD8;
+}
+
+QPushButton: pressed {
+	background-color:#344CB8;
+}</string>
+   </property>
+   <property name="text">
+    <string>Modifier</string>
+   </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ajouterImageBtn_2">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>20</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#445CC8;
+	border-radius:5px;
+	border:1px solid #1833AB;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#546CD8;
+}
+
+QPushButton: pressed {
+	background-color:#344CB8;
+}</string>
+   </property>
+   <property name="text">
+    <string>importer</string>
+   </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ajouterImageBtn_3">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>20</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#445CC8;
+	border-radius:5px;
+	border:1px solid #1833AB;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#546CD8;
+}
+
+QPushButton: pressed {
+	background-color:#344CB8;
+}</string>
+   </property>
+   <property name="text">
+    <string>Exporter</string>
+   </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
    </property>
   </widget>
  </widget>
@@ -206,6 +251,8 @@ QPushButton: pressed {
    <header>QtWebKitWidgets/QWebView</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="projectRessources.qrc"/>
+ </resources>
  <connections/>
 </ui>

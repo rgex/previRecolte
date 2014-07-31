@@ -534,13 +534,17 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
         qDebug() << "year : " << QString::number(year);
         qDebug() << "name : " << name;
 
-        ui->editSiteKeyLabel->setText(key);
-        ui->editSiteYearLabel->setText(QString::number(year));
     }
     else
     {
         editYearMeteoForm* uiEditYearMeteo = new editYearMeteoForm();
         ui->EditSiteScrollArea->setWidget(uiEditYearMeteo);
+
+        HtmlChartMaker htmlChartMaker;
+        Meteo* meteo = this->mDbi.getMeteo(key.toInt(), year);
+
+        QString html = htmlChartMaker.generateHtmlChartWithMap(meteo->getMeteo());
+        uiEditYearMeteo->setWebViewHtml(html);
     }
 }
 

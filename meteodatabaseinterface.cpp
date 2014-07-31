@@ -61,9 +61,37 @@ void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)
 
 }
 
-QList<Meteo*> MeteoDatabaseInterface::getMeteo(int siteId, int year)
+Meteo* MeteoDatabaseInterface::getMeteo(int siteId, int year)
 {
+    Meteo* meteo = new Meteo();
+    qDebug() << "db: " << this->dbPath;
 
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
+
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM meteo WHERE id_site = :siteId AND year = :year");
+    query.bindValue(":siteId", siteId);
+    query.bindValue(":year", year);
+    if(query.exec())
+    {
+        query.next();
+        meteo->setId( query.value(0).toInt() );
+        meteo->setYear( query.value(1).toInt() );
+        meteo->setSiteId( query.value(2).toInt() );
+        meteo->importMeteoFromCsv( query.value(3).toString() );
+    }
+    else
+    {
+        qDebug() << "SQL ERROR : " << query.lastError();
+    }
+    db.close();
+    return meteo;
 }
 
 void MeteoDatabaseInterface::setStoragePaths(QString appStoragePath, QString dbPath)

@@ -18,3 +18,8 @@ editYearMeteoForm::~editYearMeteoForm()
 {
     delete ui;
 }
+
+void editYearMeteoForm::setWebViewHtml(QString html)
+{
+    ui->meteoChartWebView->setHtml(html);
+}

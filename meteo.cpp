@@ -4,6 +4,7 @@
 #include <QStringList>
 #include <QString>
 #include <QMap>
+#include <QDebug>
 
 Meteo::Meteo()
 {
@@ -13,7 +14,7 @@ Meteo::Meteo()
 void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace)
 {
 
-    if(false == date.mid(0, 4).compare(QString::number(this->year)))
+    if(0 != date.mid(0, 4).compare(QString::number(this->year)))
     {
         return;
     }
@@ -76,8 +77,23 @@ QString Meteo::exportMeteoAsCsv()
     return csv;
 }
 
-void loadMeteoFromCSV()
+void Meteo::importMeteoFromCsv(QString meteoCsv)
 {
+
+     QStringList meteoList = meteoCsv.split(";");
+
+     foreach(QString meteo, meteoList)
+     {
+         QStringList meteoElements = meteo.split(",");
+         if(meteoElements.size()> 3)
+         {
+             this->addEntry(meteoElements.at(0),
+                            meteoElements.at(1).toFloat(),
+                            meteoElements.at(2).toFloat(),
+                            meteoElements.at(3).toFloat(),
+                            true);
+         }
+     }
 
 }
 
@@ -110,4 +126,14 @@ void Meteo::setSiteId(int id)
 int Meteo::getSiteId()
 {
     return this->siteId;
+}
+
+void Meteo::setMeteo(QMap<QString, QStringList> meteo)
+{
+    this->meteo = meteo;
+}
+
+QMap<QString, QStringList> Meteo::getMeteo()
+{
+    return this->meteo;
 }
