@@ -9,14 +9,27 @@ MeteoDatabaseInterface::MeteoDatabaseInterface()
 
 }
 
-void MeteoDatabaseInterface::deleteMeteo(int siteId)
-{
-
-}
-
 void MeteoDatabaseInterface::deleteMeteo(int siteId, int year)
 {
+    qDebug() << "db: " << this->dbPath;
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
 
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query;
+    query.prepare("DELETE FROM meteo WHERE id_site = :siteId; AND year = :year");
+    query.bindValue(":siteId", siteId);
+    query.bindValue(":year", year);
+    if(false == query.exec())
+    {
+       qDebug() << "SQL ERROR : " << query.lastError();
+    }
+    db.commit();
+    db.close();
 }
 
 void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)
