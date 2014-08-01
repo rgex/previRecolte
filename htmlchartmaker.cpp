@@ -260,6 +260,11 @@ QString HtmlChartMaker::generateHtmlChartWithTempData(QList<QStringList> tempera
 
 QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> tempMap)
 {
+    return this->generateHtmlChartWithMap(tempMap, 0, false);
+}
+
+QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, int year, bool completeMissingMonth)
+{
 
     QMap<QString, float> dayMaxTempMap;
 
@@ -277,11 +282,15 @@ QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> temp
         //*/
     }
 
-    return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap);
+    return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap, year, completeMissingMonth);
 }
 
-
 QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap)
+{
+    return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap, 0, false);
+}
+
+QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap, int year, bool completeMissingMonth)
 {
 
     QMap<QString, float> monthMaxTempMap = this->calculateMonthTempAverage(dayMaxTempMap);
@@ -291,15 +300,45 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     QMap<QString, float> monthMinTempMap = this->calculateMonthTempAverage(dayMinTempMap);
 
     QString avgValues = "";
+
+    if(true == completeMissingMonth && 0 != year)
+    for(int i = 1; i <= 12; i++)
+    {
+        QString newMapKey = QString::number(year);
+        QString month = QString::number(i);
+        if(1 == month.length())
+        {
+            month = "0" + month;
+        }
+        newMapKey = newMapKey + month;
+
+        if(false == monthMaxTempMap.contains(newMapKey))
+        {
+            monthMaxTempMap.insert(newMapKey, 0);
+            monthTempAvgMap.insert(newMapKey, 0);
+            monthMinTempMap.insert(newMapKey, 0);
+        }
+    }
+
     int i = 0;
     foreach(QString qMapKey, monthTempAvgMap.keys())
     {
         QString qsAvg;
         qsAvg = qsAvg.setNum(monthTempAvgMap.value(qMapKey), 'f', 2);
         if(i == 0)
-            avgValues.append(qsAvg);
+        {
+            if(qsAvg.toFloat() != 0)
+                avgValues.append(qsAvg);
+            else
+                avgValues.append(" 0");
+        }
         else
-            avgValues.append("," + qsAvg);
+        {
+            if(qsAvg.toFloat() != 0)
+                avgValues.append("," + qsAvg);
+            else
+                avgValues.append(", 0");
+        }
         i++;
     }
 
@@ -309,6 +348,7 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     {
         QString qsMax;
         qsMax = qsMax.setNum(monthMaxTempMap.value(qMapKey), 'f', 2);
+
         if(i == 0)
             maxValues.append(qsMax);
         else
@@ -416,7 +456,7 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     html.append("]\n\
                                 }\n\
                     window.onload = function(){\n\
-                            window.onresize = function(event) {\n\
+                       window.onresize = function(event) {\n\
                                 document.getElementById(\"canvas\").style.width = window.innerWidth - 20;\n\
                                 document.getElementById(\"canvas\").style.height = window.innerHeight - 120;\n\
                             }\n\
@@ -426,8 +466,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
                         window.myLine = new Chart(ctx).Line(lineChartData, {\n\
                             responsive: true,\n\
                             pointHitDetectionRadius : 5,\n\
+                            scaleBeginAtZero : true, \n\
+                            scaleShowLine : false, \n\
                             datasetFill : false\n\
                         });\n\
+                        \n\
+                        \n\
                     }\n\
                     </script>\n\
                         <script>\n\

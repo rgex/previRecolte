@@ -1,6 +1,10 @@
 #include "edityearmeteoform.h"
 #include "ui_edityearmeteoform.h"
 
+MainWindow* mainWindow;
+int year;
+int siteId;
+
 editYearMeteoForm::editYearMeteoForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::editYearMeteoForm)
@@ -22,4 +26,24 @@ editYearMeteoForm::~editYearMeteoForm()
 void editYearMeteoForm::setWebViewHtml(QString html)
 {
     ui->meteoChartWebView->setHtml(html);
+}
+
+void editYearMeteoForm::setMainWindowPointer(MainWindow* pointer)
+{
+    mainWindow = pointer;
+}
+
+void editYearMeteoForm::on_editDeleteYearButton_clicked()
+{
+    mainWindow->deleteYearFromSite(siteId,year);
+}
+
+void editYearMeteoForm::setYear(int value)
+{
+    year = value;
+}
+
+void editYearMeteoForm::setSiteId(int value)
+{
+    siteId = value;
 }

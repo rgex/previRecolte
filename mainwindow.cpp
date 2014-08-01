@@ -17,6 +17,8 @@
 #include <QHeaderView>
 #include "meteo.h"
 #include "meteodatabaseinterface.h"
+#include "editavgmeteoform.h"
+#include "edityearmeteoform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -486,12 +488,15 @@ void MainWindow::refreshSitesTreeView()
 
         foreach (QString year, yearList)
         {
-            QStandardItem* subItem = new QStandardItem(year);
-            subItem->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
-            subItem->setData(QString::number(site->getId()),10000); //set key
-            subItem->setData(year,10001); //set year
-            item->appendRow(subItem);
-            item->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
+            if(0 != year.toInt())
+            {
+                QStandardItem* subItem = new QStandardItem(year);
+                subItem->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
+                subItem->setData(QString::number(site->getId()),10000); //set key
+                subItem->setData(year,10001); //set year
+                item->appendRow(subItem);
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable); //set Item as being not editable
+            }
         }
         model->appendRow(item);
     }
@@ -540,12 +545,15 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
     else
     {
         editYearMeteoForm* uiEditYearMeteo = new editYearMeteoForm();
+        uiEditYearMeteo->setMainWindowPointer(this);
+        uiEditYearMeteo->setSiteId(key.toInt());
+        uiEditYearMeteo->setYear(year);
         ui->EditSiteScrollArea->setWidget(uiEditYearMeteo);
 
         HtmlChartMaker htmlChartMaker;
         Meteo* meteo = this->mDbi.getMeteo(key.toInt(), year);
 
-        QString html = htmlChartMaker.generateHtmlChartWithMap(meteo->getMeteo());
+        QString html = htmlChartMaker.generateHtmlChartWithMap(meteo->getMeteo(), year, true);
         uiEditYearMeteo->setWebViewHtml(html);
     }
 }
@@ -577,4 +585,16 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
             ui->previsionVarieteSelect->addItem(variete->getNom());
         }
     }
+}
+
+void MainWindow::deleteYearFromSite(int siteId, int year)
+{
+    qDebug() << "will delete year : " << year << " for site with id: " << siteId;
+}
+
+void MainWindow::deleteSite(int siteId)
+{
+    this->sDbi.deleteSite(site);
+    this->mDbi.deleteMeteo(siteId);
+    qDebug() << "will delete site : " << siteId;
 }

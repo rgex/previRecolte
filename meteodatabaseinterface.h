@@ -13,6 +13,7 @@ private:
 
 public:
     MeteoDatabaseInterface();
+    void deleteMeteo(int siteId);
     void deleteMeteo(int siteId, int year);
     void saveMeteo(Meteo* meteo);
     Meteo* getMeteo(int siteId, int year);

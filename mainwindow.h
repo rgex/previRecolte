@@ -6,8 +6,7 @@
 #include "varietedatabaseinterface.h"
 #include "sitesdatabaseinterface.h"
 #include "meteodatabaseinterface.h"
-#include "editavgmeteoform.h"
-#include "edityearmeteoform.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +32,8 @@ public:
     void refreshSitesTreeView();
     void hideEditVarieteInputs();
     void showEditVarieteInputs();
+    void deleteYearFromSite(int siteId, int year);
+    void deleteSite(int siteId);
 
 private slots:
     void on_ajouterVarieteBtn_clicked();
@@ -53,7 +54,6 @@ private slots:
     void on_sitesTreeView_clicked(const QModelIndex &index);
     void on_sitesTreeView_pressed(const QModelIndex &index);
     void on_EditSiteSaveButton_clicked();
-
     void on_leftTabWidget_currentChanged(int index);
 
 private:

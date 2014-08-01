@@ -9,6 +9,11 @@ MeteoDatabaseInterface::MeteoDatabaseInterface()
 
 }
 
+void MeteoDatabaseInterface::deleteMeteo(int siteId)
+{
+
+}
+
 void MeteoDatabaseInterface::deleteMeteo(int siteId, int year)
 {
 
