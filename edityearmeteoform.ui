@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_11">
+  <widget class="QLabel" name="editYearChartTitleLabel">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -144,7 +144,7 @@ QPushButton: pressed {
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.edit.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.edit.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -198,7 +198,7 @@ QPushButton: pressed {
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="ajouterImageBtn_3">
+  <widget class="QPushButton" name="exportYearBtn">
    <property name="geometry">
     <rect>
      <x>370</x>

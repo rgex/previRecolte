@@ -7,6 +7,7 @@
 #include <QUrl>
 #include <QStringList>
 #include <QList>
+#include <QStandardPaths>
 #include "htmlchartmaker.h"
 #include "site.h"
 #include "sitesdatabaseinterface.h"
@@ -79,7 +80,7 @@ void MainWindow::on_ajouterImageBtn_clicked()
 {
 
     QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
-                                                    "",
+                                                    QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers image(*.jpg *.gif *png)"));
     qDebug() << "fileName is : " << fileName;
 
@@ -296,7 +297,7 @@ void MainWindow::reloadVarieteListView()
 void MainWindow::on_editAjouterImageVarieteBtn_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
-                                                    "",
+                                                    QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers image(*.jpg *.gif *png)"));
     qDebug() << "fileName is : " << fileName;
 
@@ -371,7 +372,7 @@ void MainWindow::on_ajouterSiteOpenMeteoFileBtn_clicked()
 {
 
     QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
-                                                    "",
+                                                    QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers csv(*.csv)"));
     if(false == fileName.isEmpty())
     {
@@ -485,7 +486,7 @@ void MainWindow::refreshSitesTreeView()
         QStringList yearList = site->getYears();
         item->setData(QString::number(site->getId()),10000); //set key
         item->setData(0,10001); //set year (0) is equivalent for no year
-
+        item->setData(site->getYearsCsv(),10002); //set years CSV
         foreach (QString year, yearList)
         {
             if(0 != year.toInt())
@@ -529,14 +530,18 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
 {
     QString key = index.data(10000).toString();
     int year = index.data(10001).toInt();
+    QString yearsCsv = index.data(10002).toString();
     QString name = index.data(0).toString();
 
     if(0 == year)
     {
         editAvgMeteoForm* uiEditAvgMeteo = new editAvgMeteoForm();
         uiEditAvgMeteo->setEditSiteNameTextEditText(name);
-        ui->EditSiteScrollArea->setWidget(uiEditAvgMeteo);
+        uiEditAvgMeteo->setMainWindowPointer(this);
+        uiEditAvgMeteo->setSiteId(key.toInt());
+        uiEditAvgMeteo->setEditSiteChartTitleLabel("Températures moyennes des années (" + yearsCsv + ")");
 
+        ui->EditSiteScrollArea->setWidget(uiEditAvgMeteo);
         qDebug() << "key  : " << key;
         qDebug() << "year : " << QString::number(year);
         qDebug() << "name : " << name;
@@ -548,6 +553,7 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
         uiEditYearMeteo->setMainWindowPointer(this);
         uiEditYearMeteo->setSiteId(key.toInt());
         uiEditYearMeteo->setYear(year);
+        uiEditYearMeteo->setEditYearChartTitleLabel("Température moyenne pour l'année " + QString::number(year));
         ui->EditSiteScrollArea->setWidget(uiEditYearMeteo);
 
         HtmlChartMaker htmlChartMaker;
@@ -592,12 +598,35 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
 
 void MainWindow::deleteYearFromSite(int siteId, int year)
 {
-    qDebug() << "will delete year : " << year << " for site with id: " << siteId;
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir supprimer cette année?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "will delete year : " << year << " for site with id: " << siteId;
+        this->mDbi.deleteMeteo(siteId, year);
+        this->refreshSitesTreeView();
+        delete ui->EditSiteScrollArea->widget();
+    }
 }
 
 void MainWindow::deleteSite(int siteId)
 {
-    this->sDbi.deleteSite(site);
-    this->mDbi.deleteMeteo(siteId);
-    qDebug() << "will delete site : " << siteId;
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir supprimer ce site?",
+                                    QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        qDebug() << "will delete site : " << siteId;
+        this->sDbi.deleteSite(siteId);
+        this->refreshSitesTreeView();
+        delete ui->EditSiteScrollArea->widget();
+    }
+}
+
+Meteo* MainWindow::getMeteo(int siteId,int year)
+{
+    qDebug() << "Will export data of year :" << year << " and for site with id:" << siteId;
+    Meteo* meteo = this->mDbi.getMeteo(siteId, year);
+    return meteo;
 }

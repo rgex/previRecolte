@@ -24,6 +24,7 @@ public:
     void deleteYear(int year);
     void setYears(QStringList years);
     void setId(int id);
+    QString getYearsCsv();
 
 };
 

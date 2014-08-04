@@ -16,12 +16,17 @@ Site::Site()
 
 QString Site::getNom()
 {
-    return nom;
+    return this->nom;
 }
 
 QStringList Site::getYears()
 {
-    return years;
+    return this->years;
+}
+
+QString Site::getYearsCsv()
+{
+    return this->years.join(",");
 }
 
 void Site::setNom(QString nom)

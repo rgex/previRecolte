@@ -7,6 +7,7 @@
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.multiple.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.page.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.edit.png</file>
     </qresource>
     <qresource prefix="/icons/black">
         <file>WindowsIcons-master/WindowsPhone/light/appbar.edit.png</file>

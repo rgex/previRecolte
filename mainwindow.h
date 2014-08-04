@@ -34,6 +34,7 @@ public:
     void showEditVarieteInputs();
     void deleteYearFromSite(int siteId, int year);
     void deleteSite(int siteId);
+    Meteo* getMeteo(int siteId,int year);
 
 private slots:
     void on_ajouterVarieteBtn_clicked();

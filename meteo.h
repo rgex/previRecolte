@@ -23,6 +23,7 @@ public:
     void removeEntry(QString date);
     void sort();
     QString exportMeteoAsCsv();
+    QString exportMeteoAsCsv2();
     void importMeteoFromCsv(QString meteoCsv);
 
     //getters and setters

@@ -1,7 +1,7 @@
 #include "edityearmeteoform.h"
 #include "ui_edityearmeteoform.h"
-
-MainWindow* mainWindow;
+#include <QFileDialog>
+#include <QStandardPaths>
 int year;
 int siteId;
 
@@ -35,15 +35,32 @@ void editYearMeteoForm::setMainWindowPointer(MainWindow* pointer)
 
 void editYearMeteoForm::on_editDeleteYearButton_clicked()
 {
-    mainWindow->deleteYearFromSite(siteId,year);
+    this->mainWindow->deleteYearFromSite(siteId,year);
 }
 
 void editYearMeteoForm::setYear(int value)
 {
-    year = value;
+    this->year = value;
 }
 
 void editYearMeteoForm::setSiteId(int value)
 {
-    siteId = value;
+    this->siteId = value;
+}
+
+void editYearMeteoForm::setEditYearChartTitleLabel(QString text)
+{
+    ui->editYearChartTitleLabel->setText(text);
+}
+
+void editYearMeteoForm::on_exportYearBtn_clicked()
+{
+    Meteo* meteo = this->mainWindow->getMeteo(siteId,year);
+    qDebug() << meteo->exportMeteoAsCsv2();
+    QString filename = QFileDialog::getSaveFileName(0, QObject::tr("Enregistrer un fichier"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
+                                                    QObject::tr("Fichier csv (*.csv)"));
+
+    qDebug() << "filename : " << filename;
+
 }

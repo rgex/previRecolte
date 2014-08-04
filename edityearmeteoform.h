@@ -19,9 +19,12 @@ public:
     void setMainWindowPointer(MainWindow* pointer);
     void setYear(int value);
     void setSiteId(int value);
+    void setEditYearChartTitleLabel(QString text);
 
 private slots:
     void on_editDeleteYearButton_clicked();
+
+    void on_exportYearBtn_clicked();
 
 private:
     Ui::editYearMeteoForm *ui;

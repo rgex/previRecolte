@@ -1,5 +1,7 @@
 #include "editavgmeteoform.h"
 #include "ui_editavgmeteoform.h"
+#include "mainwindow.h"
+
 
 editAvgMeteoForm::editAvgMeteoForm(QWidget *parent) :
     QWidget(parent),
@@ -26,10 +28,25 @@ void editAvgMeteoForm::setEditSiteNameTextEditText(QString text)
 
 void editAvgMeteoForm::on_editDeleteSiteButton_clicked()
 {
-
+    mainWindow->deleteSite(this->siteId);
 }
 
 void editAvgMeteoForm::setWebViewHtml(QString html)
 {
     ui->meteoChartWebView->setHtml(html);
+}
+
+void editAvgMeteoForm::setMainWindowPointer(MainWindow* pointer)
+{
+    this->mainWindow = pointer;
+}
+
+void editAvgMeteoForm::setSiteId(int value)
+{
+    this->siteId = value;
+}
+
+void editAvgMeteoForm::setEditSiteChartTitleLabel(QString text)
+{
+    ui->EditSiteCharTitleLabel->setText(text);
 }

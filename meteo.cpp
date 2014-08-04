@@ -5,6 +5,7 @@
 #include <QString>
 #include <QMap>
 #include <QDebug>
+#include <QDateTime>
 
 Meteo::Meteo()
 {
@@ -66,13 +67,38 @@ void Meteo::sort()
 QString Meteo::exportMeteoAsCsv()
 {
     QString csv;
-
     foreach(QString key, this->meteo.keys())
     {
         csv.append(this->meteo.value(key).at(0) + "," +
                    this->meteo.value(key).at(1) + "," +
                    this->meteo.value(key).at(2) + "," +
                    this->meteo.value(key).at(3) + ";");
+    }
+    return csv;
+}
+
+QString Meteo::exportMeteoAsCsv2()
+{
+    QString csv;
+    csv.append(QString("id,") +
+               QString("Date,") +
+               QString("Température moyenne,") +
+               QString("Température maximale,") +
+               QString("Température minimale") +
+               QString("\n")
+               );
+    int i = 0;
+    foreach(QString key, this->meteo.keys())
+    {
+        qDebug() << "date : " << this->meteo.value(key).at(0);
+        QDateTime date = QDateTime::fromString(this->meteo.value(key).at(0),"yyyyMMdd");
+        QString qsDate = date.toString("yyyy-MM-dd hh:mm:ss");
+        csv.append(QString::number(i) + "," +
+                   qsDate + "," +
+                   this->meteo.value(key).at(2) + "," +
+                   this->meteo.value(key).at(1) + "," +
+                   this->meteo.value(key).at(3) + "\n");
+        i++;
     }
     return csv;
 }

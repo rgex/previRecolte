@@ -1299,8 +1299,8 @@ QPushButton: pressed {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>777</width>
-                  <height>556</height>
+                  <width>590</width>
+                  <height>16</height>
                  </rect>
                 </property>
                </widget>
@@ -1351,7 +1351,7 @@ QPushButton: pressed {
          <property name="geometry">
           <rect>
            <x>200</x>
-           <y>130</y>
+           <y>70</y>
            <width>211</width>
            <height>31</height>
           </rect>
@@ -1361,7 +1361,7 @@ QPushButton: pressed {
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>130</y>
+           <y>70</y>
            <width>171</width>
            <height>31</height>
           </rect>
@@ -1374,7 +1374,7 @@ QPushButton: pressed {
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>80</y>
+           <y>20</y>
            <width>171</width>
            <height>31</height>
           </rect>
@@ -1387,7 +1387,7 @@ QPushButton: pressed {
          <property name="geometry">
           <rect>
            <x>200</x>
-           <y>80</y>
+           <y>20</y>
            <width>211</width>
            <height>31</height>
           </rect>
@@ -1397,9 +1397,9 @@ QPushButton: pressed {
          <property name="geometry">
           <rect>
            <x>20</x>
-           <y>190</y>
+           <y>130</y>
            <width>411</width>
-           <height>161</height>
+           <height>151</height>
           </rect>
          </property>
          <property name="title">
@@ -1450,6 +1450,11 @@ QPushButton: pressed {
            <string>Traitement d'Induction Florale</string>
           </property>
          </widget>
+         <zorder>previsionsDateEdit</zorder>
+         <zorder>radioButton</zorder>
+         <zorder>radioButton_2</zorder>
+         <zorder>previsionSiteSelect</zorder>
+         <zorder>label_11</zorder>
         </widget>
         <widget class="QPushButton" name="pushButton">
          <property name="geometry">
@@ -1464,6 +1469,29 @@ QPushButton: pressed {
           <string>Calculer la date de récolte</string>
          </property>
         </widget>
+        <widget class="QComboBox" name="previsionSiteSelect_2">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>290</y>
+           <width>211</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_13">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>290</y>
+           <width>171</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Modèle de prévisions</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>
@@ -1476,7 +1504,7 @@ QPushButton: pressed {
      <x>0</x>
      <y>0</y>
      <width>1132</width>
-     <height>21</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFichier">

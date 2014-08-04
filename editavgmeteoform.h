@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include "mainwindow.h"
 
 namespace Ui {
 class editAvgMeteoForm;
@@ -17,12 +18,17 @@ public:
     ~editAvgMeteoForm();
     void setEditSiteNameTextEditText(QString text);
     void setWebViewHtml(QString html);
+    void setMainWindowPointer(MainWindow* pointer);
+    void setSiteId(int value);
+    void setEditSiteChartTitleLabel(QString text);
 
 private slots:
     void on_editDeleteSiteButton_clicked();
 
 private:
     Ui::editAvgMeteoForm *ui;
+    MainWindow* mainWindow;
+    int siteId;
 };
 
 #endif // EDITAVGMETEOFORM_H
