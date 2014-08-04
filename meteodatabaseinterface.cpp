@@ -1,6 +1,8 @@
 #include "meteodatabaseinterface.h"
 #include <QString>
 #include "meteo.h"
+#include "site.h"
+#include "sitesdatabaseinterface.h"
 #include <QDebug>
 #include <QtSql/QtSql>
 
@@ -21,15 +23,21 @@ void MeteoDatabaseInterface::deleteMeteo(int siteId, int year)
     }
 
     QSqlQuery query;
-    query.prepare("DELETE FROM meteo WHERE id_site = :siteId; AND year = :year");
+    query.prepare("DELETE FROM meteo WHERE id_site = :siteId AND year = :year");
     query.bindValue(":siteId", siteId);
     query.bindValue(":year", year);
     if(false == query.exec())
     {
-       qDebug() << "SQL ERROR : " << query.lastError();
+       qDebug() << "SQL ERROR 11: " << query.lastError();
     }
     db.commit();
     db.close();
+
+    SitesDatabaseInterface sitesDatabaseInterface;
+    sitesDatabaseInterface.setStoragePaths("", this->dbPath);
+    Site* site = sitesDatabaseInterface.getSite(siteId);
+    site->deleteYear(year);
+    sitesDatabaseInterface.saveSite(site);
 }
 
 void MeteoDatabaseInterface::saveMeteo(Meteo* meteo)

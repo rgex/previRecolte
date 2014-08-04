@@ -37,13 +37,13 @@ void SitesDatabaseInterface::saveSite(Site* site)
         query.bindValue(":years", yearsCsv);
         if(false == query.exec())
         {
-            qDebug() << "SQL ERROR : " << query.lastError();
+            qDebug() << "SQL ERROR 12: " << query.lastError();
         }
     }
     else
     {
         QSqlQuery query;
-        query.prepare("INSERT INTO sites(ID,nom,years) VALUES(NULL, :nom, :years);");
+        query.prepare("INSERT INTO sites(ID,nom,years) VALUES (NULL, :nom, :years);");
         query.bindValue(":nom", site->getNom());
         query.bindValue(":years", yearsCsv);
         if(false == query.exec())
@@ -85,6 +85,43 @@ QList<Site*> SitesDatabaseInterface::getAllSites()
     db.close();
 
     return siteList;
+}
+
+Site* SitesDatabaseInterface::getSite(int id)
+{
+    Site* site = new Site();
+    qDebug() << "db: " << this->dbPath;
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(this->dbPath);
+
+    if(false == db.open())
+    {
+        qDebug() << "can not open database";
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM sites WHERE ID = :siteId ");
+    query.bindValue(":siteId", id);
+    if(query.exec())
+    {
+        query.next();
+
+        int id = query.value(0).toInt();
+        QString nom = query.value(1).toString();
+        QString years = query.value(2).toString();
+        QStringList yearsList = years.split(";");
+
+        site->setId( id );
+        site->setNom( nom );
+        site->setYears( yearsList );
+    }
+    else
+    {
+        qDebug() << "SQL ERROR 0: " << query.lastError();
+    }
+    db.close();
+    return site;
 }
 
 void SitesDatabaseInterface::deleteSite(int id)
