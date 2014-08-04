@@ -83,8 +83,8 @@ QString Meteo::exportMeteoAsCsv2()
     csv.append(QString("id,") +
                QString("Date,") +
                QString("Température moyenne,") +
-               QString("Température maximale,") +
-               QString("Température minimale") +
+               QString("Température minimale,") +
+               QString("Température maximale") +
                QString("\n")
                );
     int i = 0;

@@ -79,7 +79,7 @@ void MainWindow::on_ajouterVarieteBtn_clicked()
 void MainWindow::on_ajouterImageBtn_clicked()
 {
 
-    QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
+    QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Ouvrir un fichier"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers image(*.jpg *.gif *png)"));
     qDebug() << "fileName is : " << fileName;
@@ -296,7 +296,7 @@ void MainWindow::reloadVarieteListView()
 
 void MainWindow::on_editAjouterImageVarieteBtn_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
+    QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Ouvrir un fichier"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers image(*.jpg *.gif *png)"));
     qDebug() << "fileName is : " << fileName;
@@ -371,7 +371,7 @@ void MainWindow::on_supprimerVarieteBtn_clicked()
 void MainWindow::on_ajouterSiteOpenMeteoFileBtn_clicked()
 {
 
-    QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
+    QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Ouvrir un fichier"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers csv(*.csv)"));
     if(false == fileName.isEmpty())
