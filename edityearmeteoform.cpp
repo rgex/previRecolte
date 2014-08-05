@@ -73,3 +73,8 @@ void editYearMeteoForm::on_exportYearBtn_clicked()
     qDebug() << "filename : " << filename;
 
 }
+
+void editYearMeteoForm::on_editYearDataBtn_clicked()
+{
+    this->mainWindow->displayEditMeteo(this->siteId, this->year);
+}

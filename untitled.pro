@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     meteo.cpp \
     meteodatabaseinterface.cpp \
     editavgmeteoform.cpp \
-    edityearmeteoform.cpp
+    edityearmeteoform.cpp \
+    editmeteodataform.cpp
 
 HEADERS  += mainwindow.h \
     varietesananas.h \
@@ -36,11 +37,13 @@ HEADERS  += mainwindow.h \
     meteo.h \
     meteodatabaseinterface.h \
     editavgmeteoform.h \
-    edityearmeteoform.h
+    edityearmeteoform.h \
+    editmeteodataform.h
 
 FORMS    += mainwindow.ui \
     editavgmeteoform.ui \
-    edityearmeteoform.ui
+    edityearmeteoform.ui \
+    editmeteodataform.ui
 
 unix: CONFIG += link_pkgconfig
 

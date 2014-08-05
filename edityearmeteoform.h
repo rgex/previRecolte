@@ -26,6 +26,8 @@ private slots:
 
     void on_exportYearBtn_clicked();
 
+    void on_editYearDataBtn_clicked();
+
 private:
     Ui::editYearMeteoForm *ui;
     MainWindow* mainWindow;

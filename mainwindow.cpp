@@ -20,6 +20,7 @@
 #include "meteodatabaseinterface.h"
 #include "editavgmeteoform.h"
 #include "edityearmeteoform.h"
+#include "editmeteodataform.h"set
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -393,21 +394,18 @@ void MainWindow::on_ajouterSiteOpenMeteoFileBtn_clicked()
                     QRegExp ExpTemp("^[0-9]{0,}[\.]{1}[0-9]{0,}$");
 
                     QStringList lineColumns =  line.split(",");
-
                     QStringList tempListLine;
-                    for(int i=0; i < lineColumns.size(); i++)
+
+                    for(int i= 0; i < lineColumns.size(); i++)
                     {
                         QString column = lineColumns.at(i);
 
                         if(ExpDate.exactMatch(column))
                         {
-                            //qDebug() << "date: " << column;
                             tempListLine.append(column);
-                            //qDebug() << "date jour: " << ExpDate.cap(1);
                         }
                         if(ExpTemp.exactMatch(column))
                         {
-                            //qDebug() << "temp: " << column;
                             tempListLine.append(column);
                         }
                     }
@@ -468,6 +466,7 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
         QMessageBox msgBox;
         msgBox.warning(this, QString("Succès"), QString("Le site a été ajouté à la base de données."));
         ui->ajouterSiteNomInput->setText("");
+        ui->ajouterSiteMeteoFilePath->setText("");
     }
 }
 
@@ -629,4 +628,11 @@ Meteo* MainWindow::getMeteo(int siteId,int year)
     qDebug() << "Will export data of year :" << year << " and for site with id:" << siteId;
     Meteo* meteo = this->mDbi.getMeteo(siteId, year);
     return meteo;
+}
+
+void MainWindow::displayEditMeteo(int siteId, int year)
+{
+
+    editMeteoDataForm* uiEditMeteoDataForm = new editMeteoDataForm();
+    ui->EditSiteScrollArea->setWidget(uiEditMeteoDataForm);
 }

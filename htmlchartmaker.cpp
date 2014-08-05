@@ -38,7 +38,18 @@ QMap<QString, float> HtmlChartMaker::calculateDayTempAverage(QList<QStringList> 
 
     foreach(QStringList temperature, temperatures)
     {
-        if(temperature.length() > 1)
+        if(temperature.size() >= 4)
+        {
+            QString date = temperature.at(0);
+            QString tmp = temperature.at(1);
+
+            QDateTime qDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
+            //qDebug() << "nDate : " << qDate.toString("yyyyMMdd");
+            QStringList dayTempsList = dayTempAvgMap.value(qDate.toString("yyyyMMdd"));
+            dayTempsList.append(tmp);
+            dayTempAvgMap.insert(qDate.toString("yyyyMMdd"), dayTempsList);
+        }
+        else if(temperature.size() >= 2)
         {
             QString date = temperature.at(0);
             QString tmp = temperature.at(1);
@@ -107,7 +118,17 @@ QMap<QString, float> HtmlChartMaker::calculateMaxDayTemp(QList<QStringList> temp
 
     foreach(QStringList temperature, temperatures)
     {
-        if(temperature.length() > 1)
+        if(temperature.size() >= 4)
+        {
+            QString date = temperature.at(0);
+            QString tmp = temperature.at(3);
+
+            QDateTime qDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
+            QStringList dayTempsList = dayTempMap.value(qDate.toString("yyyyMMdd"));
+            dayTempsList.append(tmp);
+            dayTempMap.insert(qDate.toString("yyyyMMdd"), dayTempsList);
+        }
+        else if(temperature.size() >=2)
         {
             QString date = temperature.at(0);
             QString tmp = temperature.at(1);
@@ -173,7 +194,16 @@ QMap<QString, float> HtmlChartMaker::calculateMinDayTemp(QList<QStringList> temp
 
     foreach(QStringList temperature, temperatures)
     {
-        if(temperature.length() > 1)
+        if(temperature.size() >= 4)
+        {
+            QString date = temperature.at(0);
+            QString tmp = temperature.at(2);
+            QDateTime qDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
+            QStringList dayTempsList = dayTempMap.value(qDate.toString("yyyyMMdd"));
+            dayTempsList.append(tmp);
+            dayTempMap.insert(qDate.toString("yyyyMMdd"), dayTempsList);
+        }
+        else if(temperature.size() >= 2)
         {
             QString date = temperature.at(0);
             QString tmp = temperature.at(1);
@@ -234,7 +264,7 @@ QStringList HtmlChartMaker::getYearsWithTempData(QList<QStringList> temperatures
 
     foreach(QStringList temperature, temperatures)
     {
-        if(temperature.length() > 1)
+        if(temperature.size() > 1)
         {
             QString date = temperature.at(0);
             QDateTime qDate = QDateTime::fromString(date,"yyyy-MM-dd hh:mm:ss");
@@ -250,9 +280,7 @@ QStringList HtmlChartMaker::getYearsWithTempData(QList<QStringList> temperatures
 QString HtmlChartMaker::generateHtmlChartWithTempData(QList<QStringList> temperatures)
 {
     QMap<QString, float> dayMaxTempMap = this->calculateMaxDayTemp(temperatures);
-
     QMap<QString, float> dayTempAvgMap = this->calculateDayTempAverage(temperatures);
-
     QMap<QString, float> dayMinTempMap = this->calculateMinDayTemp(temperatures);
 
     return this->generateHtmlChartWithMaps(dayMaxTempMap, dayTempAvgMap, dayMinTempMap);
@@ -267,9 +295,7 @@ QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> temp
 {
 
     QMap<QString, float> dayMaxTempMap;
-
     QMap<QString, float> dayTempAvgMap;
-
     QMap<QString, float> dayMinTempMap;
 
     foreach(QString qMapKey, tempMap.keys())

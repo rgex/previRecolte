@@ -108,7 +108,7 @@ QPushButton: pressed {
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="ajouterImageBtn">
+  <widget class="QPushButton" name="editYearDataBtn">
    <property name="geometry">
     <rect>
      <x>10</x>
