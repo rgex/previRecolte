@@ -4,10 +4,11 @@
 #ifndef IMPORTCSV_H
 #define IMPORTCSV_H
 
-class ImportCsv : public QObject
+class ImportCsv
 {
-    Q_OBJECT
+
 public:
-    Q_INVOKABLE void importFile();
+    ImportCsv();
+    QList<QStringList> importFile(QString fileName);
 };
 #endif // IMPORTCSV_H

@@ -189,7 +189,7 @@ QPushButton: pressed {
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -234,7 +234,7 @@ QPushButton: pressed {
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</iconset>
    </property>
    <property name="iconSize">
     <size>

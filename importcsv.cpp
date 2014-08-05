@@ -4,41 +4,60 @@
 #include <QString>
 #include <QTextStream>
 #include <QFile>
+#include <QRegExp>
+#include <QDateTime>
 
-void ImportCsv::importFile()
+ImportCsv::ImportCsv()
 {
 
-    QString fileName = QFileDialog::getOpenFileName(0, QObject::tr("Ouvrir un fichier"),
-                                                    "",
-                                                    QObject::tr("Fichiers csv(*.csv)"));
-    qDebug() << "fileName is : " << fileName;
-    QFile file(fileName);
-    if(file.open(QIODevice::ReadOnly | QIODevice::Text))
+}
+
+QList<QStringList> ImportCsv::importFile(QString fileName)
+{
+    QList<QStringList> tempList;
+    if(false == fileName.isEmpty())
     {
-        QTextStream in(&file);
-        while(false == in.atEnd())
+        qDebug() << "fileName is : " << fileName;
+        QFile file(fileName);
+
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-            QString line = in.readLine();
-            QRegExp ExpDate("^([0-9]{4}-[0-9]{2}-[0-9]{2}) [0-9]{2}:[0-9]{2}:[0-9]{2}$");
-            QRegExp ExpTemp("^[0-9]{0,}[\.]{1}[0-9]{0,}$");
-
-            QStringList lineColumns =  line.split(",");
-
-            for(int i=0; i < lineColumns.size(); i++)
-            {
-
-                QString column = lineColumns.at(i);
-                if(ExpDate.exactMatch(column))
+                QTextStream in(&file);
+                while(!in.atEnd())
                 {
-                    qDebug() << "date: " << column;
-                    //qDebug() << "date jour: " << ExpDate.cap(1);
-                }
-                if(ExpTemp.exactMatch(column))
-                {
-                    qDebug() << "temp: " << column;
-                }
+                    QString line = in.readLine();
+                    QRegExp ExpDate("^.{0,}([0-9]{4}-[0-9]{2}-[0-9]{2}).{0,}$");
+                    QRegExp ExpDate2("^.{0,}([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}).{0,}$");
+                    QRegExp ExpTemp("^.{0,}([0-9]{0,}[\.]{1}[0-9]{0,}).{0,}$");
+                    QStringList lineColumns = line.split(",");
+                    QStringList tempListLine;
 
-            }
+                    for(int i= 0; i < lineColumns.size(); i++)
+                    {
+                        QString column = lineColumns.at(i);
+                        if(ExpDate.exactMatch(column))
+                        {
+                            //qDebug() << "Captured : " << ExpDate.cap(1);
+                            QDateTime qDate = QDateTime::fromString(ExpDate.cap(1), "yyyy-MM-dd");
+                            QString date = qDate.toString("yyyy-MM-dd hh:mm:ss");
+                            tempListLine.append(date);
+                        }
+                        if(ExpDate2.exactMatch(column))
+                        {
+                            //qDebug() << "Captured : " << ExpDate2.cap(1);
+                            QDateTime qDate = QDateTime::fromString(ExpDate2.cap(1), "M/d/yyyy");
+                            QString date = qDate.toString("yyyy-MM-dd hh:mm:ss");
+                            tempListLine.append(date);
+                        }
+                        if(ExpTemp.exactMatch(column))
+                        {
+                            //qDebug() << "Captured2 : " << ExpTemp.cap(1);
+                            tempListLine.append(ExpTemp.cap(1));
+                        }
+                    }
+                    tempList.append(tempListLine);
+                }
         }
     }
+    return tempList;
 }

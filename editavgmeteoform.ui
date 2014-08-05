@@ -132,6 +132,9 @@ QPushButton: pressed {
    </property>
   </widget>
   <widget class="QPushButton" name="EditSiteSaveButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>399</x>
@@ -160,10 +163,14 @@ QPushButton:hover:!pressed {
 
 QPushButton: pressed {
 	background-color:#30b252;
+}
+
+QPushButton: disabled {
+	background-color:#ff0000;
 }</string>
    </property>
    <property name="text">
-    <string>sauvegarder</string>
+    <string>Sauvegarder</string>
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
@@ -176,12 +183,12 @@ QPushButton: pressed {
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="ajouterImageBtn_2">
+  <widget class="QPushButton" name="importMeteoDataBtn">
    <property name="geometry">
     <rect>
      <x>400</x>
      <y>60</y>
-     <width>331</width>
+     <width>161</width>
      <height>31</height>
     </rect>
    </property>
@@ -208,11 +215,56 @@ QPushButton: pressed {
 }</string>
    </property>
    <property name="text">
-    <string>importer des données méteo</string>
+    <string>Importer</string>
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.image.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="importMeteoDataBtn_2">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>60</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#445CC8;
+	border-radius:5px;
+	border:1px solid #1833AB;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#546CD8;
+}
+
+QPushButton: pressed {
+	background-color:#344CB8;
+}</string>
+   </property>
+   <property name="text">
+    <string>Exporter</string>
+   </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</iconset>
    </property>
    <property name="iconSize">
     <size>

@@ -21,9 +21,11 @@ public:
     void setMainWindowPointer(MainWindow* pointer);
     void setSiteId(int value);
     void setEditSiteChartTitleLabel(QString text);
+    void generateGraph(int siteId);
 
 private slots:
     void on_editDeleteSiteButton_clicked();
+    void on_importMeteoDataBtn_clicked();
 
 private:
     Ui::editAvgMeteoForm *ui;

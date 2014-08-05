@@ -20,7 +20,8 @@
 #include "meteodatabaseinterface.h"
 #include "editavgmeteoform.h"
 #include "edityearmeteoform.h"
-#include "editmeteodataform.h"set
+#include "editmeteodataform.h"
+#include "importcsv.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     palette.setBrush(QPalette::Base, Qt::transparent);
     ui->ajouterSiteWebView->page()->setPalette(palette);
     ui->ajouterSiteWebView->setAttribute(Qt::WA_OpaquePaintEvent, false);
-
     ui->ajouterSiteWebView->setHtml("<br/><br/><br/><br/><br/><br/> <center>Ajoutez un fichier avec des données météo pour faire apparaitre le graphique</center>");
 }
 
@@ -253,7 +253,6 @@ void MainWindow::on_editAjouterVarieteBtn_clicked()
     else
     {
         QString key = ui->editVarieteKeyLabel->text();
-
         VarietesAnanas* variete = new VarietesAnanas(appStoragePath, imageStoragePath);
         variete->setNom(ui->editVarieteNomInput->text());
         variete->setTBase1(ui->editVarieteTBase1Input->value());
@@ -371,52 +370,18 @@ void MainWindow::on_supprimerVarieteBtn_clicked()
 
 void MainWindow::on_ajouterSiteOpenMeteoFileBtn_clicked()
 {
-
     QString fileName = QFileDialog::getOpenFileName(this, QObject::tr("Ouvrir un fichier"),
                                                     QStandardPaths::writableLocation(QStandardPaths::DesktopLocation),
                                                     QObject::tr("Fichiers csv(*.csv)"));
+    ui->ajouterSiteMeteoFilePath->setText(fileName);
     if(false == fileName.isEmpty())
     {
-        qDebug() << "fileName is : " << fileName;
-        QFile file(fileName);
         QString html = "";
+        ImportCsv importCsv;
+        this->importTempList = importCsv.importFile(fileName);
 
-        ui->ajouterSiteMeteoFilePath->setText(fileName);
-
-        if(file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-                QTextStream in(&file);
-                QList<QStringList> tempList;
-                while(!in.atEnd())
-                {
-                    QString line = in.readLine();
-                    QRegExp ExpDate("^([0-9]{4}-[0-9]{2}-[0-9]{2}) [0-9]{2}:[0-9]{2}:[0-9]{2}$");
-                    QRegExp ExpTemp("^[0-9]{0,}[\.]{1}[0-9]{0,}$");
-
-                    QStringList lineColumns =  line.split(",");
-                    QStringList tempListLine;
-
-                    for(int i= 0; i < lineColumns.size(); i++)
-                    {
-                        QString column = lineColumns.at(i);
-
-                        if(ExpDate.exactMatch(column))
-                        {
-                            tempListLine.append(column);
-                        }
-                        if(ExpTemp.exactMatch(column))
-                        {
-                            tempListLine.append(column);
-                        }
-                    }
-                    tempList.append(tempListLine);
-                }
-                HtmlChartMaker htmlChartMaker;
-                html = htmlChartMaker.generateHtmlChartWithTempData(tempList);
-                this->importTempList = tempList;
-        }
-
-        qDebug() << "html: " << html;
+        HtmlChartMaker htmlChartMaker;
+        html = htmlChartMaker.generateHtmlChartWithTempData(this->importTempList);
         ui->ajouterSiteWebView->setZoomFactor(1);
         ui->ajouterSiteWebView->setHtml(html);
     }
@@ -538,6 +503,7 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
         uiEditAvgMeteo->setEditSiteNameTextEditText(name);
         uiEditAvgMeteo->setMainWindowPointer(this);
         uiEditAvgMeteo->setSiteId(key.toInt());
+        uiEditAvgMeteo->generateGraph(key.toInt());
         uiEditAvgMeteo->setEditSiteChartTitleLabel("Températures moyennes des années (" + yearsCsv + ")");
 
         ui->EditSiteScrollArea->setWidget(uiEditAvgMeteo);

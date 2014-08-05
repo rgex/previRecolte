@@ -8,6 +8,9 @@
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.page.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.edit.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.acorn.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</file>
     </qresource>
     <qresource prefix="/icons/black">
         <file>WindowsIcons-master/WindowsPhone/light/appbar.edit.png</file>

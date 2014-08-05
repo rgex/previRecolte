@@ -73,7 +73,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="iconSize">
            <size>
@@ -163,7 +163,7 @@ QPushButton: pressed {
 }</string>
                     </property>
                     <property name="text">
-                     <string>retirer l'image</string>
+                     <string>Retirer l'image</string>
                     </property>
                     <property name="icon">
                      <iconset resource="projectRessources.qrc">
@@ -1299,8 +1299,8 @@ QPushButton: pressed {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>590</width>
-                  <height>16</height>
+                  <width>776</width>
+                  <height>544</height>
                  </rect>
                 </property>
                </widget>

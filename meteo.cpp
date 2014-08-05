@@ -14,9 +14,8 @@ Meteo::Meteo()
 
 void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace)
 {
-
-    if(0 != date.mid(0, 4).compare(QString::number(this->year)))
-    {
+    if(0 != date.mid(0, 4).compare(QString::number(this->year)) && (date.toFloat() > 1))
+    {   // 1 is a joker that allows to add new meteos entries even if the date is not matching
         return;
     }
     QStringList newEntry;
@@ -26,12 +25,12 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
     newEntry.append(QString::number(minTemp));
     foreach(QString key, this->meteo.keys())
     {
-        QStringList meteoStringLIst = this->meteo.value(key);
-        if(true == meteoStringLIst.at(0).compare(date) && false == replace)
+        QStringList meteoStringList = this->meteo.value(key);
+        if(true == meteoStringList.at(0).compare(date) && false == replace)
         {
             return;
         }
-        else if(true == meteoStringLIst.at(0).compare(date) && true == replace)
+        else if(true == meteoStringList.at(0).compare(date) && true == replace)
         {
             this->meteo.remove(key);
             this->meteo.insert(key, newEntry);

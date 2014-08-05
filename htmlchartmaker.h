@@ -33,6 +33,7 @@ public:
     QMap<QString, float> calculateMinMonthTemp(QMap<QString, float> dayMinTempMap);
 
     QStringList getYearsWithTempData(QList<QStringList> temperatures);
+    QMap<QString, QStringList> calculateAvgOfTempYears(QList<QMap<QString, QStringList> > temps);
 
     //getters and setters
 
