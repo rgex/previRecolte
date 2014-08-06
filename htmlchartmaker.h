@@ -18,6 +18,7 @@ private:
 public:
     HtmlChartMaker();
     QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap);
+    QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, bool completeMissingMonth);
     QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, int year, bool completeMissingMonth);
     QString generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap);
     QString generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap, int year, bool completeMissingMonth);
@@ -33,6 +34,7 @@ public:
     QMap<QString, float> calculateMinMonthTemp(QMap<QString, float> dayMinTempMap);
 
     QStringList getYearsWithTempData(QList<QStringList> temperatures);
+
     QMap<QString, QStringList> calculateAvgOfTempYears(QList<QMap<QString, QStringList> > temps);
 
     //getters and setters

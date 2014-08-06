@@ -106,11 +106,13 @@ Meteo* MeteoDatabaseInterface::getMeteo(int siteId, int year)
     query.bindValue(":year", year);
     if(query.exec())
     {
-        query.next();
-        meteo->setId( query.value(0).toInt() );
-        meteo->setYear( query.value(1).toInt() );
-        meteo->setSiteId( query.value(2).toInt() );
-        meteo->importMeteoFromCsv( query.value(3).toString() );
+        if(query.next())
+        {
+            meteo->setId( query.value(0).toInt() );
+            meteo->setYear( query.value(1).toInt() );
+            meteo->setSiteId( query.value(2).toInt() );
+            meteo->importMeteoFromCsv( query.value(3).toString() );
+        }
     }
     else
     {

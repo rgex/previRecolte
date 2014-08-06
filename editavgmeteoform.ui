@@ -161,12 +161,12 @@ QPushButton:hover:!pressed {
 	background-color:#54d777;
 }
 
-QPushButton: pressed {
+QPushButton:pressed {
 	background-color:#30b252;
 }
 
-QPushButton: disabled {
-	background-color:#ff0000;
+QPushButton:disabled {
+	background-color:#30b252;
 }</string>
    </property>
    <property name="text">

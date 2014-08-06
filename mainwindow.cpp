@@ -185,17 +185,17 @@ void MainWindow::setDbPath(QString path)
 
 QString MainWindow::getAppStoragePath()
 {
-    return appStoragePath;
+    return this->appStoragePath;
 }
 
 QString MainWindow::getImageStoragePath()
 {
-    return imageStoragePath;
+    return this->imageStoragePath;
 }
 
 QString MainWindow::getDbPath()
 {
-    return imageStoragePath;
+    return this->dbPath;
 }
 
 void MainWindow::on_actionQuitter_triggered()
@@ -598,7 +598,6 @@ Meteo* MainWindow::getMeteo(int siteId,int year)
 
 void MainWindow::displayEditMeteo(int siteId, int year)
 {
-
     editMeteoDataForm* uiEditMeteoDataForm = new editMeteoDataForm();
     ui->EditSiteScrollArea->setWidget(uiEditMeteoDataForm);
 }

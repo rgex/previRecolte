@@ -89,6 +89,7 @@ QList<Site*> SitesDatabaseInterface::getAllSites()
 
 Site* SitesDatabaseInterface::getSite(int id)
 {
+
     Site* site = new Site();
     qDebug() << "db: " << this->dbPath;
 

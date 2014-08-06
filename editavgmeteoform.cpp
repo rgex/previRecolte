@@ -89,21 +89,32 @@ void editAvgMeteoForm::generateGraph(int siteId)
     HtmlChartMaker htmlChartMaker;
     SitesDatabaseInterface sitesDatabaseInterface;
     sitesDatabaseInterface.setStoragePaths(QString(""), mainWindow->getDbPath());
+
     qDebug() << "will search site with ID" << siteId;
     Site* site = sitesDatabaseInterface.getSite(siteId);
     qDebug() << "got site" ;
     QStringList years = site->getYears();
     MeteoDatabaseInterface meteoDatabaseInterface;
+    meteoDatabaseInterface.setStoragePaths("", mainWindow->getDbPath());
 
     QList<QMap<QString, QStringList> > finalTmpAvg;
 
     foreach(QString year, years)
     {
+        qDebug() << "get site with ID :" << siteId << " and with year :" << year.toInt();
         Meteo* meteo = meteoDatabaseInterface.getMeteo(siteId, year.toInt());
         finalTmpAvg.append(meteo->getMeteo());
     }
 
-
-    QString html = htmlChartMaker.generateHtmlChartWithMap(htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg));
+    qDebug() << "pt1" ;
+    QMap<QString, QStringList> avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
+    qDebug() << "pt2" ;
+    QString html = htmlChartMaker.generateHtmlChartWithMap(avgOfTempYears, 1, true);
+    qDebug() << html ;
     ui->meteoChartWebView->setHtml(html);
+}
+
+void editAvgMeteoForm::on_editSiteNameTextEdit_textEdited(const QString &arg1)
+{
+    ui->EditSiteSaveButton->setDisabled(false);
 }

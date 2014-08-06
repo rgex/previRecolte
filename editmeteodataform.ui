@@ -50,6 +50,32 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#44c767;
+	border-radius:5px;
+	border:1px solid #18ab29;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#54d777;
+}
+
+QPushButton:pressed {
+	background-color:#30b252;
+}
+
+QPushButton:disabled {
+	background-color:#30b252;
+}</string>
+   </property>
    <property name="text">
     <string>Enregistrer</string>
    </property>

@@ -36,28 +36,30 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
 {
     //first get years list
     QStringList yearsList;
-    QMap<QString, QStringList> temperaturesMap;
+    QMap<QString, QStringList> tempsMap;
+    QMap<QString, QStringList> avgMap;
 
-    foreach(temperaturesMap, temps)
+    foreach(tempsMap, temps)
     {
-        foreach(QStringList temperatures, temperaturesMap)
+        foreach(QStringList temperatures, tempsMap)
         {
             if(temperatures.size() > 0)
             {
-                if(!yearsList.contains(temperatures.at(0)))
+                if(!yearsList.contains(temperatures.at(0).mid(0, 4)))
                 {
-                    yearsList.append(temperatures.at(0));
+                    yearsList.append(temperatures.at(0).mid(0, 4));
                 }
             }
         }
     }
 
-    QMap<QString, QStringList> avgMap;
-    QDateTime qDate0 = QDateTime::fromString("0001-00-00","yyyy-MM-dd");
+    QDateTime qDate0 = QDateTime::fromString("0001-01-01","yyyy-MM-dd");
 
-    while(qDate0.toString("yyyy").toInt() < 2)
+    do //
     {
-        QMap<QString, QStringList> temperaturesMap;
+        //qDebug() << "qDate0.toString(yyyy).toInt() " << qDate0.toString("yyyyMM").totInt();
+
+        QMap<QString, QStringList> tempsMap;
         float avgTempAvg = 0;
         float avgTempMin = 0;
         float avgTempMax = 0;
@@ -67,20 +69,21 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
         float tempsMaxSum = 0;
 
         int tempsCount = 0;
-        foreach(temperaturesMap, temps)
+        foreach(tempsMap, temps)
         {
             foreach(QString year, yearsList)
             {
-                if(true == temperaturesMap.contains(qDate0.toString(year + qDate0.toString("MMdd"))))
+                qDebug() << "qmap key : " << qDate0.toString(year + qDate0.toString("MMdd"));
+                if(true == tempsMap.contains(qDate0.toString(year + qDate0.toString("MMdd"))))
                 {
-                    QStringList tmpList = temperaturesMap.value(qDate0.toString(year + qDate0.toString("MMdd")));
+                    QStringList tmpList = tempsMap.value(qDate0.toString(year + qDate0.toString("MMdd")));
                     if(tmpList.size() >= 4)
                     {
                         tempsAvgSum += tmpList.at(1).toFloat();
                         tempsMinSum += tmpList.at(2).toFloat();
                         tempsMaxSum += tmpList.at(3).toFloat();
+                        tempsCount++;
                     }
-                    tempsCount++;
                 }
             }
 
@@ -90,16 +93,18 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             avgTempAvg = tempsAvgSum / (float)tempsCount;
             avgTempMin = tempsMinSum / (float)tempsCount;
             avgTempMax = tempsMaxSum / (float)tempsCount;
-        }
 
-        QStringList resTemps;
-        resTemps.append(qDate0.toString("yyyyMMdd"));
-        resTemps.append(QString::number(avgTempAvg));
-        resTemps.append(QString::number(avgTempMin));
-        resTemps.append(QString::number(avgTempMax));
-        temperaturesMap.insert(qDate0.toString("yyyyMMdd"), resTemps);
-        qDate0.addDays(1);
-    }
+            QStringList resTemps;
+            qDebug() << "will insert date : " << qDate0.toString("yyyyMMdd");
+            qDebug() << "will insert avg temp : " << QString::number(avgTempAvg);
+            resTemps.append(qDate0.toString("yyyyMMdd"));
+            resTemps.append(QString::number(avgTempAvg));
+            resTemps.append(QString::number(avgTempMin));
+            resTemps.append(QString::number(avgTempMax));
+            avgMap.insert(qDate0.toString("yyyyMMdd"), resTemps);
+        }
+        qDate0 = qDate0.addDays(1);
+    } while(qDate0.toString("yyyy").toInt() < 2);
 
     return avgMap;
 }
@@ -365,6 +370,11 @@ QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> temp
     return this->generateHtmlChartWithMap(tempMap, 0, false);
 }
 
+QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, bool completeMissingMonth)
+{
+    return this->generateHtmlChartWithMap(tempMap, 0, completeMissingMonth);
+}
+
 QString HtmlChartMaker::generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, int year, bool completeMissingMonth)
 {
 
@@ -403,6 +413,8 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     for(int i = 1; i <= 12; i++)
     {
         QString newMapKey = QString::number(year);
+        if(1 == newMapKey.size())
+            newMapKey = "000" + newMapKey;
         QString month = QString::number(i);
         if(1 == month.length())
         {
