@@ -485,7 +485,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     {
         QDateTime qDate;
         qDate = qDate.fromString(qMapKey, "yyyyMM");
-        QString qsDate = qDate.toString("MMMM yyyy");
+        QString qsDate;
+        if(0 == qDate.toString("yyyy").compare("0001"))
+            qsDate = qDate.toString("MMMM");
+        else
+            qsDate = qDate.toString("MMMM yyyy");
+
         if(i == 0)
             dates.append("'" + qsDate + "'");
         else

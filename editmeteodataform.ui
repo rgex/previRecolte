@@ -79,6 +79,10 @@ QPushButton:disabled {
    <property name="text">
     <string>Enregistrer</string>
    </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.check.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.check.png</iconset>
+   </property>
   </widget>
   <widget class="QPushButton" name="cancelBtn">
    <property name="geometry">
@@ -89,11 +93,39 @@ QPushButton:disabled {
      <height>31</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color:#C84444;
+	border-radius:5px;
+	border:1px solid #AB1818;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#D85454;
+}
+
+QPushButton:pressed {
+	background-color:#B83434;
+}</string>
+   </property>
    <property name="text">
     <string>Annuler</string>
    </property>
+   <property name="icon">
+    <iconset resource="projectRessources.qrc">
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.close.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.close.png</iconset>
+   </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="projectRessources.qrc"/>
+ </resources>
  <connections/>
 </ui>

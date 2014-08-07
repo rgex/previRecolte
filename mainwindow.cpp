@@ -612,9 +612,7 @@ void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
     qDebug() << "siteId :" << QsSiteId.toInt();
 
     ui->previsionModelSelect->clear();
-
     QList<Meteo*> meteoList = this->mDbi.getMeteo(QsSiteId.toInt());
-
     qDebug() << "meteoList.size() :" << meteoList.size();
 
     if(meteoList.size() > 0)
@@ -628,5 +626,57 @@ void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
         {
             ui->previsionModelSelect->addItem(QString::number(meteo->getYear()), meteo->getId());
         }
+    }
+}
+
+void MainWindow::on_calculateDateRecolteBtn_clicked()
+{
+    qDebug() << "clicked calculateDateRecolteBtn";
+    if(true == ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).isNull()
+            || 0 == ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toString().compare(QString("0")))
+    {
+        QMessageBox msgBox;
+        msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner une variété"));
+    }
+    else if(true == ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).isNull()
+            || 0 == ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toString().compare(QString("0")))
+    {
+        QMessageBox msgBox;
+        msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner un site"));
+    }
+
+    else if(true == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).isNull()
+            || 0 == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString().compare(QString("0")))
+    {
+        QMessageBox msgBox;
+        msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner un modèle de prévision"));
+    }
+    else if(false == ui->tifRadioBtn->isChecked() && false == ui->floraisonRadioBtn->isChecked())
+    {
+        QMessageBox msgBox;
+        msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner si la date correspond à la floraison ou au TIF."));
+    }
+
+    if(0 == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString().compare("-1"))
+    {
+        HtmlChartMaker htmlChartMaker;
+
+        Site* site = this->sDbi.getSite(ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toInt());
+
+        QStringList years = site->getYears();
+
+        QList<QMap<QString, QStringList> > finalTmpAvg;
+
+        foreach(QString year, years)
+        {
+            qDebug() << "get site with ID :" << site->getId() << " and with year :" << year.toInt();
+            Meteo* meteo = this->mDbi.getMeteo(site->getId(), year.toInt());
+            finalTmpAvg.append(meteo->getMeteo());
+        }
+
+        QMap<QString, QStringList> avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
+
+        QDateTime selectedDate = ui->previsionsDateEdit->dateTime();
+
     }
 }
