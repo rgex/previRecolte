@@ -58,6 +58,8 @@ private slots:
     void on_EditSiteSaveButton_clicked();
     void on_leftTabWidget_currentChanged(int index);
 
+    void on_previsionSiteSelect_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     QString appStoragePath;

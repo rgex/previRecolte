@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1507,7 +1507,7 @@ QPushButton:disabled {
           <string>Calculer la date de récolte</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="previsionSiteSelect_2">
+        <widget class="QComboBox" name="previsionModelSelect">
          <property name="geometry">
           <rect>
            <x>200</x>

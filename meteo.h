@@ -20,10 +20,11 @@ public:
     Meteo();
     void addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace); //meteo has to be under this format YYYYMMDD
     void addMeteoWithQMaps(QMap<QString, float> maxTempMap, QMap<QString, float> avgTempMap, QMap<QString, float> minTempMap);
+    void addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, bool replace);
     void removeEntry(QString date);
     void sort();
     QString exportMeteoAsCsv();
-    QString exportMeteoAsCsv2();
+    QString exportMeteoAsCsv2(bool includeHeaders);
     void importMeteoFromCsv(QString meteoCsv);
 
     //getters and setters

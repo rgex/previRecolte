@@ -17,6 +17,7 @@ public:
     void deleteMeteo(int siteId, int year);
     void saveMeteo(Meteo* meteo);
     Meteo* getMeteo(int siteId, int year);
+    QList<Meteo*> getMeteo(int siteId);
 
     void setStoragePaths(QString appStoragePath, QString dbPath);
 };

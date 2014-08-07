@@ -66,9 +66,9 @@
   <widget class="QPushButton" name="editDeleteYearButton">
    <property name="geometry">
     <rect>
-     <x>550</x>
+     <x>520</x>
      <y>20</y>
-     <width>191</width>
+     <width>221</width>
      <height>31</height>
     </rect>
    </property>
@@ -111,9 +111,9 @@ QPushButton: pressed {
   <widget class="QPushButton" name="editYearDataBtn">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>20</y>
-     <width>161</width>
+     <width>231</width>
      <height>31</height>
     </rect>
    </property>
@@ -153,57 +153,12 @@ QPushButton: pressed {
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="ajouterImageBtn_2">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>20</y>
-     <width>161</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-	background-color:#445CC8;
-	border-radius:5px;
-	border:1px solid #1833AB;
-	color:#ffffff;
-	font-family:arial;
-	font-size:15px;
-	font-weight:bold;
-	text-decoration:none;
-	padding-right:10px;
-	outline: 0;
-}
-
-QPushButton:hover:!pressed {
-	background-color:#546CD8;
-}
-
-QPushButton: pressed {
-	background-color:#344CB8;
-}</string>
-   </property>
-   <property name="text">
-    <string>importer</string>
-   </property>
-   <property name="icon">
-    <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>28</width>
-     <height>28</height>
-    </size>
-   </property>
-  </widget>
   <widget class="QPushButton" name="exportYearBtn">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>270</x>
      <y>20</y>
-     <width>161</width>
+     <width>231</width>
      <height>31</height>
     </rect>
    </property>

@@ -543,20 +543,23 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
 {
     if(index == 2) //previsions
     {
-        ui->previsionSiteSelect->clear();
         ui->previsionVarieteSelect->clear();
-
+        ui->previsionSiteSelect->clear();
         ui->previsionsDateEdit->setDate(QDate::currentDate());
+
         QList<Site*> siteList = this->sDbi.getAllSites();
+        ui->previsionSiteSelect->addItem("Sélectionnez","0");
+
         foreach(Site* site, siteList)
         {
-            ui->previsionSiteSelect->addItem(site->getNom());
+            ui->previsionSiteSelect->addItem(site->getNom(), QString::number(site->getId()));
         }
 
         QList<VarietesAnanas*> varieteList = this->vDbi.getAllvarietes();
+        ui->previsionVarieteSelect->addItem("Sélectionnez","0");
         foreach(VarietesAnanas* variete, varieteList)
         {
-            ui->previsionVarieteSelect->addItem(variete->getNom());
+            ui->previsionVarieteSelect->addItem(variete->getNom(), QString::number(variete->getId()));
         }
     }
 }
@@ -600,4 +603,30 @@ void MainWindow::displayEditMeteo(int siteId, int year)
 {
     editMeteoDataForm* uiEditMeteoDataForm = new editMeteoDataForm();
     ui->EditSiteScrollArea->setWidget(uiEditMeteoDataForm);
+}
+
+void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
+{
+    qDebug() << "new index" << index;
+    QString QsSiteId = ui->previsionSiteSelect->itemData(index).toString();
+    qDebug() << "siteId :" << QsSiteId.toInt();
+
+    ui->previsionModelSelect->clear();
+
+    QList<Meteo*> meteoList = this->mDbi.getMeteo(QsSiteId.toInt());
+
+    qDebug() << "meteoList.size() :" << meteoList.size();
+
+    if(meteoList.size() > 0)
+    {
+        ui->previsionModelSelect->addItem("Sélectionnez","0");
+        if(meteoList.size() > 1)
+        {
+            ui->previsionModelSelect->addItem("Moyenne de toutes les années","-1");
+        }
+        foreach(Meteo* meteo, meteoList)
+        {
+            ui->previsionModelSelect->addItem(QString::number(meteo->getYear()), meteo->getId());
+        }
+    }
 }

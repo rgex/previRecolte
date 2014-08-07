@@ -42,13 +42,18 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
 
 void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap)
 {
+    this->addMeteoWithQMaps(dayMaxTempMap, dayAvgTempMap, dayMinTempMap, true);
+}
+
+void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, bool replace)
+{
     foreach(QString qMapKey, dayMaxTempMap.keys())
     {
         this->addEntry(qMapKey,
                        dayMaxTempMap.value(qMapKey),
                        dayAvgTempMap.value(qMapKey),
                        dayMinTempMap.value(qMapKey),
-                       true
+                       replace
                        );
     }
 }
@@ -76,23 +81,25 @@ QString Meteo::exportMeteoAsCsv()
     return csv;
 }
 
-QString Meteo::exportMeteoAsCsv2()
+QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
 {
     QString csv;
-    csv.append(QString("id,") +
-               QString("Date,") +
-               QString("Température moyenne,") +
-               QString("Température minimale,") +
-               QString("Température maximale") +
-               QString("\n")
-               );
+    if(true == includeHeaders)
+    {
+        csv.append(QString("Date,") +
+                   QString("Température moyenne,") +
+                   QString("Température minimale,") +
+                   QString("Température maximale") +
+                   QString("\n")
+                   );
+    }
     int i = 0;
     foreach(QString key, this->meteo.keys())
     {
         qDebug() << "date : " << this->meteo.value(key).at(0);
         QDateTime date = QDateTime::fromString(this->meteo.value(key).at(0),"yyyyMMdd");
         QString qsDate = date.toString("yyyy-MM-dd hh:mm:ss");
-        csv.append(QString::number(i) + "," +
+        csv.append(
                    qsDate + "," +
                    this->meteo.value(key).at(2) + "," +
                    this->meteo.value(key).at(1) + "," +

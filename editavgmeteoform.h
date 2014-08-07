@@ -29,6 +29,10 @@ private slots:
 
     void on_editSiteNameTextEdit_textEdited(const QString &arg1);
 
+    void on_EditSiteSaveButton_clicked();
+
+    void on_exportMeteoDataBtn_clicked();
+
 private:
     Ui::editAvgMeteoForm *ui;
     MainWindow* mainWindow;

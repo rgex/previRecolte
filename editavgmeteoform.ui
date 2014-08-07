@@ -188,7 +188,7 @@ QPushButton:disabled {
     <rect>
      <x>400</x>
      <y>60</y>
-     <width>161</width>
+     <width>331</width>
      <height>31</height>
     </rect>
    </property>
@@ -228,12 +228,12 @@ QPushButton: pressed {
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="importMeteoDataBtn_2">
+  <widget class="QPushButton" name="exportMeteoDataBtn">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>20</x>
      <y>60</y>
-     <width>161</width>
+     <width>371</width>
      <height>31</height>
     </rect>
    </property>
@@ -264,7 +264,7 @@ QPushButton: pressed {
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</iconset>
    </property>
    <property name="iconSize">
     <size>

@@ -56,7 +56,7 @@ void editYearMeteoForm::setEditYearChartTitleLabel(QString text)
 void editYearMeteoForm::on_exportYearBtn_clicked()
 {
     Meteo* meteo = this->mainWindow->getMeteo(siteId,year);
-    QString csv = meteo->exportMeteoAsCsv2();
+    QString csv = meteo->exportMeteoAsCsv2(true);
     qDebug() << csv;
     //@TODO fix default export filename
     QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/exportmeteo" + QString::number(meteo->getYear()) + ".csv";
