@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->supprimerImageBtn->setHidden(true);
+    this->hideDatePrevisions();
     this->hideEditVarieteInputs();
     this->sitesSelectionModelIsInitialized = false;
 
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ajouterSiteWebView->page()->setPalette(palette);
     ui->ajouterSiteWebView->setAttribute(Qt::WA_OpaquePaintEvent, false);
     ui->ajouterSiteWebView->setHtml("<br/><br/><br/><br/><br/><br/> <center>Ajoutez un fichier avec des données météo pour faire apparaitre le graphique</center>");
+    ui->previsionsDateEdit->setDate(QDate::currentDate());
 }
 
 void MainWindow::initWindow()
@@ -117,6 +119,22 @@ void MainWindow::on_varietesTabView_currentChanged(int index)
     {
         this->reloadVarieteListView();
     }
+}
+
+void MainWindow::hideDatePrevisions()
+{
+    ui->dateFloraisonLabel->setHidden(true);
+    ui->dateFloraisonLabelInput->setHidden(true);
+    ui->dateRecolteLabel->setHidden(true);
+    ui->dateRecolteLabelInput->setHidden(true);
+}
+
+void MainWindow::showDatePrevisions()
+{
+    ui->dateFloraisonLabel->setHidden(false);
+    ui->dateFloraisonLabelInput->setHidden(false);
+    ui->dateRecolteLabel->setHidden(false);
+    ui->dateRecolteLabelInput->setHidden(false);
 }
 
 void MainWindow::hideEditVarieteInputs()
@@ -568,9 +586,11 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
 {
     if(index == 2) //previsions
     {
+        QString selectedVarieteId = ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toString();
+        QString selectedSiteId = ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toString();
+
         ui->previsionVarieteSelect->clear();
         ui->previsionSiteSelect->clear();
-        ui->previsionsDateEdit->setDate(QDate::currentDate());
 
         QList<Site*> siteList = this->sDbi.getAllSites();
         ui->previsionSiteSelect->addItem("Sélectionnez","0");
@@ -578,6 +598,8 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
         foreach(Site* site, siteList)
         {
             ui->previsionSiteSelect->addItem(site->getNom(), QString::number(site->getId()));
+            if(0 == QString::number(site->getId()).compare(selectedSiteId))
+                ui->previsionSiteSelect->setCurrentIndex(ui->previsionSiteSelect->count() - 1);
         }
 
         QList<VarietesAnanas*> varieteList = this->vDbi.getAllvarietes();
@@ -585,6 +607,8 @@ void MainWindow::on_leftTabWidget_currentChanged(int index)
         foreach(VarietesAnanas* variete, varieteList)
         {
             ui->previsionVarieteSelect->addItem(variete->getNom(), QString::number(variete->getId()));
+            if(0 == QString::number(variete->getId()).compare(selectedVarieteId))
+                ui->previsionVarieteSelect->setCurrentIndex(ui->previsionVarieteSelect->count() - 1);
         }
     }
 }
@@ -632,6 +656,8 @@ void MainWindow::displayEditMeteo(int siteId, int year)
 
 void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
 {
+    QString selectedModelId = ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString();
+
     qDebug() << "new index" << index;
     QString QsSiteId = ui->previsionSiteSelect->itemData(index).toString();
     qDebug() << "siteId :" << QsSiteId.toInt();
@@ -680,6 +706,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
     {
         QMessageBox msgBox;
         msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner si la date correspond à la floraison ou au TIF."));
+        return ;
     }
 
 
@@ -691,7 +718,6 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
         QList<QMap<QString, QStringList> > finalTmpAvg;
         QMap<QString, QStringList> avgOfTempYears;
-
         QString modelYear;
 
         foreach(QString year, years)
@@ -718,14 +744,15 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
         //TODO calculate avg temp of map
 
+        float tmpFloraison = variete->getTFloraison();
+        float tmpSum = 0;
+        int exactValues = 0;
+        int prognosedValues = 0;
+        float tBase = variete->getTBase1();
+        float tmpRecolte = variete->getTRecolte();
+
         if(ui->tifRadioBtn->isChecked())
         {
-            //floraison
-            float tmpFloraison = variete->getTFloraison();
-            float tmpSum = 0;
-            int exactValues = 0;
-            int prognosedValues = 0;
-            float tBase = variete->getTBase1();
 
             while(tmpFloraison > tmpSum)
             {
@@ -754,8 +781,15 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                     }
                     else
                     {
-                        //@TODO display red alert message showing that data is missing.
-                        //@TODO add average temperature.a
+                        QString errorMsg;
+                        if(0 == modelYear.compare("0001"))
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
+                        else
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYear);
+                        QMessageBox msgBox;
+                        msgBox.warning(this, QString("Erreur"), errorMsg);
+                        this->hideDatePrevisions();
+                        return;
                     }
                 }
                 selectedDate = selectedDate.addDays(1);
@@ -764,10 +798,9 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             qDebug() << "date de floraison :" << selectedDate.toString("yyyy-MM-dd");
             qDebug() << "exact values :" << exactValues;
             qDebug() << "prognosed values :" << prognosedValues;
-            ui->dateFloraisonLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
+            ui->dateFloraisonLabelInput->setText(selectedDate.toString("d MMMM yyyy"));
 
             //récolte
-            float tmpRecolte = variete->getTRecolte();
             tmpSum = 0;
             exactValues = 0;
             prognosedValues = 0;
@@ -800,8 +833,15 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                     }
                     else
                     {
-                        //@TODO display red alert message showing that data is missing.
-                        //@TODO add average temperature.
+                        QString errorMsg;
+                        if(0 == modelYear.compare("0001"))
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
+                        else
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYear);
+                        QMessageBox msgBox;
+                        msgBox.warning(this, QString("Erreur"), errorMsg);
+                        this->hideDatePrevisions();
+                        return;
                     }
                 }
                 selectedDate = selectedDate.addDays(1);
@@ -809,12 +849,60 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             qDebug() << "date de récolte :" << selectedDate.toString("yyyy-MM-dd");
             qDebug() << "exact values :" << exactValues;
             qDebug() << "prognosed values :" << prognosedValues;
-            ui->dateRecolteLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
+            ui->dateRecolteLabelInput->setText(selectedDate.toString("d MMMM yyyy"));
 
+            this->showDatePrevisions();
         }
-        else if(ui->tifRadioBtn->isChecked())
+        else if(ui->floraisonRadioBtn->isChecked())
         {
 
+            while(tmpRecolte > tmpSum)
+            {
+                bool foundExactTemp = false; //if we find a temperature record for that day we use it.
+                QMap<QString, QStringList> mapListAllYears;
+                foreach(mapListAllYears, finalTmpAvg)
+                {
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
+                    {
+                        tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
+                        exactValues++;
+                        foundExactTemp = true;
+                    }
+                }
+
+                if(foundExactTemp == false)
+                {
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    {
+                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        if(tempList.size() > 1)
+                        {
+                            tmpSum += tempList.at(1).toFloat() - tBase;
+                            prognosedValues++;
+                        }
+                    }
+                    else
+                    {
+                        QString errorMsg;
+                        if(0 == modelYear.compare("0001"))
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
+                        else
+                            errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYear);
+                        QMessageBox msgBox;
+                        msgBox.warning(this, QString("Erreur"), errorMsg);
+                        this->hideDatePrevisions();
+                        return;
+                    }
+                }
+                selectedDate = selectedDate.addDays(1);
+            }
+            qDebug() << "date de récolte :" << selectedDate.toString("yyyy-MM-dd");
+            qDebug() << "exact values :" << exactValues;
+            qDebug() << "prognosed values :" << prognosedValues;
+            ui->dateRecolteLabelInput->setText(selectedDate.toString("d MMMM yyyy"));
+            this->showDatePrevisions();
+            ui->dateFloraisonLabel->setHidden(true);
+            ui->dateFloraisonLabelInput->setHidden(true);
         }
 
 

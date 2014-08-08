@@ -30,6 +30,8 @@ public:
     void initWindow();
     void emptyAjouterUneVarieteFields();
     void refreshSitesTreeView();
+    void hideDatePrevisions();
+    void showDatePrevisions();
     void hideEditVarieteInputs();
     void showEditVarieteInputs();
     void deleteYearFromSite(int siteId, int year);

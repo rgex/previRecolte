@@ -87,9 +87,9 @@ QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
     if(true == includeHeaders)
     {
         csv.append(QString("Date,") +
-                   QString("Température moyenne,") +
-                   QString("Température minimale,") +
-                   QString("Température maximale") +
+                   QString("Températures moyenne,") +
+                   QString("Températures minimale,") +
+                   QString("Températures maximale") +
                    QString("\n")
                    );
     }
@@ -101,9 +101,9 @@ QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
         QString qsDate = date.toString("yyyy-MM-dd hh:mm:ss");
         csv.append(
                    qsDate + "," +
-                   this->meteo.value(key).at(2) + "," +
-                   this->meteo.value(key).at(1) + "," +
-                   this->meteo.value(key).at(3) + "\n");
+                   QString::number(this->meteo.value(key).at(2).toFloat(), 'f', 3) + "," +
+                   QString::number(this->meteo.value(key).at(1).toFloat(), 'f', 3) + "," +
+                   QString::number(this->meteo.value(key).at(3).toFloat(), 'f', 3) + "\n");
         i++;
     }
     return csv;
