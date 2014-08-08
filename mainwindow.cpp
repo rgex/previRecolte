@@ -283,6 +283,11 @@ void MainWindow::reloadVarieteListView()
     //reload varietesTabView
     QList<VarietesAnanas*> varieteList = this->vDbi.getAllvarietes();
 
+    //get current selected if there is one.
+    int currentSelectedItem = 0;
+    if(false == ui->editVarieteKeyLabel->text().isEmpty())
+        currentSelectedItem = ui->editVarieteKeyLabel->text().toInt();
+
     foreach(VarietesAnanas *variete, varieteList)
     {
         QListWidgetItem *item = new QListWidgetItem();
@@ -291,6 +296,8 @@ void MainWindow::reloadVarieteListView()
         qDebug() << "Saved data : " << item->data(10000);
         qDebug() << "Variete nom : " << variete->getNom();
         ui->varietesListWidget->addItem(item);
+        if(currentSelectedItem == variete->getId())
+            ui->varietesListWidget->setCurrentItem(item);
     }
 }
 
@@ -660,9 +667,9 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
     if(0 == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString().compare("-1"))
     {
         HtmlChartMaker htmlChartMaker;
+        VarietesAnanas* variete = this->vDbi.getVarieteWithId(ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toInt());
 
         Site* site = this->sDbi.getSite(ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toInt());
-
         QStringList years = site->getYears();
 
         QList<QMap<QString, QStringList> > finalTmpAvg;
@@ -675,8 +682,69 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         }
 
         QMap<QString, QStringList> avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
-
         QDateTime selectedDate = ui->previsionsDateEdit->dateTime();
+
+        //TODO calculate avg temp of map
+
+        if(ui->tifRadioBtn->isChecked())
+        {
+            //floraison
+            float tmpFloraison = variete->getTFloraison();
+            float tmpSum = 0;
+            float tBase = variete->getTBase1();
+
+            while(tmpFloraison > tmpSum)
+            {
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")))
+                {
+                    QStringList tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
+                    if(tempList.size() > 1)
+                    {
+                        tmpSum += tempList.at(1).toFloat() - tBase;
+                    }
+                }
+                else
+                {
+                    //@TODO display red alert message showing that data is missing.
+                    //@TODO add average temperature.a
+                }
+                selectedDate = selectedDate.addDays(1);
+            }
+            qDebug() << "date de floraison :" << selectedDate.toString("yyyy-MM-dd");
+            ui->dateFloraisonLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
+
+            //récolte
+            float tmpRecolte = variete->getTRecolte();
+            tmpSum = 0;
+            tBase = variete->getTBase2();
+
+            while(tmpRecolte > tmpSum)
+            {
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")))
+                {
+                    QStringList tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
+                    if(tempList.size() > 1)
+                    {
+                        tmpSum += tempList.at(1).toFloat() - tBase;
+                    }
+                }
+                else
+                {
+                    //@TODO display red alert message showing that data is missing.
+                    //@TODO add average temperature.
+                }
+                selectedDate = selectedDate.addDays(1);
+            }
+            qDebug() << "date de récolte :" << selectedDate.toString("yyyy-MM-dd");
+            ui->dateRecolteLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
+
+        }
+        else if(ui->tifRadioBtn->isChecked())
+        {
+
+        }
+
+
 
     }
 }
