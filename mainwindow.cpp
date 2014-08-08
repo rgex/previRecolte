@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->supprimerImageBtn->setHidden(true);
     this->hideEditVarieteInputs();
+    this->sitesSelectionModelIsInitialized = false;
 
     //set the webView background to transparent
     QPalette palette = ui->ajouterSiteWebView->palette();
@@ -458,6 +459,7 @@ void MainWindow::refreshSitesTreeView()
         item->setData(QString::number(site->getId()),10000); //set key
         item->setData(0,10001); //set year (0) is equivalent for no year
         item->setData(site->getYearsCsv(),10002); //set years CSV
+
         foreach (QString year, yearList)
         {
             if(0 != year.toInt())
@@ -472,7 +474,23 @@ void MainWindow::refreshSitesTreeView()
         }
         model->appendRow(item);
     }
-    ui->sitesTreeView->setModel(model);
+    if(false == this->sitesSelectionModelIsInitialized)
+    {
+        /*
+        this->sitesSelectionModel = new QItemSelectionModel(model);
+        this->sitesSelectionModel->selectedRows()
+        this->sitesSelectionModelIsInitialized = true;
+        */
+
+        ui->sitesTreeView->setModel(model);
+        //ui->sitesTreeView->setSelectionModel(this->sitesSelectionModel);
+    }
+    else
+    {
+        this->sitesSelectionModel = ui->sitesTreeView->selectionModel();
+    }
+
+    //ui->sitesTreeView->setSelectionModel();
 }
 
 void MainWindow::on_sitesTabWidget_currentChanged(int index)
@@ -631,7 +649,7 @@ void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
         }
         foreach(Meteo* meteo, meteoList)
         {
-            ui->previsionModelSelect->addItem(QString::number(meteo->getYear()), meteo->getId());
+            ui->previsionModelSelect->addItem(QString::number(meteo->getYear()), meteo->getYear());
         }
     }
 }
@@ -664,8 +682,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner si la date correspond à la floraison ou au TIF."));
     }
 
-    if(0 == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString().compare("-1"))
-    {
+
         HtmlChartMaker htmlChartMaker;
         VarietesAnanas* variete = this->vDbi.getVarieteWithId(ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toInt());
 
@@ -673,6 +690,9 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         QStringList years = site->getYears();
 
         QList<QMap<QString, QStringList> > finalTmpAvg;
+        QMap<QString, QStringList> avgOfTempYears;
+
+        QString modelYear;
 
         foreach(QString year, years)
         {
@@ -681,7 +701,19 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             finalTmpAvg.append(meteo->getMeteo());
         }
 
-        QMap<QString, QStringList> avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
+        if(0 == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString().compare("-1"))
+        {
+
+            avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
+            modelYear = "0001";
+        }
+        else
+        {
+            modelYear = ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString();
+            Meteo* meteo = this->mDbi.getMeteo(site->getId(), modelYear.toInt());
+            avgOfTempYears = meteo->getMeteo();
+        }
+
         QDateTime selectedDate = ui->previsionsDateEdit->dateTime();
 
         //TODO calculate avg temp of map
@@ -691,51 +723,92 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             //floraison
             float tmpFloraison = variete->getTFloraison();
             float tmpSum = 0;
+            int exactValues = 0;
+            int prognosedValues = 0;
             float tBase = variete->getTBase1();
 
             while(tmpFloraison > tmpSum)
             {
-                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")))
+                bool foundExactTemp = false; //if we find a temperature record for that day we use it.
+                QMap<QString, QStringList> mapListAllYears;
+                foreach(mapListAllYears, finalTmpAvg)
                 {
-                    QStringList tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
-                    if(tempList.size() > 1)
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
                     {
-                        tmpSum += tempList.at(1).toFloat() - tBase;
+                        tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
+                        exactValues++;
+                        foundExactTemp = true;
                     }
                 }
-                else
+
+                if(foundExactTemp == false)
                 {
-                    //@TODO display red alert message showing that data is missing.
-                    //@TODO add average temperature.a
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    {
+                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        if(tempList.size() > 1)
+                        {
+                            tmpSum += tempList.at(1).toFloat() - tBase;
+                            prognosedValues++;
+                        }
+                    }
+                    else
+                    {
+                        //@TODO display red alert message showing that data is missing.
+                        //@TODO add average temperature.a
+                    }
                 }
                 selectedDate = selectedDate.addDays(1);
             }
+
             qDebug() << "date de floraison :" << selectedDate.toString("yyyy-MM-dd");
+            qDebug() << "exact values :" << exactValues;
+            qDebug() << "prognosed values :" << prognosedValues;
             ui->dateFloraisonLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
 
             //récolte
             float tmpRecolte = variete->getTRecolte();
             tmpSum = 0;
+            exactValues = 0;
+            prognosedValues = 0;
             tBase = variete->getTBase2();
 
             while(tmpRecolte > tmpSum)
             {
-                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")))
+                bool foundExactTemp = false; //if we find a temperature record for that day we use it.
+                QMap<QString, QStringList> mapListAllYears;
+                foreach(mapListAllYears, finalTmpAvg)
                 {
-                    QStringList tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
-                    if(tempList.size() > 1)
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
                     {
-                        tmpSum += tempList.at(1).toFloat() - tBase;
+                        tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
+                        exactValues++;
+                        foundExactTemp = true;
                     }
                 }
-                else
+
+                if(foundExactTemp == false)
                 {
-                    //@TODO display red alert message showing that data is missing.
-                    //@TODO add average temperature.
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    {
+                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        if(tempList.size() > 1)
+                        {
+                            tmpSum += tempList.at(1).toFloat() - tBase;
+                            prognosedValues++;
+                        }
+                    }
+                    else
+                    {
+                        //@TODO display red alert message showing that data is missing.
+                        //@TODO add average temperature.
+                    }
                 }
                 selectedDate = selectedDate.addDays(1);
             }
             qDebug() << "date de récolte :" << selectedDate.toString("yyyy-MM-dd");
+            qDebug() << "exact values :" << exactValues;
+            qDebug() << "prognosed values :" << prognosedValues;
             ui->dateRecolteLabelInput->setText(selectedDate.toString("dd MMMM yyyy"));
 
         }
@@ -745,6 +818,4 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         }
 
 
-
-    }
 }

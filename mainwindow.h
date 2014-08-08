@@ -6,7 +6,7 @@
 #include "varietedatabaseinterface.h"
 #include "sitesdatabaseinterface.h"
 #include "meteodatabaseinterface.h"
-
+#include <QItemSelectionModel>
 
 namespace Ui {
 class MainWindow;
@@ -71,6 +71,8 @@ private:
     SitesDatabaseInterface sDbi;
     MeteoDatabaseInterface mDbi;
     QList<QStringList> importTempList;
+    QItemSelectionModel* sitesSelectionModel;
+    bool sitesSelectionModelIsInitialized;
 
 };
 
