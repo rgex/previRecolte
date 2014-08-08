@@ -73,7 +73,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>
@@ -949,7 +949,7 @@ QPushButton:pressed {
         <item row="1" column="0">
          <widget class="QTabWidget" name="sitesTabWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="iconSize">
            <size>

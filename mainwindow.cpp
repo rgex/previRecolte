@@ -678,6 +678,8 @@ void MainWindow::on_previsionSiteSelect_currentIndexChanged(int index)
             ui->previsionModelSelect->addItem(QString::number(meteo->getYear()), meteo->getYear());
         }
     }
+
+    //ui->previsionsDateEdit->da
 }
 
 void MainWindow::on_calculateDateRecolteBtn_clicked()
