@@ -38,6 +38,8 @@ public:
     void deleteSite(int siteId);
     Meteo* getMeteo(int siteId,int year);
     void displayEditMeteo(int siteId, int year);
+    void updateSiteScrollArea(int siteId, int year,QString yearsCsv);
+    void loadSiteScrollArea(int siteId, int year);
 
 private slots:
     void on_ajouterVarieteBtn_clicked();
@@ -59,9 +61,7 @@ private slots:
     void on_sitesTreeView_pressed(const QModelIndex &index);
     void on_EditSiteSaveButton_clicked();
     void on_leftTabWidget_currentChanged(int index);
-
     void on_previsionSiteSelect_currentIndexChanged(int index);
-
     void on_calculateDateRecolteBtn_clicked();
 
 private:

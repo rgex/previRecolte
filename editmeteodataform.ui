@@ -125,11 +125,11 @@ QPushButton:pressed {
 }</string>
    </property>
    <property name="text">
-    <string>Annuler</string>
+    <string>Retour</string>
    </property>
    <property name="icon">
     <iconset resource="projectRessources.qrc">
-     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.close.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.close.png</iconset>
+     <normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.navigate.previous.png</normaloff>:/icons/white/WindowsIcons-master/WindowsPhone/dark/appbar.navigate.previous.png</iconset>
    </property>
   </widget>
  </widget>

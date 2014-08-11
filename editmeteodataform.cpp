@@ -120,5 +120,11 @@ void editMeteoDataForm::on_saveBtn_clicked()
 
 void editMeteoDataForm::on_cancelBtn_clicked()
 {
-
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirmation", "Êtes-vous sûr de vouloir quitter, toutes les modifications non enregistrés seront perdues?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+        this->mainWindow->loadSiteScrollArea(this->siteId, this->year);
+    }
 }

@@ -11,6 +11,7 @@
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.acorn.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</file>
+        <file>WindowsIcons-master/WindowsPhone/dark/appbar.navigate.previous.png</file>
     </qresource>
     <qresource prefix="/icons/black">
         <file>WindowsIcons-master/WindowsPhone/light/appbar.edit.png</file>

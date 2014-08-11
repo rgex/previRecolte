@@ -573,6 +573,23 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
     }
 }
 
+void MainWindow::loadSiteScrollArea(int siteId, int year)
+{
+    qDebug() << "loadSiteScrollArea";
+    editYearMeteoForm* uiEditYearMeteo = new editYearMeteoForm();
+    uiEditYearMeteo->setMainWindowPointer(this);
+    uiEditYearMeteo->setSiteId(siteId);
+    uiEditYearMeteo->setYear(year);
+    uiEditYearMeteo->setEditYearChartTitleLabel("Température moyenne pour l'année " + QString::number(year));
+    ui->EditSiteScrollArea->setWidget(uiEditYearMeteo);
+
+    HtmlChartMaker htmlChartMaker;
+    Meteo* meteo = this->mDbi.getMeteo(siteId, year);
+
+    QString html = htmlChartMaker.generateHtmlChartWithMap(meteo->getMeteo(), year, true);
+    uiEditYearMeteo->setWebViewHtml(html);
+}
+
 void MainWindow::on_sitesTreeView_pressed(const QModelIndex &index)
 {
     //qDebug() << "pressed : " << index;
@@ -695,12 +712,14 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
     {
         QMessageBox msgBox;
         msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner une variété"));
+        return ;
     }
     else if(true == ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).isNull()
             || 0 == ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toString().compare(QString("0")))
     {
         QMessageBox msgBox;
         msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner un site"));
+        return ;
     }
 
     else if(true == ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).isNull()
@@ -708,6 +727,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
     {
         QMessageBox msgBox;
         msgBox.warning(this, QString("Erreur"), QString("Vous devez sélectionner un modèle de prévision"));
+        return ;
     }
     else if(false == ui->tifRadioBtn->isChecked() && false == ui->floraisonRadioBtn->isChecked())
     {
