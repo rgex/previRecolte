@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1456,11 +1456,6 @@ QPushButton:disabled {
              <string>Traitement d'Induction Florale</string>
             </property>
            </widget>
-           <zorder>previsionsDateEdit</zorder>
-           <zorder>floraisonRadioBtn</zorder>
-           <zorder>tifRadioBtn</zorder>
-           <zorder>previsionSiteSelect</zorder>
-           <zorder>label_11</zorder>
           </widget>
           <widget class="QPushButton" name="calculateDateRecolteBtn">
            <property name="geometry">

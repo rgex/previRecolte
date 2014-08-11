@@ -23,9 +23,7 @@ public:
 
 private slots:
     void on_editDeleteYearButton_clicked();
-
     void on_exportYearBtn_clicked();
-
     void on_editYearDataBtn_clicked();
 
 private:

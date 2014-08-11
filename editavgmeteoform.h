@@ -26,11 +26,8 @@ public:
 private slots:
     void on_editDeleteSiteButton_clicked();
     void on_importMeteoDataBtn_clicked();
-
     void on_editSiteNameTextEdit_textEdited(const QString &arg1);
-
     void on_EditSiteSaveButton_clicked();
-
     void on_exportMeteoDataBtn_clicked();
 
 private:

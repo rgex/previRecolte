@@ -458,6 +458,7 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
         msgBox.warning(this, QString("Succès"), QString("Le site a été ajouté à la base de données."));
         ui->ajouterSiteNomInput->setText("");
         ui->ajouterSiteMeteoFilePath->setText("");
+        ui->ajouterSiteWebView->setHtml("<br/><br/><br/><br/><br/><br/> <center>Ajoutez un fichier avec des données météo pour faire apparaitre le graphique</center>");
     }
 }
 
@@ -651,6 +652,10 @@ Meteo* MainWindow::getMeteo(int siteId,int year)
 void MainWindow::displayEditMeteo(int siteId, int year)
 {
     editMeteoDataForm* uiEditMeteoDataForm = new editMeteoDataForm();
+    uiEditMeteoDataForm->setMainWindowPointer(this);
+    uiEditMeteoDataForm->setId(siteId);
+    uiEditMeteoDataForm->setYear(year);
+    uiEditMeteoDataForm->displayTable();
     ui->EditSiteScrollArea->setWidget(uiEditMeteoDataForm);
 }
 
@@ -762,7 +767,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                 QMap<QString, QStringList> mapListAllYears;
                 foreach(mapListAllYears, finalTmpAvg)
                 {
-                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() > 0)
                     {
                         tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
                         exactValues++;
@@ -814,7 +819,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                 QMap<QString, QStringList> mapListAllYears;
                 foreach(mapListAllYears, finalTmpAvg)
                 {
-                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() > 0)
                     {
                         tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
                         exactValues++;
@@ -864,7 +869,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                 QMap<QString, QStringList> mapListAllYears;
                 foreach(mapListAllYears, finalTmpAvg)
                 {
-                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")))
+                    if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() > 0)
                     {
                         tmpSum += mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(1).toFloat() - tBase;
                         exactValues++;

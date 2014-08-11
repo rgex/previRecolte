@@ -119,11 +119,14 @@ void Meteo::importMeteoFromCsv(QString meteoCsv)
          QStringList meteoElements = meteo.split(",");
          if(meteoElements.size()> 3)
          {
-             this->addEntry(meteoElements.at(0),
-                            meteoElements.at(1).toFloat(),
-                            meteoElements.at(2).toFloat(),
-                            meteoElements.at(3).toFloat(),
-                            true);
+             if(meteoElements.at(1).toFloat() > 0 && meteoElements.at(2).toFloat() > 0 && meteoElements.at(3).toFloat() > 0)
+             {
+                 this->addEntry(meteoElements.at(0),
+                                meteoElements.at(1).toFloat(),
+                                meteoElements.at(2).toFloat(),
+                                meteoElements.at(3).toFloat(),
+                                true);
+            }
          }
      }
 

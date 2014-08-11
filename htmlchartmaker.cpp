@@ -45,7 +45,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
         {
             if(temperatures.size() > 0)
             {
-                if(!yearsList.contains(temperatures.at(0).mid(0, 4)))
+                if(false == yearsList.contains(temperatures.at(0).mid(0, 4)))
                 {
                     yearsList.append(temperatures.at(0).mid(0, 4));
                 }
@@ -77,7 +77,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
                 if(true == tempsMap.contains(qDate0.toString(year + qDate0.toString("MMdd"))))
                 {
                     QStringList tmpList = tempsMap.value(qDate0.toString(year + qDate0.toString("MMdd")));
-                    if(tmpList.size() >= 4)
+                    if(tmpList.size() >= 4 && tmpList.at(1).toFloat() > 0 && tmpList.at(2).toFloat() > 0 && tmpList.at(3).toFloat() > 0)
                     {
                         tempsAvgSum += tmpList.at(1).toFloat();
                         tempsMinSum += tmpList.at(2).toFloat();
@@ -88,6 +88,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             }
 
         }
+
         if(tempsCount > 0)
         {
             avgTempAvg = tempsAvgSum / (float)tempsCount;

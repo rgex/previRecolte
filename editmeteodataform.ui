@@ -34,11 +34,20 @@
      <height>451</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="French" country="France"/>
+   </property>
    <property name="verticalScrollBarPolicy">
     <enum>Qt::ScrollBarAlwaysOn</enum>
    </property>
    <property name="editTriggers">
     <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::SingleSelection</enum>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectItems</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="saveBtn">
