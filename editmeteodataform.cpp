@@ -68,7 +68,12 @@ void editMeteoDataForm::displayTable()
     ui->editMeteoTableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem(QString("T° minimale")));
     ui->editMeteoTableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem(QString("T° maximale")));
 
-    QDateTime date = QDateTime::fromString(QString::number(this->year)+"0101","yyyyMMdd");
+    ui->editMeteoTableWidget->setColumnWidth(0, 150);
+    ui->editMeteoTableWidget->setColumnWidth(1, 150);
+    ui->editMeteoTableWidget->setColumnWidth(2, 150);
+    ui->editMeteoTableWidget->setColumnWidth(3, 150);
+
+    QDateTime date = QDateTime::fromString(QString::number(this->year) + "0101", "yyyyMMdd");
     int i = 0;
     while(date.toString("yyyy").toInt() == this->year)
     {
