@@ -55,3 +55,5 @@ unix: LIBS += -lsqlite3
 RESOURCES += \
     projectRessources.qrc
 
+RC_FILE = icon.rc
+

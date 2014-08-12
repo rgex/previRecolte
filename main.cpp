@@ -14,6 +14,20 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::addLibraryPath("./");
 
+    QApplication a(argc, argv);
+    QPixmap pixmap(":/images/splash.jpg");
+    QSplashScreen splash(pixmap);
+    splash.show();
+    splash.showMessage("Chargement de l'application", Qt::AlignLeft, Qt::white);
+    #ifdef Q_OS_WIN
+        QThread::msleep(800);
+    #else
+        int ms = 800;
+        struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
+        nanosleep(&ts, NULL);
+    #endif
+    a.processEvents();
+
     //on launch create application folder to store images and databases
     //QString appStoragePath = QDir::homePath() + "/sql-ananas-cirad";
     QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
@@ -79,14 +93,6 @@ int main(int argc, char *argv[])
     }
     db.commit();
     db.close();
-
-    QApplication a(argc, argv);
-    QPixmap pixmap(":/images/splash.jpg");
-    QSplashScreen splash(pixmap);
-    splash.show();
-
-    splash.showMessage("Chargement de l'application");
-    a.processEvents();
 
     MainWindow w;
     w.setAppStoragePath(appStoragePath);
