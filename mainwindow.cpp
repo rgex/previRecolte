@@ -797,9 +797,14 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
                 if(foundExactTemp == false)
                 {
-                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                     {
-                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        QStringList tempList;
+                        if(0 == selectedDate.toString("MMdd").compare("0229"))
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("0228"));
+                        else
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+
                         if(tempList.size() > 1)
                         {
                             tmpSum += tempList.at(1).toFloat() - tBase;
@@ -849,9 +854,13 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
                 if(foundExactTemp == false)
                 {
-                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                     {
-                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        QStringList tempList;
+                        if(0 == selectedDate.toString("MMdd").compare("0229"))
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("0228"));
+                        else
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
                         if(tempList.size() > 1)
                         {
                             tmpSum += tempList.at(1).toFloat() - tBase;
@@ -899,9 +908,13 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
                 if(foundExactTemp == false)
                 {
-                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")))
+                    if(avgOfTempYears.contains(modelYear + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                     {
-                        QStringList tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
+                        QStringList tempList;
+                        if(0 == selectedDate.toString("MMdd").compare("0229"))
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("0228"));
+                        else
+                            tempList = avgOfTempYears.value(modelYear + selectedDate.toString("MMdd"));
                         if(tempList.size() > 1)
                         {
                             tmpSum += tempList.at(1).toFloat() - tBase;
@@ -910,6 +923,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
                     }
                     else
                     {
+                        qDebug() << selectedDate.toString("MMdd");
                         QString errorMsg;
                         if(0 == modelYear.compare("0001"))
                             errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
