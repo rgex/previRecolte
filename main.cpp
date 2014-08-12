@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     QSplashScreen splash(pixmap);
     splash.show();
     splash.showMessage("Chargement de l'application", Qt::AlignLeft, Qt::white);
+
     #ifdef Q_OS_WIN
         QThread::msleep(800);
     #else
@@ -33,7 +34,12 @@ int main(int argc, char *argv[])
     QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
     QString databasePath = appStoragePath + "/ananas.db";
 
-    QDir().mkdir(appStoragePath); //create app folder
+    #ifdef Q_OS_WIN
+        QDir().mkdir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)); //create app folder
+    #endif
+
+    QDir().mkdir(appStoragePath); //create data folder
+
     qDebug() << "created folder : " + appStoragePath;
     QString imageStoragePath = appStoragePath + "/images";
     QDir().mkdir(imageStoragePath); //create image folder
