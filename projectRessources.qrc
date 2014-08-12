@@ -17,4 +17,7 @@
         <file>WindowsIcons-master/WindowsPhone/light/appbar.edit.png</file>
         <file>WindowsIcons-master/WindowsPhone/light/appbar.add.png</file>
     </qresource>
+    <qresource prefix="/html">
+        <file alias="aide.html">html/documentationAnanasSqlite.html</file>
+    </qresource>
 </RCC>

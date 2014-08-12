@@ -22,6 +22,7 @@
 #include "edityearmeteoform.h"
 #include "editmeteodataform.h"
 #include "importcsv.h"
+#include "helpform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -946,5 +947,14 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             ui->dateFloraisonLabelInput->setHidden(true);
         }
 
+
+}
+
+void MainWindow::on_actionAide_triggered()
+{
+    HelpForm *helpForm = new HelpForm();
+    helpForm->show();
+    helpForm->raise();
+    helpForm->activateWindow();
 
 }

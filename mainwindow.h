@@ -64,6 +64,8 @@ private slots:
     void on_previsionSiteSelect_currentIndexChanged(int index);
     void on_calculateDateRecolteBtn_clicked();
 
+    void on_actionAide_triggered();
+
 private:
     Ui::MainWindow *ui;
     QString appStoragePath;
