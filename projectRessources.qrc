@@ -8,7 +8,7 @@
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.add.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.page.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.edit.png</file>
-        <file>WindowsIcons-master/WindowsPhone/dark/appbar.acorn.png</file>
+        <file alias="images">WindowsIcons-master/WindowsPhone/dark/appbar.acorn.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.in.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.cabinet.out.png</file>
         <file>WindowsIcons-master/WindowsPhone/dark/appbar.navigate.previous.png</file>
@@ -19,5 +19,8 @@
     </qresource>
     <qresource prefix="/html">
         <file alias="aide.html">html/documentationAnanasSqlite.html</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="splash.jpg">images/splash.jpg</file>
     </qresource>
 </RCC>

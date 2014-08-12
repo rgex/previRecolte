@@ -6,11 +6,14 @@
 #include <iostream>
 #include <string>
 #include <QtSql/QtSql>
+#include <QSplashScreen>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::addLibraryPath("./");
+
     //on launch create application folder to store images and databases
     //QString appStoragePath = QDir::homePath() + "/sql-ananas-cirad";
     QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
@@ -78,6 +81,12 @@ int main(int argc, char *argv[])
     db.close();
 
     QApplication a(argc, argv);
+    QPixmap pixmap(":/images/splash.jpg");
+    QSplashScreen splash(pixmap);
+    splash.show();
+
+    splash.showMessage("Chargement de l'application");
+    a.processEvents();
 
     MainWindow w;
     w.setAppStoragePath(appStoragePath);
@@ -85,6 +94,6 @@ int main(int argc, char *argv[])
     w.setDbPath(databasePath);
     w.initWindow();
     w.show();
-
+    splash.close();
     return a.exec();
 }
