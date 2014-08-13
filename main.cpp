@@ -34,10 +34,8 @@ int main(int argc, char *argv[])
     QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
     QString databasePath = appStoragePath + "/ananas.db";
 
-    #ifdef Q_OS_WIN
-        QDir().mkdir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)); //create app folder
-    #endif
 
+    QDir().mkdir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)); //create app folder
     QDir().mkdir(appStoragePath); //create data folder
 
     qDebug() << "created folder : " + appStoragePath;

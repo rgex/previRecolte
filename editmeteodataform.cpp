@@ -108,8 +108,8 @@ void editMeteoDataForm::on_saveBtn_clicked()
     {
         QDate qDate = QDate::fromString(ui->editMeteoTableWidget->item(i, 0)->text(), "yyyy-MM-dd");
         float avgTemp = ui->editMeteoTableWidget->item(i, 1)->text().toFloat();
-        float minTemp = ui->editMeteoTableWidget->item(i, 2)->text().toFloat();
-        float maxTemp = ui->editMeteoTableWidget->item(i, 3)->text().toFloat();
+        float minTemp = ui->editMeteoTableWidget->item(i, 3)->text().toFloat();
+        float maxTemp = ui->editMeteoTableWidget->item(i, 2)->text().toFloat();
         meteo->addEntry(qDate.toString("yyyyMMdd"), maxTemp, avgTemp, minTemp, true);
     }
     meteoDatabaseInterface->saveMeteo(meteo);

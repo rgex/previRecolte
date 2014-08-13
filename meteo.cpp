@@ -26,7 +26,7 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
     foreach(QString key, this->meteo.keys())
     {
         QStringList meteoStringList = this->meteo.value(key);
-        if(true == meteoStringList.at(0).compare(date) && false == replace)
+        if((true == meteoStringList.at(0).compare(date) || meteoStringList.at(1).compare("0") == 0) && false == replace)
         {
             return;
         }
