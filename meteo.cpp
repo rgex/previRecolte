@@ -73,10 +73,13 @@ QString Meteo::exportMeteoAsCsv()
     QString csv;
     foreach(QString key, this->meteo.keys())
     {
-        csv.append(this->meteo.value(key).at(0) + "," +
-                   this->meteo.value(key).at(1) + "," +
-                   this->meteo.value(key).at(2) + "," +
-                   this->meteo.value(key).at(3) + ";");
+        if(this->meteo.value(key).count() == 4)
+        {
+            csv.append(this->meteo.value(key).at(0) + "," +
+                       this->meteo.value(key).at(1) + "," +
+                       this->meteo.value(key).at(2) + "," +
+                       this->meteo.value(key).at(3) + ";");
+        }
     }
     return csv;
 }
@@ -89,7 +92,8 @@ QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
         csv.append(QString("Date,") +
                    QString("Températures moyenne,") +
                    QString("Températures minimale,") +
-                   QString("Températures maximale") +
+                   QString("Températures maximale,") +
+                   QString("Pluviométrie") +
                    QString("\n")
                    );
     }
@@ -99,12 +103,30 @@ QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
         qDebug() << "date : " << this->meteo.value(key).at(0);
         QDateTime date = QDateTime::fromString(this->meteo.value(key).at(0),"yyyyMMdd");
         QString qsDate = date.toString("yyyy-MM-dd hh:mm:ss");
-        csv.append(
-                   qsDate + "," +
-                   QString::number(this->meteo.value(key).at(2).toFloat(), 'f', 3) + "," +
-                   QString::number(this->meteo.value(key).at(1).toFloat(), 'f', 3) + "," +
-                   QString::number(this->meteo.value(key).at(3).toFloat(), 'f', 3) + "\n");
-        i++;
+
+        if(this->meteo.value(key).count() == 4) //pas de pluviométrie
+        {
+            csv.append(
+                       qsDate + "," +
+                       QString::number(this->meteo.value(key).at(2).toFloat(), 'f', 3) + "," +
+                       QString::number(this->meteo.value(key).at(1).toFloat(), 'f', 3) + "," +
+                       QString::number(this->meteo.value(key).at(3).toFloat(), 'f', 3) + "," +
+                       ""  + "\n"
+                       );
+            i++;
+        }
+
+        if(this->meteo.value(key).count() == 5) //avec pluviométrie
+        {
+            csv.append(
+                       qsDate + "," +
+                       QString::number(this->meteo.value(key).at(2).toFloat(), 'f', 3) + "," +
+                       QString::number(this->meteo.value(key).at(1).toFloat(), 'f', 3) + "," +
+                       QString::number(this->meteo.value(key).at(3).toFloat(), 'f', 3) + "," +
+                       QString::number(this->meteo.value(key).at(4).toFloat(), 'f', 2) + "\n"
+                       );
+            i++;
+        }
     }
     return csv;
 }

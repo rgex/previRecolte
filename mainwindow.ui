@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1325,6 +1325,11 @@ QPushButton:disabled {
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_7">
+       <attribute name="title">
+        <string>Intervalles</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
         <string>Prévisions</string>
@@ -1353,121 +1358,100 @@ QPushButton:disabled {
         </item>
         <item>
          <widget class="QWidget" name="widget" native="true">
-          <widget class="QComboBox" name="previsionSiteSelect">
-           <property name="geometry">
-            <rect>
-             <x>200</x>
-             <y>70</y>
-             <width>211</width>
-             <height>31</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_11">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>70</y>
-             <width>171</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Site</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_12">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>20</y>
-             <width>171</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Variété</string>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="previsionVarieteSelect">
-           <property name="geometry">
-            <rect>
-             <x>200</x>
-             <y>20</y>
-             <width>211</width>
-             <height>31</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QGroupBox" name="groupBox">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>130</y>
-             <width>411</width>
-             <height>151</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Date</string>
-           </property>
-           <widget class="QDateEdit" name="previsionsDateEdit">
-            <property name="geometry">
-             <rect>
-              <x>80</x>
-              <y>110</y>
-              <width>211</width>
-              <height>31</height>
-             </rect>
-            </property>
-            <property name="displayFormat">
-             <string>d/M/yyyy</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-            <property name="currentSectionIndex">
-             <number>2</number>
-            </property>
-           </widget>
-           <widget class="QRadioButton" name="floraisonRadioBtn">
-            <property name="geometry">
-             <rect>
-              <x>80</x>
-              <y>40</y>
-              <width>311</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Floraison</string>
-            </property>
-           </widget>
-           <widget class="QRadioButton" name="tifRadioBtn">
-            <property name="geometry">
-             <rect>
-              <x>80</x>
-              <y>70</y>
-              <width>311</width>
-              <height>26</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Traitement d'Induction Florale</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QPushButton" name="calculateDateRecolteBtn">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>370</y>
-             <width>401</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>28</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_12" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>1000</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <widget class="QLabel" name="label_11">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>100</y>
+                  <width>171</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Site</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateFloraisonLabelInput">
+                <property name="geometry">
+                 <rect>
+                  <x>760</x>
+                  <y>40</y>
+                  <width>221</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>date</string>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="previsionModelSelect">
+                <property name="geometry">
+                 <rect>
+                  <x>220</x>
+                  <y>320</y>
+                  <width>211</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="previsionVarieteSelect">
+                <property name="geometry">
+                 <rect>
+                  <x>220</x>
+                  <y>50</y>
+                  <width>211</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateFloraisonLabel">
+                <property name="geometry">
+                 <rect>
+                  <x>530</x>
+                  <y>40</y>
+                  <width>211</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Date de floraison</string>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="calculateDateRecolteBtn">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>400</y>
+                  <width>401</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
 	background-color:#44c767;
 	border-radius:5px;
 	border:1px solid #18ab29;
@@ -1491,86 +1475,149 @@ QPushButton:pressed {
 QPushButton:disabled {
 	background-color:#30b252;
 }</string>
-           </property>
-           <property name="text">
-            <string>Calculer la date de récolte</string>
-           </property>
-          </widget>
-          <widget class="QComboBox" name="previsionModelSelect">
-           <property name="geometry">
-            <rect>
-             <x>200</x>
-             <y>290</y>
-             <width>211</width>
-             <height>31</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_13">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>290</y>
-             <width>171</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Modèle de prévision</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="dateRecolteLabel">
-           <property name="geometry">
-            <rect>
-             <x>510</x>
-             <y>120</y>
-             <width>171</width>
-             <height>41</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de récolte</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="dateRecolteLabelInput">
-           <property name="geometry">
-            <rect>
-             <x>700</x>
-             <y>120</y>
-             <width>171</width>
-             <height>41</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de récolte</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="dateFloraisonLabel">
-           <property name="geometry">
-            <rect>
-             <x>510</x>
-             <y>70</y>
-             <width>171</width>
-             <height>41</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Date de floraison</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="dateFloraisonLabelInput">
-           <property name="geometry">
-            <rect>
-             <x>700</x>
-             <y>70</y>
-             <width>171</width>
-             <height>41</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>date</string>
-           </property>
-          </widget>
+                </property>
+                <property name="text">
+                 <string>Calculer la date de récolte</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateRecolteLabelInput">
+                <property name="geometry">
+                 <rect>
+                  <x>760</x>
+                  <y>100</y>
+                  <width>221</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Date de récolte</string>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="previsionSiteSelect">
+                <property name="geometry">
+                 <rect>
+                  <x>220</x>
+                  <y>100</y>
+                  <width>211</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+               </widget>
+               <widget class="QLabel" name="label_12">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>50</y>
+                  <width>171</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Variété</string>
+                </property>
+               </widget>
+               <widget class="QGroupBox" name="groupBox">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>160</y>
+                  <width>411</width>
+                  <height>151</height>
+                 </rect>
+                </property>
+                <property name="title">
+                 <string>Date</string>
+                </property>
+                <widget class="QDateEdit" name="previsionsDateEdit">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>110</y>
+                   <width>211</width>
+                   <height>31</height>
+                  </rect>
+                 </property>
+                 <property name="displayFormat">
+                  <string>d/M/yyyy</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                 <property name="currentSectionIndex">
+                  <number>2</number>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="floraisonRadioBtn">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>40</y>
+                   <width>311</width>
+                   <height>26</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Floraison</string>
+                 </property>
+                </widget>
+                <widget class="QRadioButton" name="tifRadioBtn">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>70</y>
+                   <width>311</width>
+                   <height>26</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Traitement d'Induction Florale</string>
+                 </property>
+                </widget>
+               </widget>
+               <widget class="QLabel" name="label_13">
+                <property name="geometry">
+                 <rect>
+                  <x>40</x>
+                  <y>320</y>
+                  <width>171</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Modèle de prévision</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateRecolteLabel">
+                <property name="geometry">
+                 <rect>
+                  <x>530</x>
+                  <y>100</y>
+                  <width>211</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Date de récolte</string>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>28</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
