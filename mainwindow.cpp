@@ -40,6 +40,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->ajouterSiteWebView->page()->setPalette(palette);
     ui->ajouterSiteWebView->setAttribute(Qt::WA_OpaquePaintEvent, false);
     ui->ajouterSiteWebView->setHtml("<br/><br/><br/><br/><br/><br/> <center>Ajoutez un fichier avec des données météo pour faire apparaitre le graphique</center>");
+
+    QPalette palette2 = ui->IntervalleWebView->palette();
+    palette2.setBrush(QPalette::Base, Qt::transparent);
+    ui->IntervalleWebView->page()->setPalette(palette2);
+    ui->IntervalleWebView->setAttribute(Qt::WA_OpaquePaintEvent, false);
+    ui->IntervalleWebView->setHtml("");
+
     ui->previsionsDateEdit->setDate(QDate::currentDate());
 }
 

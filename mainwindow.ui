@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1329,6 +1329,148 @@ QPushButton:disabled {
        <attribute name="title">
         <string>Intervalles</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_13" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>1000</width>
+              <height>11</height>
+             </size>
+            </property>
+            <widget class="QComboBox" name="comboBox">
+             <property name="geometry">
+              <rect>
+               <x>190</x>
+               <y>10</y>
+               <width>261</width>
+               <height>31</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_15">
+             <property name="geometry">
+              <rect>
+               <x>490</x>
+               <y>10</y>
+               <width>181</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Variete</string>
+             </property>
+            </widget>
+            <widget class="QWebView" name="IntervalleWebView">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>120</y>
+               <width>1001</width>
+               <height>481</height>
+              </rect>
+             </property>
+             <property name="url">
+              <url>
+               <string>about:blank</string>
+              </url>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="pushButton">
+             <property name="geometry">
+              <rect>
+               <x>300</x>
+               <y>60</y>
+               <width>371</width>
+               <height>41</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color:#44c767;
+	border-radius:5px;
+	border:1px solid #18ab29;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right:10px;
+	outline: 0;
+}
+
+QPushButton:hover:!pressed {
+	background-color:#54d777;
+}
+
+QPushButton:pressed {
+	background-color:#30b252;
+}
+
+QPushButton:disabled {
+	background-color:#30b252;
+}</string>
+             </property>
+             <property name="text">
+              <string>Afficher l'intervalle floraison/récolte</string>
+             </property>
+            </widget>
+            <widget class="QComboBox" name="comboBox_2">
+             <property name="geometry">
+              <rect>
+               <x>680</x>
+               <y>10</y>
+               <width>261</width>
+               <height>31</height>
+              </rect>
+             </property>
+            </widget>
+            <widget class="QLabel" name="label_14">
+             <property name="geometry">
+              <rect>
+               <x>50</x>
+               <y>10</y>
+               <width>131</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Site</string>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
