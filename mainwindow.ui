@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1353,7 +1353,7 @@ QPushButton:disabled {
               <height>11</height>
              </size>
             </property>
-            <widget class="QComboBox" name="comboBox">
+            <widget class="QComboBox" name="intervallesSiteSelect">
              <property name="geometry">
               <rect>
                <x>190</x>
@@ -1391,7 +1391,7 @@ QPushButton:disabled {
               </url>
              </property>
             </widget>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="intervallesSubmitBtn">
              <property name="geometry">
               <rect>
                <x>300</x>
@@ -1430,7 +1430,7 @@ QPushButton:disabled {
               <string>Afficher l'intervalle floraison/récolte</string>
              </property>
             </widget>
-            <widget class="QComboBox" name="comboBox_2">
+            <widget class="QComboBox" name="intervallesVarieteSelect">
              <property name="geometry">
               <rect>
                <x>680</x>
@@ -1740,6 +1740,16 @@ QPushButton:disabled {
                 </property>
                 <property name="text">
                  <string>Date de récolte</string>
+                </property>
+               </widget>
+               <widget class="QPlainTextEdit" name="previsionsDebugPlainTextEdit">
+                <property name="geometry">
+                 <rect>
+                  <x>483</x>
+                  <y>153</y>
+                  <width>501</width>
+                  <height>391</height>
+                 </rect>
                 </property>
                </widget>
               </widget>

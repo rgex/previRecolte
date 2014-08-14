@@ -48,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->IntervalleWebView->setHtml("");
 
     ui->previsionsDateEdit->setDate(QDate::currentDate());
+
+    this->ui->previsionsDebugPlainTextEdit->setHidden(true);
 }
 
 void MainWindow::initWindow()
@@ -610,7 +612,7 @@ void MainWindow::on_EditSiteSaveButton_clicked()
 
 void MainWindow::on_leftTabWidget_currentChanged(int index)
 {
-    if(index == 2) //previsions
+    if(index == 3) //previsions
     {
         QString selectedVarieteId = ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toString();
         QString selectedSiteId = ui->previsionSiteSelect->itemData(ui->previsionSiteSelect->currentIndex()).toString();
@@ -753,7 +755,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
         QList<QMap<QString, QStringList> > finalTmpAvg;
         QMap<QString, QStringList> avgOfTempYears;
-        QString modelYear;
+        int modelYear = 1;
 
         foreach(QString year, years)
         {
@@ -766,17 +768,45 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         {
 
             avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
-            modelYear = "0001";
         }
         else
         {
-            modelYear = ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toString();
-            Meteo* meteo = this->mDbi.getMeteo(site->getId(), modelYear.toInt());
+            modelYear = ui->previsionModelSelect->itemData(ui->previsionModelSelect->currentIndex()).toInt();
+            Meteo* meteo = this->mDbi.getMeteo(site->getId(), modelYear);
             avgOfTempYears = meteo->getMeteo();
         }
 
-        QDateTime selectedDate = ui->previsionsDateEdit->dateTime();
+        QDate selectedDate = ui->previsionsDateEdit->date();
 
+        this->clearPrevisionsDebugPlainTextEdit();
+
+        this->ui->previsionsDebugPlainTextEdit->setHidden(false);
+
+        if(true == ui->tifRadioBtn->isChecked())
+        {
+            QDate dateFloraison = htmlChartMaker.predictDate(selectedDate, modelYear, this, site, variete->getTBase1(), variete->getTFloraison(), variete->getTBase2(), variete->getTRecolte(), true);
+            QDate dateRecolte = htmlChartMaker.predictDate(dateFloraison, modelYear, this, site, variete->getTBase1(), variete->getTFloraison(), variete->getTBase2(), variete->getTRecolte(), true);
+
+            ui->dateFloraisonLabelInput->setText(dateFloraison.toString("d MMMM yyyy"));
+            ui->dateRecolteLabelInput->setText(dateRecolte.toString("d MMMM yyyy"));
+
+            ui->dateFloraisonLabel->setHidden(false);
+            ui->dateFloraisonLabelInput->setHidden(false);
+
+            ui->dateRecolteLabel->setHidden(false);
+            ui->dateRecolteLabelInput->setHidden(false);
+        }
+        else
+        {
+            QDate dateRecolte = htmlChartMaker.predictDate(selectedDate, modelYear, this, site, variete->getTBase1(), variete->getTFloraison(), variete->getTBase2(), variete->getTRecolte(), false);
+            ui->dateRecolteLabelInput->setText(dateRecolte.toString("d MMMM yyyy"));
+
+            ui->dateRecolteLabel->setHidden(false);
+            ui->dateRecolteLabelInput->setHidden(false);
+        }
+
+
+        /*
         //TODO calculate avg temp of map
 
         float tmpFloraison = variete->getTFloraison();
@@ -953,8 +983,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
             ui->dateFloraisonLabel->setHidden(true);
             ui->dateFloraisonLabelInput->setHidden(true);
         }
-
-
+        */
 }
 
 void MainWindow::on_actionAide_triggered()
@@ -964,4 +993,19 @@ void MainWindow::on_actionAide_triggered()
     helpForm->raise();
     helpForm->activateWindow();
 
+}
+
+void MainWindow::on_intervallesSubmitBtn_clicked()
+{
+
+}
+
+void MainWindow::insertTextInPrevisionsDebugPlainTextEdit(QString text)
+{
+    this->ui->previsionsDebugPlainTextEdit->insertPlainText(text);
+}
+
+void MainWindow::clearPrevisionsDebugPlainTextEdit()
+{
+    this->ui->previsionsDebugPlainTextEdit->clear();
 }

@@ -5,6 +5,8 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMap>
+#include "meteodatabaseinterface.h"
+#include <QMessageBox>
 
 HtmlChartMaker::HtmlChartMaker()
 {
@@ -30,6 +32,161 @@ std::string HtmlChartMaker::hex_to_string(const std::string& input)
         output.push_back(((p - lut) << 4) | (q - lut));
     }
     return output;
+}
+
+QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow* mainWindow, Site* site, float base1, float floraison, float base2, float recolte, bool isForRecolte)
+{
+    MeteoDatabaseInterface meteoDatabaseInterface;
+    meteoDatabaseInterface.setStoragePaths("", mainWindow->getDbPath());
+
+    QStringList years = site->getYears();
+
+    QList<QMap<QString, QStringList> > finalTmpAvg;
+    QMap<QString, QStringList> avgOfTempYears;
+
+    foreach(QString year, years)
+    {
+        qDebug() << "get site with ID :" << site->getId() << " and with year :" << year.toInt();
+        Meteo* meteo = meteoDatabaseInterface.getMeteo(site->getId(), year.toInt());
+        finalTmpAvg.append(meteo->getMeteo());
+    }
+
+    if(1 == modelYear)
+    {
+        avgOfTempYears = this->calculateAvgOfTempYears(finalTmpAvg);
+    }
+    else
+    {
+        Meteo* meteo = meteoDatabaseInterface.getMeteo(site->getId(), modelYear);
+        finalTmpAvg.append(meteo->getMeteo());
+    }
+
+
+    float tmpFloraison = floraison;
+    float tmpSum = 0;
+    float lastAdd = 0;
+    int exactValues = 0;
+    int prognosedValues = 0;
+    float tmpRecolte = recolte;
+    QString modelYearString = QString::number(modelYear);
+    if(1 == modelYearString.length())
+        modelYearString = "000" + modelYearString;
+
+    if(false == isForRecolte)
+    {
+        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Récolte ###\n");
+        while(tmpFloraison > tmpSum)
+        {
+            bool foundExactTemp = false; //if we find a temperature record for that day we use it.
+            QMap<QString, QStringList> mapListAllYears;
+
+            foreach(mapListAllYears, finalTmpAvg)
+            {
+                if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
+                {
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base1;
+                    tmpSum += lastAdd;
+                    exactValues++;
+                    foundExactTemp = true;
+                }
+            }
+
+            if(foundExactTemp == false)
+            {
+                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                {
+                    QStringList tempList;
+                    if(0 == selectedDate.toString("MMdd").compare("0229"))
+                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                    else
+                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+
+                    if(tempList.size() > 1)
+                    {
+                        lastAdd = tempList.at(2).toFloat() - base1;
+                        tmpSum += lastAdd;
+                        prognosedValues++;
+                    }
+                }
+                else
+                {
+                    QString errorMsg;
+                    if(1 == modelYear)
+                        errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
+                    else
+                        errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYearString);
+                    QMessageBox msgBox;
+                    msgBox.warning(NULL, QString("Erreur"), errorMsg);
+                    return QDate::fromString("0001","yyyy");
+                }
+            }
+            selectedDate = selectedDate.addDays(1);
+            qDebug() << "date :" << selectedDate.toString("yyyy-MM-dd");
+            mainWindow->insertTextInPrevisionsDebugPlainTextEdit("date : " + selectedDate.toString("yyyy-MM-dd") + "   " + QString::number(tmpSum,'f',3) + "   + "  + QString::number(lastAdd,'f',3) + "\n");
+        }
+
+        qDebug() << "date de floraison :" << selectedDate.toString("yyyy-MM-dd");
+        qDebug() << "exact values :" << exactValues;
+        qDebug() << "prognosed values :" << prognosedValues;
+
+    }
+    else
+    {
+        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Floraison ###\n");
+        while(tmpRecolte > tmpSum)
+        {
+            bool foundExactTemp = false; //if we find a temperature record for that day we use it.
+            QMap<QString, QStringList> mapListAllYears;
+            foreach(mapListAllYears, finalTmpAvg)
+            {
+                if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
+                {
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base2;
+                    tmpSum += lastAdd;
+                    exactValues++;
+                    foundExactTemp = true;
+                }
+            }
+
+            if(foundExactTemp == false)
+            {
+                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                {
+                    QStringList tempList;
+                    if(0 == selectedDate.toString("MMdd").compare("0229"))
+                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                    else
+                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+                    if(tempList.size() > 1)
+                    {
+                        lastAdd = tempList.at(2).toFloat() - base2;
+                        tmpSum += lastAdd;
+                        prognosedValues++;
+                    }
+                }
+                else
+                {
+                    qDebug() << selectedDate.toString("MMdd");
+                    QString errorMsg;
+                    if(1 == modelYear)
+                        errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM "));
+                    else
+                        errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYearString);
+                    QMessageBox msgBox;
+                    msgBox.warning(NULL, QString("Erreur"), errorMsg);
+                    return QDate::fromString("0001","yyyy");
+                }
+            }
+            selectedDate = selectedDate.addDays(1);
+            qDebug() << "date :" << selectedDate.toString("yyyy-MM-dd");
+            mainWindow->insertTextInPrevisionsDebugPlainTextEdit("date : " + selectedDate.toString("yyyy-MM-dd") + "   " + QString::number(tmpSum,'f',3) + "   + "  + QString::number(lastAdd,'f',3) + "\n");
+        }
+        qDebug() << "date de récolte :" << selectedDate.toString("yyyy-MM-dd");
+        qDebug() << "exact values :" << exactValues;
+        qDebug() << "prognosed values :" << prognosedValues;
+    }
+
+    return selectedDate;
 }
 
 QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QString, QStringList> > temps)
@@ -110,7 +267,6 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
     return avgMap;
 }
 
-
 QMap<QString, float> HtmlChartMaker::calculateDayTempAverage(QList<QStringList> temperatures)
 {
     QMap<QString, QStringList> dayTempAvgMap;
@@ -159,6 +315,37 @@ QMap<QString, float> HtmlChartMaker::calculateDayTempAverage(QList<QStringList> 
     }
 
     return dayTempAvgFloatMap;
+}
+
+
+QMap<QString, float> HtmlChartMaker::calculateWeekTempAverage(QMap<QString, float> dayTempAvgMap)
+{
+    QMap<QString, QStringList> weekTempAvgMap;
+    QMap<QString, float> weekTempAvgFloatMap;
+
+    foreach(QString qMapKey, dayTempAvgMap.keys())
+    {
+        QString date = QString::number(QDate::fromString(qMapKey, "yyyyMMdd").weekNumber());
+        QString tmp;
+        tmp = tmp.setNum(dayTempAvgMap.value(qMapKey), 'f', 2);
+        QStringList tmpStringList = weekTempAvgMap.value(date);
+        tmpStringList.append(tmp);
+        weekTempAvgMap.insert(date, tmpStringList);
+    }
+
+    foreach(QString qMapKey, weekTempAvgMap.keys())
+    {
+        QStringList tmpStringList = weekTempAvgMap.value(qMapKey);
+        float sum = 0;
+        for(int i=0; i < tmpStringList.size(); i++)
+        {
+            sum += tmpStringList.at(i).toFloat();
+        }
+        float avg = sum / (float)tmpStringList.size();
+        weekTempAvgFloatMap.insert(qMapKey, avg);
+    }
+
+    return weekTempAvgFloatMap;
 }
 
 QMap<QString, float> HtmlChartMaker::calculateMonthTempAverage(QMap<QString, float> dayTempAvgMap)

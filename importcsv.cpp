@@ -26,10 +26,26 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                 while(!in.atEnd())
                 {
                     QString line = in.readLine();
+
+
+                    line = line.replace(";","!##!");
+                    if(line.contains("\""))
+                    {
+                        line = line.replace("\",\"","!##!");
+                    }
+                    else
+                    {
+                        line = line.replace(",","!##!");
+                    }
+
                     QRegExp ExpDate("^.{0,}([0-9]{4}-[0-9]{2}-[0-9]{2}).{0,}$");
                     QRegExp ExpDate2("^.{0,}([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}).{0,}$");
-                    QRegExp ExpTemp("^.{0,}([0-9]{0,}[\.]{1}[0-9]{0,}).{0,}$");
-                    QStringList lineColumns = line.split(",");
+
+                    QRegExp ExpTemp("^.{0,}([0-9]{1,}[\.]{1}[0-9]{0,3}).{0,}$");
+                    QRegExp ExpTempComma("^.{0,}([0-9]{1,}[\,]{1}[0-9]{0,3}).{0,}$");
+                    QRegExp ExpPluvio("^.{0,}([0-9]{1,}[\.]{1}[0-9]{0,2})[^0-9]{0,}$");
+
+                    QStringList lineColumns = line.split("!##!");
                     QStringList tempListLine;
 
                     for(int i= 0; i < lineColumns.size(); i++)
@@ -53,6 +69,16 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                         {
                             //qDebug() << "Captured2 : " << ExpTemp.cap(1);
                             tempListLine.append(ExpTemp.cap(1));
+                        }
+                        if(ExpTempComma.exactMatch(column))
+                        {
+                            //qDebug() << "Captured2 : " << ExpTemp.cap(1);
+                            tempListLine.append(ExpTemp.cap(1).replace(",","."));
+                        }
+                        if(ExpPluvio.exactMatch(column))
+                        {
+                            //qDebug() << "Captured3 : " << ExpPluvio.cap(1);
+                            tempListLine.append(ExpPluvio.cap(1));
                         }
                     }
                     tempList.append(tempListLine);

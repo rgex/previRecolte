@@ -40,6 +40,8 @@ public:
     void displayEditMeteo(int siteId, int year);
     void updateSiteScrollArea(int siteId, int year,QString yearsCsv);
     void loadSiteScrollArea(int siteId, int year);
+    void insertTextInPrevisionsDebugPlainTextEdit(QString text);
+    void clearPrevisionsDebugPlainTextEdit();
 
 private slots:
     void on_ajouterVarieteBtn_clicked();
@@ -65,6 +67,8 @@ private slots:
     void on_calculateDateRecolteBtn_clicked();
 
     void on_actionAide_triggered();
+
+    void on_intervallesSubmitBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
