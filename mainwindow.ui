@@ -1379,10 +1379,10 @@ QPushButton:disabled {
             <widget class="QWebView" name="IntervalleWebView">
              <property name="geometry">
               <rect>
-               <x>0</x>
-               <y>120</y>
-               <width>1001</width>
-               <height>481</height>
+               <x>170</x>
+               <y>90</y>
+               <width>630</width>
+               <height>551</height>
               </rect>
              </property>
              <property name="url">
@@ -1395,9 +1395,9 @@ QPushButton:disabled {
              <property name="geometry">
               <rect>
                <x>300</x>
-               <y>60</y>
+               <y>50</y>
                <width>371</width>
-               <height>41</height>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1427,7 +1427,7 @@ QPushButton:disabled {
 }</string>
              </property>
              <property name="text">
-              <string>Afficher l'intervalle floraison/récolte</string>
+              <string>Calculer l'intervalle floraison/récolte</string>
              </property>
             </widget>
             <widget class="QComboBox" name="intervallesVarieteSelect">
@@ -1451,6 +1451,60 @@ QPushButton:disabled {
              </property>
              <property name="text">
               <string>Site</string>
+             </property>
+            </widget>
+            <widget class="QProgressBar" name="intervalleProgressBar">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>310</y>
+               <width>991</width>
+               <height>23</height>
+              </rect>
+             </property>
+             <property name="maximum">
+              <number>55</number>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+            </widget>
+            <widget class="QLabel" name="IntervallesFloraisonLegendLabel">
+             <property name="geometry">
+              <rect>
+               <x>810</x>
+               <y>400</y>
+               <width>181</width>
+               <height>91</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel{
+	color: #A0A0A0;
+}</string>
+             </property>
+             <property name="text">
+              <string>nombre de Jours
+jusqu'à la floraison</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="IntervallesRecolteLegendLabel">
+             <property name="geometry">
+              <rect>
+               <x>810</x>
+               <y>180</y>
+               <width>181</width>
+               <height>91</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel{
+	color: #FE2E2E;
+}</string>
+             </property>
+             <property name="text">
+              <string>nombre de Jours
+jusqu'à la récolte</string>
              </property>
             </widget>
            </widget>
@@ -1540,10 +1594,10 @@ QPushButton:disabled {
                <widget class="QLabel" name="dateFloraisonLabelInput">
                 <property name="geometry">
                  <rect>
-                  <x>760</x>
-                  <y>40</y>
-                  <width>221</width>
-                  <height>41</height>
+                  <x>720</x>
+                  <y>70</y>
+                  <width>261</width>
+                  <height>31</height>
                  </rect>
                 </property>
                 <property name="text">
@@ -1554,7 +1608,7 @@ QPushButton:disabled {
                 <property name="geometry">
                  <rect>
                   <x>220</x>
-                  <y>320</y>
+                  <y>370</y>
                   <width>211</width>
                   <height>31</height>
                  </rect>
@@ -1573,10 +1627,10 @@ QPushButton:disabled {
                <widget class="QLabel" name="dateFloraisonLabel">
                 <property name="geometry">
                  <rect>
-                  <x>530</x>
-                  <y>40</y>
+                  <x>480</x>
+                  <y>70</y>
                   <width>211</width>
-                  <height>41</height>
+                  <height>31</height>
                  </rect>
                 </property>
                 <property name="text">
@@ -1587,7 +1641,7 @@ QPushButton:disabled {
                 <property name="geometry">
                  <rect>
                   <x>40</x>
-                  <y>400</y>
+                  <y>450</y>
                   <width>401</width>
                   <height>31</height>
                  </rect>
@@ -1625,14 +1679,14 @@ QPushButton:disabled {
                <widget class="QLabel" name="dateRecolteLabelInput">
                 <property name="geometry">
                  <rect>
-                  <x>760</x>
+                  <x>720</x>
                   <y>100</y>
-                  <width>221</width>
-                  <height>41</height>
+                  <width>261</width>
+                  <height>31</height>
                  </rect>
                 </property>
                 <property name="text">
-                 <string>Date de récolte</string>
+                 <string>date</string>
                 </property>
                </widget>
                <widget class="QComboBox" name="previsionSiteSelect">
@@ -1663,8 +1717,8 @@ QPushButton:disabled {
                  <rect>
                   <x>40</x>
                   <y>160</y>
-                  <width>411</width>
-                  <height>151</height>
+                  <width>441</width>
+                  <height>181</height>
                  </rect>
                 </property>
                 <property name="title">
@@ -1673,8 +1727,8 @@ QPushButton:disabled {
                 <widget class="QDateEdit" name="previsionsDateEdit">
                  <property name="geometry">
                   <rect>
-                   <x>40</x>
-                   <y>110</y>
+                   <x>30</x>
+                   <y>140</y>
                    <width>211</width>
                    <height>31</height>
                   </rect>
@@ -1692,9 +1746,9 @@ QPushButton:disabled {
                 <widget class="QRadioButton" name="floraisonRadioBtn">
                  <property name="geometry">
                   <rect>
-                   <x>40</x>
+                   <x>30</x>
                    <y>40</y>
-                   <width>311</width>
+                   <width>401</width>
                    <height>26</height>
                   </rect>
                  </property>
@@ -1705,9 +1759,9 @@ QPushButton:disabled {
                 <widget class="QRadioButton" name="tifRadioBtn">
                  <property name="geometry">
                   <rect>
-                   <x>40</x>
+                   <x>30</x>
                    <y>70</y>
-                   <width>311</width>
+                   <width>401</width>
                    <height>26</height>
                   </rect>
                  </property>
@@ -1715,12 +1769,25 @@ QPushButton:disabled {
                   <string>Traitement d'Induction Florale</string>
                  </property>
                 </widget>
+                <widget class="QRadioButton" name="recolteRadioBtn">
+                 <property name="geometry">
+                  <rect>
+                   <x>30</x>
+                   <y>100</y>
+                   <width>401</width>
+                   <height>26</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Date de récolte (souhaitée)</string>
+                 </property>
+                </widget>
                </widget>
                <widget class="QLabel" name="label_13">
                 <property name="geometry">
                  <rect>
                   <x>40</x>
-                  <y>320</y>
+                  <y>370</y>
                   <width>171</width>
                   <height>31</height>
                  </rect>
@@ -1732,10 +1799,10 @@ QPushButton:disabled {
                <widget class="QLabel" name="dateRecolteLabel">
                 <property name="geometry">
                  <rect>
-                  <x>530</x>
+                  <x>480</x>
                   <y>100</y>
                   <width>211</width>
-                  <height>41</height>
+                  <height>31</height>
                  </rect>
                 </property>
                 <property name="text">
@@ -1750,6 +1817,32 @@ QPushButton:disabled {
                   <width>501</width>
                   <height>391</height>
                  </rect>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateTifInputLabel">
+                <property name="geometry">
+                 <rect>
+                  <x>720</x>
+                  <y>40</y>
+                  <width>261</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>date</string>
+                </property>
+               </widget>
+               <widget class="QLabel" name="dateTifLabel">
+                <property name="geometry">
+                 <rect>
+                  <x>480</x>
+                  <y>40</y>
+                  <width>211</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Date du TIF</string>
                 </property>
                </widget>
               </widget>

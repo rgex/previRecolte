@@ -21,6 +21,9 @@ private:
 
 public:
     HtmlChartMaker();
+
+    QString generateHtmlWeekIntervalle(QMap<int, QStringList> weekList);
+
     QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap);
     QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, bool completeMissingMonth);
     QString generateHtmlChartWithMap(QMap<QString, QStringList> tempMap, int year, bool completeMissingMonth);
@@ -44,7 +47,7 @@ public:
 
     QMap<QString, QStringList> calculateAvgOfTempYears(QList<QMap<QString, QStringList> > temps);
 
-    QDate predictDate(QDate selectedDate, int modelYear, MainWindow* mainWindow, Site* site, float base1, float floraison, float base2, float recolte, bool isForRecolte);
+    QDate predictDate(QDate selectedDate, int modelYear, MainWindow* mainWindow, Site* site, float base1, float floraison, float base2, float recolte, int predictionType);
 
     //getters and setters
 
