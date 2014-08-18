@@ -286,7 +286,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
                     if(tempList.size() > 1)
                     {
-                        lastAdd = tempList.at(2).toFloat() - base2;
+                        lastAdd = tempList.at(2).toFloat() - base1;
                         tmpSum += lastAdd;
                         prognosedValues++;
                     }

@@ -814,6 +814,9 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
             ui->dateRecolteLabel->setHidden(false);
             ui->dateRecolteLabelInput->setHidden(false);
+
+            ui->dateTifLabel->setHidden(true);
+            ui->dateTifInputLabel->setHidden(true);
         }
 
         if(true == ui->floraisonRadioBtn->isChecked())
@@ -824,12 +827,24 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
             ui->dateRecolteLabel->setHidden(false);
             ui->dateRecolteLabelInput->setHidden(false);
+
+            ui->dateFloraisonLabel->setHidden(true);
+            ui->dateFloraisonLabelInput->setHidden(true);
+            ui->dateTifLabel->setHidden(true);
+            ui->dateTifInputLabel->setHidden(true);
         }
 
         if(true == ui->recolteRadioBtn->isChecked())
         {
             ui->dateTifLabel->setHidden(false);
             ui->dateTifInputLabel->setHidden(false);
+
+            ui->dateFloraisonLabel->setHidden(true);
+            ui->dateFloraisonLabelInput->setHidden(true);
+
+            ui->dateRecolteLabel->setHidden(true);
+            ui->dateRecolteLabelInput->setHidden(true);
+
             QDate dateTif = htmlChartMaker.predictDate(selectedDate, modelYear, this, site, variete->getTBase1(), variete->getTFloraison(), variete->getTBase2(), variete->getTRecolte(), 3);
 
             ui->dateTifInputLabel->setText(dateTif.toString("d ") + dateTif.toString("MMMM").mid(0,3) + dateTif.toString(" yyyy"));
