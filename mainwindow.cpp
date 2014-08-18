@@ -894,6 +894,7 @@ void MainWindow::on_intervallesSubmitBtn_clicked()
         weekIntervalles.insert(i, list);
         currentDate = currentDate.addDays(7);
         i++;
+        qApp->processEvents();
     }
 
     ui->IntervallesFloraisonLegendLabel->setHidden(false);
