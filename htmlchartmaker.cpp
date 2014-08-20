@@ -7,6 +7,7 @@
 #include <QMap>
 #include "meteodatabaseinterface.h"
 #include <QMessageBox>
+#include <QFile>
 
 HtmlChartMaker::HtmlChartMaker()
 {
@@ -718,6 +719,115 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
 
 QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekList)
 {
+    QString dataFloraison = "";
+    QString dataRecolte = "";
+
+    int i = 0;
+    foreach(int qMapKey, weekList.keys())
+    {
+        QStringList list = weekList.value(qMapKey);
+
+        if(0 == i)
+        {
+            dataFloraison.append("['semaine " + QString::number(i+1) + "',");
+            dataFloraison.append("" + list.at(0) + "]"); //floraison
+
+            dataRecolte.append("['semaine " + QString::number(i+1) + "',");
+            dataRecolte.append("" + list.at(1) + "]");
+        }
+        else
+        {
+            dataFloraison.append(",['semaine " + QString::number(i+1) + "',");
+            dataFloraison.append("" + list.at(0) + "]"); //floraison
+
+            dataRecolte.append(",['semaine " + QString::number(i+1) + "',");
+            dataRecolte.append("" + list.at(1) + "]");
+        }
+
+        i++;
+    }
+
+    QString html = "";
+
+    QFile mFile(":./html/highcharts-all.js");
+
+    if(!mFile.open(QFile::ReadOnly | QFile::Text))
+    {
+           qDebug() << "could not open file for read";
+    }
+
+    QTextStream in(&mFile);
+    QString libText = in.readAll();
+
+
+    mFile.close();
+
+    html.append("<html>\n");
+
+    html.append("<div id='container' style=''></div>\n");
+
+    html.append("<script type='text/javascript'>\n");
+    html.append(libText);
+    html.append("</script>\n");
+
+    html.append("<script type='text/javascript'>\n");
+    //html.append("$(function () {\n");
+    html.append("chart = new Highcharts.Chart({\n");
+    html.append("chart: {\n");
+    html.append("    type: 'spline',\n");
+    html.append("    renderTo: 'container'\n");
+    html.append("},\n");
+    html.append("title: {\n");
+    html.append("    text: 'Intervalle TIF / Floraison / Récolte'\n");
+    html.append("},\n");
+    html.append("xAxis: {\n");
+    html.append("   title: {\n");
+    html.append("       text: 'nombre de semaines'\n");
+    html.append("   }\n");
+    html.append("},\n");
+    html.append("yAxis: {\n");
+    html.append("   title: {\n");
+    html.append("       text: 'nombre de jours'\n");
+    html.append("   },\n");
+    html.append("   min: 0\n");
+    html.append("},\n");
+    html.append("tooltip: {\n");
+    html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
+    html.append("   pointFormat: 'semaine {point.x}: {point.y} jours'\n");
+    html.append("},\n");
+
+
+    //floraison
+    html.append("series: [{\n");
+    html.append("   name: 'Floraison',\n");
+    html.append("   data: [\n");
+    html.append(dataFloraison);
+
+    //récolte
+    html.append("]\n");
+    html.append("}, {\n");
+    html.append("name: 'Récolte',\n");
+    html.append("data: [\n");
+    html.append(dataRecolte);
+
+    //End of Script
+
+    html.append("    ]\n");
+    html.append("    }]\n");
+    html.append("    });\n");
+    //html.append("    });\n");
+    html.append("</script>\n");
+
+    html.append("</html>\n");
+
+    qDebug() << "HTML : " << html;
+    return html;
+}
+
+/*
+// OLD chart.js version
+QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekList)
+{
     QString labels = "";
     QString floraisonValues = "";
     QString recolteValues = "";
@@ -828,6 +938,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
 
         return html;
 }
+*/
 
 QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayTempAvgMap, QMap<QString, float> dayMinTempMap, int year, bool completeMissingMonth)
 {

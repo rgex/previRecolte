@@ -51,8 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->intervalleProgressBar->setHidden(true);
     ui->previsionsDebugPlainTextEdit->setHidden(true);
 
-    ui->IntervallesFloraisonLegendLabel->setHidden(true);
-    ui->IntervallesRecolteLegendLabel->setHidden(true);
 
     ui->dateTifLabel->setHidden(true);
     ui->dateTifInputLabel->setHidden(true);
@@ -912,14 +910,13 @@ void MainWindow::on_intervallesSubmitBtn_clicked()
         list.append(QString::number(currentDate.daysTo(floraisonDate)));
         list.append(QString::number(currentDate.daysTo(recolteDate)));
 
+        list.append(QString::number("10.00"); //température
+
         weekIntervalles.insert(i, list);
         currentDate = currentDate.addDays(7);
         i++;
         qApp->processEvents();
     }
-
-    ui->IntervallesFloraisonLegendLabel->setHidden(false);
-    ui->IntervallesRecolteLegendLabel->setHidden(false);
 
     ui->IntervalleWebView->setHtml(htmlChartMaker.generateHtmlWeekIntervalle(weekIntervalles));
 

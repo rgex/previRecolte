@@ -36,7 +36,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
@@ -1311,8 +1311,8 @@ QPushButton:disabled {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>776</width>
-                  <height>544</height>
+                  <width>590</width>
+                  <height>16</height>
                  </rect>
                 </property>
                </widget>
@@ -1379,10 +1379,10 @@ QPushButton:disabled {
             <widget class="QWebView" name="IntervalleWebView">
              <property name="geometry">
               <rect>
-               <x>170</x>
+               <x>50</x>
                <y>90</y>
-               <width>630</width>
-               <height>551</height>
+               <width>891</width>
+               <height>531</height>
               </rect>
              </property>
              <property name="url">
@@ -1467,44 +1467,6 @@ QPushButton:disabled {
              </property>
              <property name="value">
               <number>0</number>
-             </property>
-            </widget>
-            <widget class="QLabel" name="IntervallesFloraisonLegendLabel">
-             <property name="geometry">
-              <rect>
-               <x>810</x>
-               <y>400</y>
-               <width>181</width>
-               <height>91</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel{
-	color: #A0A0A0;
-}</string>
-             </property>
-             <property name="text">
-              <string>nombre de Jours
-jusqu'à la floraison</string>
-             </property>
-            </widget>
-            <widget class="QLabel" name="IntervallesRecolteLegendLabel">
-             <property name="geometry">
-              <rect>
-               <x>810</x>
-               <y>180</y>
-               <width>181</width>
-               <height>91</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel{
-	color: #FE2E2E;
-}</string>
-             </property>
-             <property name="text">
-              <string>nombre de Jours
-jusqu'à la récolte</string>
              </property>
             </widget>
            </widget>
