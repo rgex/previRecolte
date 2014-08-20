@@ -721,6 +721,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
 {
     QString dataFloraison = "";
     QString dataRecolte = "";
+    QString temperatures ="";
 
     int i = 0;
     foreach(int qMapKey, weekList.keys())
@@ -729,19 +730,25 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
 
         if(0 == i)
         {
-            dataFloraison.append("['semaine " + QString::number(i+1) + "',");
-            dataFloraison.append("" + list.at(0) + "]"); //floraison
+            dataFloraison.append("['semaine " + QString::number(i+1) + "',"); //Floraison
+            dataFloraison.append("" + list.at(0) + "]");
 
-            dataRecolte.append("['semaine " + QString::number(i+1) + "',");
+            dataRecolte.append("['semaine " + QString::number(i+1) + "',"); //Récolte
             dataRecolte.append("" + list.at(1) + "]");
+
+            temperatures.append("['semaine " + QString::number(i+1) + "',"); //Témpératures
+            temperatures.append("" + list.at(2) + "]");
         }
         else
         {
-            dataFloraison.append(",['semaine " + QString::number(i+1) + "',");
-            dataFloraison.append("" + list.at(0) + "]"); //floraison
+            dataFloraison.append(",['semaine " + QString::number(i+1) + "',"); //Floraison
+            dataFloraison.append("" + list.at(0) + "]");
 
-            dataRecolte.append(",['semaine " + QString::number(i+1) + "',");
+            dataRecolte.append(",['semaine " + QString::number(i+1) + "',"); //Récolte
             dataRecolte.append("" + list.at(1) + "]");
+
+            temperatures.append(",['semaine " + QString::number(i+1) + "',"); //Témpératures
+            temperatures.append("" + list.at(2) + "]");
         }
 
         i++;
@@ -782,37 +789,66 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
     html.append("},\n");
     html.append("xAxis: {\n");
     html.append("   title: {\n");
-    html.append("       text: 'nombre de semaines'\n");
+    html.append("       text: 'semaine n°'\n");
     html.append("   }\n");
     html.append("},\n");
-    html.append("yAxis: {\n");
+    html.append("yAxis: [\n");
+    html.append("{\n");
     html.append("   title: {\n");
     html.append("       text: 'nombre de jours'\n");
     html.append("   },\n");
-    html.append("   min: 0\n");
+    //html.append("   min: 0\n");
     html.append("},\n");
+
+    html.append("{\n");
+    html.append("   title: {\n");
+    html.append("       text: 'Témpérature'\n");
+    html.append("   },\n");
+    //html.append("   min: 0,\n");
+    html.append("   opposite: true\n");
+    html.append("}\n");
+
+    html.append("],\n");
+    html.append("exporting: { enabled: false },\n");
+
+    //températures
+    html.append("series: [{\n");
+    html.append("name: 'Températures',\n");
+    html.append("tooltip: {\n");
+    html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
+    html.append("   pointFormat: 'semaine {point.x}: {point.y}°C'\n");
+    html.append("},\n");
+    html.append("yAxis: 1,\n");
+    html.append("data: [\n");
+    html.append(temperatures);
+    html.append("]\n");
+
+    //récolte
+    html.append("}, {\n");
+    html.append("name: 'Récolte',\n");
     html.append("tooltip: {\n");
     html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
     html.append("   pointFormat: 'semaine {point.x}: {point.y} jours'\n");
     html.append("},\n");
-
-
-    //floraison
-    html.append("series: [{\n");
-    html.append("   name: 'Floraison',\n");
-    html.append("   data: [\n");
-    html.append(dataFloraison);
-
-    //récolte
-    html.append("]\n");
-    html.append("}, {\n");
-    html.append("name: 'Récolte',\n");
+    html.append("yAxis: 0,\n");
     html.append("data: [\n");
     html.append(dataRecolte);
+    html.append("],\n");
+
+    //floraison
+    html.append("}, {\n");
+    html.append("   name: 'Floraison',\n");
+    html.append("   yAxis: 0,\n");
+    html.append("tooltip: {\n");
+    html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
+    html.append("   pointFormat: 'semaine {point.x}: {point.y} jours'\n");
+    html.append("},\n");
+    html.append("   data: [\n");
+    html.append(dataFloraison);
+    html.append("]\n");
 
     //End of Script
 
-    html.append("    ]\n");
     html.append("    }]\n");
     html.append("    });\n");
     //html.append("    });\n");

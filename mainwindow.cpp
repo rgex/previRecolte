@@ -910,7 +910,38 @@ void MainWindow::on_intervallesSubmitBtn_clicked()
         list.append(QString::number(currentDate.daysTo(floraisonDate)));
         list.append(QString::number(currentDate.daysTo(recolteDate)));
 
-        list.append(QString::number("10.00"); //température
+        //calculate temperature
+
+        //get meteo
+        //htmlChartMaker.
+
+        QList<QMap<QString, QStringList> > finalTmpAvg;
+        QMap<QString, QStringList> avgOfTempYears;
+
+        foreach(QString year, site->getYears())
+        {
+            qDebug() << "get site with ID :" << site->getId() << " and with year :" << year.toInt();
+            Meteo* meteo = this->mDbi.getMeteo(site->getId(), year.toInt());
+            finalTmpAvg.append(meteo->getMeteo());
+        }
+
+        avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
+
+        int tempCount = 0;
+        float tempSum = 0;
+        QDate dayDate = QDate::fromString(currentDate.toString("yyyyMMdd"),"yyyyMMdd");
+
+        for(int i=0; i<7; i++)
+        {
+            dayDate = dayDate.addDays(i);
+            if(avgOfTempYears.contains(dayDate.toString("yyyyMMdd")))
+            {
+                tempCount++;
+                tempSum += avgOfTempYears.value(dayDate.toString("yyyyMMdd")).at(2).toFloat();
+            }
+        }
+
+        list.append(QString::number(tempSum/tempCount)); //température
 
         weekIntervalles.insert(i, list);
         currentDate = currentDate.addDays(7);

@@ -27,11 +27,9 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                 {
                     QString line = in.readLine();
 
-
-                    line = line.replace(";","!##!");
-                    if(line.contains("\""))
+                    if(line.contains(";"))
                     {
-                        line = line.replace("\",\"","!##!");
+                        line = line.replace(";","!##!");
                     }
                     else
                     {
