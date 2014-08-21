@@ -58,8 +58,11 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
     }
     else
     {
+        qDebug() << "Model year is : " << modelYear;
+        QList<QMap<QString, QStringList> > finalTmp;
         Meteo* meteo = meteoDatabaseInterface.getMeteo(site->getId(), modelYear);
-        finalTmpAvg.append(meteo->getMeteo());
+        finalTmp.append(meteo->getMeteo());
+        avgOfTempYears = this->calculateAvgOfTempYears(finalTmp);
     }
 
 
@@ -95,14 +98,14 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
             if(foundExactTemp == false)
             {
-                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                 {
                     QStringList tempList;
 
                     if(0 == selectedDate.toString("MMdd").compare("0229"))
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("0228"));
                     else
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
 
                     if(tempList.size() > 1)
                     {
@@ -154,14 +157,14 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
             if(foundExactTemp == false)
             {
-                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                 {
                     QStringList tempList;
 
                     if(0 == selectedDate.toString("MMdd").compare("0229"))
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("0228"));
                     else
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
 
                     if(tempList.size() > 1)
                     {
@@ -213,14 +216,14 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
             if(foundExactTemp == false)
             {
-                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                 {
                     QStringList tempList;
 
                     if(0 == selectedDate.toString("MMdd").compare("0229"))
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("0228"));
                     else
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
 
                     if(tempList.size() > 1)
                     {
@@ -276,14 +279,14 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
             if(foundExactTemp == false)
             {
-                if(avgOfTempYears.contains(modelYearString + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
+                if(avgOfTempYears.contains("0001" + selectedDate.toString("MMdd")) || 0 == selectedDate.toString("MMdd").compare(QString("0229")))
                 {
                     QStringList tempList;
 
                     if(0 == selectedDate.toString("MMdd").compare("0229"))
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("0228"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("0228"));
                     else
-                        tempList = avgOfTempYears.value(modelYearString + selectedDate.toString("MMdd"));
+                        tempList = avgOfTempYears.value("0001" + selectedDate.toString("MMdd"));
 
                     if(tempList.size() > 1)
                     {
