@@ -18,9 +18,9 @@ private:
 
 public:
     Meteo();
-    void addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace); //meteo has to be under this format YYYYMMDD
-    void addMeteoWithQMaps(QMap<QString, float> maxTempMap, QMap<QString, float> avgTempMap, QMap<QString, float> minTempMap);
-    void addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, bool replace);
+    void addEntry(QString date, float maxTemp, float avgTemp, float minTemp, float pluvioMetry, bool replace); //meteo has to be under this format YYYYMMDD
+    void addMeteoWithQMaps(QMap<QString, float> maxTempMap, QMap<QString, float> avgTempMap, QMap<QString, float> minTempMap, QMap<QString, float> dayPluvioMap);
+    void addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap, bool replace);
     void removeEntry(QString date);
     void sort();
     QString exportMeteoAsCsv();

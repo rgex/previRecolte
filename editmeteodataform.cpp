@@ -110,7 +110,8 @@ void editMeteoDataForm::on_saveBtn_clicked()
         float avgTemp = ui->editMeteoTableWidget->item(i, 1)->text().toFloat();
         float minTemp = ui->editMeteoTableWidget->item(i, 3)->text().toFloat();
         float maxTemp = ui->editMeteoTableWidget->item(i, 2)->text().toFloat();
-        meteo->addEntry(qDate.toString("yyyyMMdd"), maxTemp, avgTemp, minTemp, true);
+
+        meteo->addEntry(qDate.toString("yyyyMMdd"), maxTemp, avgTemp, minTemp, 0, true);
     }
     meteoDatabaseInterface->saveMeteo(meteo);
 

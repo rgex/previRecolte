@@ -12,7 +12,7 @@ Meteo::Meteo()
     this->idMeteo = 0;
 }
 
-void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, bool replace)
+void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, float pluvioMetry, bool replace)
 {
     if(0 != date.mid(0, 4).compare(QString::number(this->year)) && (date.toFloat() > 1))
     {   // 1 is a joker that allows to add new meteos entries even if the date is not matching
@@ -23,6 +23,7 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
     newEntry.append(QString::number(maxTemp));
     newEntry.append(QString::number(avgTemp));
     newEntry.append(QString::number(minTemp));
+    newEntry.append(QString::number(pluvioMetry));
     foreach(QString key, this->meteo.keys())
     {
         QStringList meteoStringList = this->meteo.value(key);
@@ -40,12 +41,12 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
     this->sort();
 }
 
-void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap)
+void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap)
 {
-    this->addMeteoWithQMaps(dayMaxTempMap, dayAvgTempMap, dayMinTempMap, true);
+    this->addMeteoWithQMaps(dayMaxTempMap, dayAvgTempMap, dayMinTempMap, dayPluvioMap, true);
 }
 
-void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, bool replace)
+void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap, bool replace)
 {
     foreach(QString qMapKey, dayMaxTempMap.keys())
     {
@@ -53,6 +54,7 @@ void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, 
                        dayMaxTempMap.value(qMapKey),
                        dayAvgTempMap.value(qMapKey),
                        dayMinTempMap.value(qMapKey),
+                       dayPluvioMap.value(qMapKey),
                        replace
                        );
     }
@@ -78,7 +80,16 @@ QString Meteo::exportMeteoAsCsv()
             csv.append(this->meteo.value(key).at(0) + "," +
                        this->meteo.value(key).at(1) + "," +
                        this->meteo.value(key).at(2) + "," +
-                       this->meteo.value(key).at(3) + ";");
+                       this->meteo.value(key).at(3) + "," +
+                       ",0;");
+        }
+        if(this->meteo.value(key).count() == 5)
+        {
+            csv.append(this->meteo.value(key).at(0) + "," +
+                       this->meteo.value(key).at(1) + "," +
+                       this->meteo.value(key).at(2) + "," +
+                       this->meteo.value(key).at(3) + "," +
+                       this->meteo.value(key).at(4) + ";");
         }
     }
     return csv;
@@ -143,11 +154,25 @@ void Meteo::importMeteoFromCsv(QString meteoCsv)
          {
              if(meteoElements.at(1).toFloat() > 0 && meteoElements.at(2).toFloat() > 0 && meteoElements.at(3).toFloat() > 0)
              {
-                 this->addEntry(meteoElements.at(0),
-                                meteoElements.at(1).toFloat(),
-                                meteoElements.at(2).toFloat(),
-                                meteoElements.at(3).toFloat(),
-                                true);
+                 if(meteoElements.length() == 4)
+                 {
+                     this->addEntry(meteoElements.at(0),
+                                    meteoElements.at(1).toFloat(),
+                                    meteoElements.at(2).toFloat(),
+                                    meteoElements.at(3).toFloat(),
+                                    0,
+                                    true);
+                 }
+
+                 if(meteoElements.length() == 5)
+                 {
+                     this->addEntry(meteoElements.at(0),
+                                    meteoElements.at(1).toFloat(),
+                                    meteoElements.at(2).toFloat(),
+                                    meteoElements.at(3).toFloat(),
+                                    meteoElements.at(4).toFloat(),
+                                    true);
+                 }
             }
          }
      }

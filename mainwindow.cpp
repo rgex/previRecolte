@@ -456,7 +456,8 @@ void MainWindow::on_ajouterSiteSauvegarderBtn_clicked()
                 meteo->setYear(year.toInt());
                 meteo->addMeteoWithQMaps(htmlChartMaker.calculateMinDayTemp(this->importTempList),
                                          htmlChartMaker.calculateDayTempAverage(this->importTempList),
-                                         htmlChartMaker.calculateMaxDayTemp(this->importTempList)
+                                         htmlChartMaker.calculateMaxDayTemp(this->importTempList),
+                                         htmlChartMaker.calculateDayPluviometry(this->importTempList)
                                          );
 
                 qDebug() << "meteo csv : " << meteo->exportMeteoAsCsv();

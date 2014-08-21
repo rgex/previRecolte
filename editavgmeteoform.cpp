@@ -108,7 +108,8 @@ void editAvgMeteoForm::on_importMeteoDataBtn_clicked()
                     meteo->setYear(year.toInt());
                     meteo->addMeteoWithQMaps(htmlChartMaker.calculateMinDayTemp(importTempList),
                                              htmlChartMaker.calculateDayTempAverage(importTempList),
-                                             htmlChartMaker.calculateMaxDayTemp(importTempList)
+                                             htmlChartMaker.calculateMaxDayTemp(importTempList),
+                                             htmlChartMaker.calculateDayPluviometry(importTempList)
                                              );
 
                     qDebug() << "meteo csv : " << meteo->exportMeteoAsCsv();
@@ -153,6 +154,7 @@ void editAvgMeteoForm::on_importMeteoDataBtn_clicked()
                     meteo->addMeteoWithQMaps(htmlChartMaker.calculateMinDayTemp(importTempList),
                                              htmlChartMaker.calculateDayTempAverage(importTempList),
                                              htmlChartMaker.calculateMaxDayTemp(importTempList),
+                                             htmlChartMaker.calculateDayPluviometry(importTempList),
                                              false
                                              );
 

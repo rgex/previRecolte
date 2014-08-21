@@ -39,9 +39,9 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                     QRegExp ExpDate("^.{0,}([0-9]{4}-[0-9]{2}-[0-9]{2}).{0,}$");
                     QRegExp ExpDate2("^.{0,}([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}).{0,}$");
 
-                    QRegExp ExpTemp("^.{0,}([0-9]{1,}[\.]{1}[0-9]{0,3}).{0,}$");
-                    QRegExp ExpTempComma("^.{0,}([0-9]{1,}[\,]{1}[0-9]{0,3}).{0,}$");
-                    QRegExp ExpPluvio("^.{0,}([0-9]{1,}[\.]{1}[0-9]{0,2})[^0-9]{0,}$");
+                    QRegExp ExpTemp("^.{0,}([0-9]{1,}[\.]{1}[0-9]{3}).{0,}$");
+                    QRegExp ExpTempComma("^.{0,}([0-9]{1,}[\,]{1}[0-9]{3}).{0,}$");
+                    QRegExp ExpPluvio("^.{0,}([0-9]{1,}[\.]{1}[0-9]{2})[^0-9]{0,}$");
 
                     QStringList lineColumns = line.split("!##!");
                     QStringList tempListLine;
