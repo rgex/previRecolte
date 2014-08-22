@@ -926,12 +926,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
         qsAvg = qsAvg.setNum(monthTempAvgMap.value(qMapKey), 'f', 2);
         if(i == 0)
         {
-            avgValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            avgValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             avgValues.append(qsAvg + "]");
         }
         else
         {
-            avgValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            avgValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             avgValues.append(qsAvg + "]");
         }
         i++;
@@ -946,12 +946,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
 
         if(i == 0)
         {
-            maxValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            maxValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             maxValues.append(qsMax + "]");
         }
         else
         {
-            maxValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            maxValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             maxValues.append(qsMax + "]");
         }
         i++;
@@ -966,12 +966,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
 
         if(i == 0)
         {
-            minValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            minValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             minValues.append(qsMin + "]");
         }
         else
         {
-            minValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            minValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             minValues.append(qsMin + "]");
         }
         i++;
@@ -986,12 +986,12 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
 
         if(i == 0)
         {
-            pluvValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            pluvValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             pluvValues.append(qsPluv + "]");
         }
         else
         {
-            pluvValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + qMapKey.mid(4,2) + ",1),");
+            pluvValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
             pluvValues.append(qsPluv + "]");
         }
         i++;
