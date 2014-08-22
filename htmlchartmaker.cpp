@@ -56,9 +56,9 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
     if(1 == modelYearString.length())
         modelYearString = "000" + modelYearString;
 
-    if(2 == predictionType) //recolte prediction
+    if(1 == predictionType) //floraison prediction
     {
-        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Récolte ###\n");
+        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Floraison ###\n");
         while(tmpFloraison > tmpSum)
         {
             bool foundExactTemp = false; //if we find a temperature record for that day we use it.
@@ -68,7 +68,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
             {
                 if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
                 {
-                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base2;
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base1;
                     tmpSum += lastAdd;
                     exactValues++;
                     foundExactTemp = true;
@@ -88,7 +88,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
                     if(tempList.size() > 1)
                     {
-                        lastAdd = tempList.at(2).toFloat() - base2;
+                        lastAdd = tempList.at(2).toFloat() - base1;
                         tmpSum += lastAdd;
                         prognosedValues++;
                     }
@@ -116,9 +116,9 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
     }
 
-    if(1 == predictionType)  //floraison prediction
+    if(2 == predictionType)  //récolte prediction
     {
-        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Floraison ###\n");
+        mainWindow->insertTextInPrevisionsDebugPlainTextEdit("\n### Récolte ###\n");
         while(tmpRecolte > tmpSum)
         {
             bool foundExactTemp = false; //if we find a temperature record for that day we use it.
@@ -127,7 +127,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
             {
                 if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
                 {
-                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base1;
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base2;
                     tmpSum += lastAdd;
                     exactValues++;
                     foundExactTemp = true;
@@ -147,7 +147,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
                     if(tempList.size() > 1)
                     {
-                        lastAdd = tempList.at(2).toFloat() - base1;
+                        lastAdd = tempList.at(2).toFloat() - base2;
                         tmpSum += lastAdd;
                         prognosedValues++;
                     }
