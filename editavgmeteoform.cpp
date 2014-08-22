@@ -233,9 +233,12 @@ void editAvgMeteoForm::on_exportMeteoDataBtn_clicked()
     QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/exportmeteo.csv";
 
     qDebug() << "default path : " << defaultPath;
+
+
     QString filename = QFileDialog::getSaveFileName(this, QObject::tr("Enregistrer un fichier"),
                                                     defaultPath,
                                                     QObject::tr("Fichier csv (*.csv)"));
+    filename = filename + ".csv";
 
     QFile file;
     file.setFileName(filename);
