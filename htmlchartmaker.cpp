@@ -331,10 +331,12 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
         float avgTempAvg = 0;
         float avgTempMin = 0;
         float avgTempMax = 0;
+        float avgPluvioAvg = 0;
 
         float tempsAvgSum = 0;
         float tempsMinSum = 0;
         float tempsMaxSum = 0;
+        float pluvioAvgSum = 0;
 
         int tempsCount = 0;
         foreach(tempsMap, temps)
@@ -350,6 +352,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
                         tempsAvgSum += tmpList.at(1).toFloat();
                         tempsMinSum += tmpList.at(2).toFloat();
                         tempsMaxSum += tmpList.at(3).toFloat();
+                        pluvioAvgSum += tmpList.at(4).toFloat();
                         tempsCount++;
                     }
                 }
@@ -362,6 +365,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             avgTempAvg = tempsAvgSum / (float)tempsCount;
             avgTempMin = tempsMinSum / (float)tempsCount;
             avgTempMax = tempsMaxSum / (float)tempsCount;
+            avgPluvioAvg = pluvioAvgSum / (float)tempsCount;
 
             QStringList resTemps;
             qDebug() << "will insert date : " << qDate0.toString("yyyyMMdd");
@@ -370,6 +374,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             resTemps.append(QString::number(avgTempAvg));
             resTemps.append(QString::number(avgTempMin));
             resTemps.append(QString::number(avgTempMax));
+            resTemps.append(QString::number(avgPluvioAvg));
             avgMap.insert(qDate0.toString("yyyyMMdd"), resTemps);
         }
         qDate0 = qDate0.addDays(1);

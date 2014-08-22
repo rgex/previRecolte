@@ -182,7 +182,7 @@ void editAvgMeteoForm::generateGraph(int siteId)
 
     qDebug() << "will search site with ID" << siteId;
     Site* site = sitesDatabaseInterface.getSite(siteId);
-    qDebug() << "got site" ;
+    qDebug() << "got site";
     QStringList years = site->getYears();
     MeteoDatabaseInterface meteoDatabaseInterface;
     meteoDatabaseInterface.setStoragePaths("", mainWindow->getDbPath());
