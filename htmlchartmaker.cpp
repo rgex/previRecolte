@@ -68,7 +68,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
             {
                 if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
                 {
-                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base1;
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base2;
                     tmpSum += lastAdd;
                     exactValues++;
                     foundExactTemp = true;
@@ -88,7 +88,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
                     if(tempList.size() > 1)
                     {
-                        lastAdd = tempList.at(2).toFloat() - base1;
+                        lastAdd = tempList.at(2).toFloat() - base2;
                         tmpSum += lastAdd;
                         prognosedValues++;
                     }
@@ -127,7 +127,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
             {
                 if(mapListAllYears.contains(selectedDate.toString("yyyyMMdd")) && mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() > 0)
                 {
-                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base2;
+                    lastAdd = mapListAllYears.value(selectedDate.toString("yyyyMMdd")).at(2).toFloat() - base1;
                     tmpSum += lastAdd;
                     exactValues++;
                     foundExactTemp = true;
@@ -147,7 +147,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
 
                     if(tempList.size() > 1)
                     {
-                        lastAdd = tempList.at(2).toFloat() - base2;
+                        lastAdd = tempList.at(2).toFloat() - base1;
                         tmpSum += lastAdd;
                         prognosedValues++;
                     }
