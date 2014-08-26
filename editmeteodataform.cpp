@@ -61,17 +61,19 @@ void editMeteoDataForm::displayTable()
     else
         ui->editMeteoTableWidget->setRowCount(365);
 
-    ui->editMeteoTableWidget->setColumnCount(4);
+    ui->editMeteoTableWidget->setColumnCount(5);
 
     ui->editMeteoTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem(QString("Date")));
     ui->editMeteoTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem(QString("T° moyenne")));
     ui->editMeteoTableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem(QString("T° minimale")));
     ui->editMeteoTableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem(QString("T° maximale")));
+    ui->editMeteoTableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem(QString("Pluviometrie")));
 
-    ui->editMeteoTableWidget->setColumnWidth(0, 150);
-    ui->editMeteoTableWidget->setColumnWidth(1, 150);
-    ui->editMeteoTableWidget->setColumnWidth(2, 150);
-    ui->editMeteoTableWidget->setColumnWidth(3, 150);
+    ui->editMeteoTableWidget->setColumnWidth(0, 120);
+    ui->editMeteoTableWidget->setColumnWidth(1, 120);
+    ui->editMeteoTableWidget->setColumnWidth(2, 120);
+    ui->editMeteoTableWidget->setColumnWidth(3, 120);
+    ui->editMeteoTableWidget->setColumnWidth(4, 120);
 
     QDateTime date = QDateTime::fromString(QString::number(this->year) + "0101", "yyyyMMdd");
     int i = 0;
@@ -84,6 +86,10 @@ void editMeteoDataForm::displayTable()
             ui->editMeteoTableWidget->setItem(i, 1, new QTableWidgetItem(list.at(2)));
             ui->editMeteoTableWidget->setItem(i, 2, new QTableWidgetItem(list.at(1)));
             ui->editMeteoTableWidget->setItem(i, 3, new QTableWidgetItem(list.at(3)));
+            if(list.size()>4)
+                ui->editMeteoTableWidget->setItem(i, 4, new QTableWidgetItem(list.at(4)));
+            else
+                ui->editMeteoTableWidget->setItem(i, 4, new QTableWidgetItem("0"));
         }
         else
         {
@@ -91,6 +97,7 @@ void editMeteoDataForm::displayTable()
             ui->editMeteoTableWidget->setItem(i, 1, new QTableWidgetItem("0"));
             ui->editMeteoTableWidget->setItem(i, 2, new QTableWidgetItem("0"));
             ui->editMeteoTableWidget->setItem(i, 3, new QTableWidgetItem("0"));
+            ui->editMeteoTableWidget->setItem(i, 4, new QTableWidgetItem("0"));
         }
 
         date = date.addDays(1);
@@ -110,8 +117,9 @@ void editMeteoDataForm::on_saveBtn_clicked()
         float avgTemp = ui->editMeteoTableWidget->item(i, 1)->text().toFloat();
         float minTemp = ui->editMeteoTableWidget->item(i, 3)->text().toFloat();
         float maxTemp = ui->editMeteoTableWidget->item(i, 2)->text().toFloat();
+        float pluviometry = ui->editMeteoTableWidget->item(i, 4)->text().toFloat();
 
-        meteo->addEntry(qDate.toString("yyyyMMdd"), maxTemp, avgTemp, minTemp, 0, true);
+        meteo->addEntry(qDate.toString("yyyyMMdd"), maxTemp, avgTemp, minTemp, pluviometry, true);
     }
     meteoDatabaseInterface->saveMeteo(meteo);
 
