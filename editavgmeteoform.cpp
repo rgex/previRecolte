@@ -98,6 +98,8 @@ void editAvgMeteoForm::on_importMeteoDataBtn_clicked()
             MeteoDatabaseInterface meteoDatabaseInterface;
             meteoDatabaseInterface.setStoragePaths("", mainWindow->getDbPath());
 
+            qDebug() << "import temp list : " << importTempList;
+
             //add meteo
             if(importTempList.count() > 0)
             {

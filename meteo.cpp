@@ -18,28 +18,35 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
     {   // 1 is a joker that allows to add new meteos entries even if the date is not matching
         return;
     }
+
     QStringList newEntry;
-    qDebug() << "addEntry date : " << date;
+    //qDebug() << "addEntry date : " << date;
     newEntry.append(date);
     newEntry.append(QString::number(maxTemp));
     newEntry.append(QString::number(avgTemp));
     newEntry.append(QString::number(minTemp));
     newEntry.append(QString::number(pluvioMetry));
+
     foreach(QString key, this->meteo.keys())
     {
         QStringList meteoStringList = this->meteo.value(key);
-        if((true == meteoStringList.at(0).compare(date) || meteoStringList.at(1).compare("0") == 0) && false == replace)
+        if((0 == meteoStringList.at(0).compare(date) && meteoStringList.at(1).compare("0") != 0) && false == replace)
         {
+            qDebug() << "found date : " << date;
             return;
         }
         else if(true == meteoStringList.at(0).compare(date) && true == replace)
         {
             this->meteo.remove(key);
             this->meteo.insert(key, newEntry);
+            qDebug() << "updated date : " << date;
+            return;
         }
     }
+
+    qDebug() << "inserted date : " << date;
+
     this->meteo.insert(date, newEntry);
-    this->sort();
 }
 
 void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap)
@@ -50,12 +57,12 @@ void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, 
 void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap, bool replace)
 {
 
+    qDebug() << "will insert dayMaxTempMap " << dayMaxTempMap;
+    qDebug() << "will insert dayAvgTempMap " << dayAvgTempMap;
+    qDebug() << "will insert dayMinTempMap " << dayMinTempMap;
+
     foreach(QString qMapKey, dayMaxTempMap.keys())
     {
-        qDebug() << "will insert qMapKey " << qMapKey;
-        qDebug() << "will insert dayMaxTempMap " << dayMaxTempMap.value(qMapKey);
-        qDebug() << "will insert dayAvgTempMap " << dayAvgTempMap.value(qMapKey);
-        qDebug() << "will insert dayMinTempMap " << dayMinTempMap.value(qMapKey);
         if(qMapKey.length() == 8)
             this->addEntry(qMapKey,
                        dayMaxTempMap.value(qMapKey),
@@ -82,21 +89,25 @@ QString Meteo::exportMeteoAsCsv()
     QString csv;
     foreach(QString key, this->meteo.keys())
     {
-        if(this->meteo.value(key).count() == 4)
+        //qDebug() << "will export key " << key;
+        if(key.length() == 8)
         {
-            csv.append(this->meteo.value(key).at(0) + "," +
-                       this->meteo.value(key).at(1) + "," +
-                       this->meteo.value(key).at(2) + "," +
-                       this->meteo.value(key).at(3) + "," +
-                       ",0;");
-        }
-        if(this->meteo.value(key).count() == 5)
-        {
-            csv.append(this->meteo.value(key).at(0) + "," +
-                       this->meteo.value(key).at(1) + "," +
-                       this->meteo.value(key).at(2) + "," +
-                       this->meteo.value(key).at(3) + "," +
-                       this->meteo.value(key).at(4) + ";");
+            if(this->meteo.value(key).count() == 4)
+            {
+                csv.append(key + "," +
+                           this->meteo.value(key).at(1) + "," +
+                           this->meteo.value(key).at(2) + "," +
+                           this->meteo.value(key).at(3) + "," +
+                           ",0;");
+            }
+            if(this->meteo.value(key).count() == 5)
+            {
+                csv.append(key + "," +
+                           this->meteo.value(key).at(1) + "," +
+                           this->meteo.value(key).at(2) + "," +
+                           this->meteo.value(key).at(3) + "," +
+                           this->meteo.value(key).at(4) + ";");
+            }
         }
     }
     return csv;
@@ -159,7 +170,7 @@ void Meteo::importMeteoFromCsv(QString meteoCsv)
          QStringList meteoElements = meteo.split(",");
          if(meteoElements.size()> 3)
          {
-             if(meteoElements.at(1).toFloat() > 0 && meteoElements.at(2).toFloat() > 0 && meteoElements.at(3).toFloat() > 0)
+             if(meteoElements.at(0).length() == 8 && meteoElements.at(1).toFloat() > 0 && meteoElements.at(2).toFloat() > 0 && meteoElements.at(3).toFloat() > 0)
              {
                  if(meteoElements.length() == 4)
                  {
@@ -168,7 +179,7 @@ void Meteo::importMeteoFromCsv(QString meteoCsv)
                                     meteoElements.at(2).toFloat(),
                                     meteoElements.at(3).toFloat(),
                                     0,
-                                    true);
+                                    false);
                  }
 
                  if(meteoElements.length() == 5)
@@ -178,7 +189,7 @@ void Meteo::importMeteoFromCsv(QString meteoCsv)
                                     meteoElements.at(2).toFloat(),
                                     meteoElements.at(3).toFloat(),
                                     meteoElements.at(4).toFloat(),
-                                    true);
+                                    false);
                  }
             }
          }

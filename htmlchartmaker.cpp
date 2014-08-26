@@ -342,7 +342,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
         {
             foreach(QString year, yearsList)
             {
-                qDebug() << "qmap key : " << qDate0.toString(year + qDate0.toString("MMdd"));
+                //qDebug() << "qmap key : " << qDate0.toString(year + qDate0.toString("MMdd"));
                 if(true == tempsMap.contains(qDate0.toString(year + qDate0.toString("MMdd"))))
                 {
                     QStringList tmpList = tempsMap.value(qDate0.toString(year + qDate0.toString("MMdd")));

@@ -795,7 +795,6 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         QDate selectedDate = ui->previsionsDateEdit->date();
 
         this->clearPrevisionsDebugPlainTextEdit();
-
         this->ui->previsionsDebugPlainTextEdit->setHidden(false);
 
         if(true == ui->tifRadioBtn->isChecked())
@@ -816,7 +815,6 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
             ui->dateTifLabel->setHidden(true);
             ui->dateTifInputLabel->setHidden(true);
-
         }
 
         if(true == ui->floraisonRadioBtn->isChecked())
@@ -835,7 +833,6 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
             ui->dateTifLabel->setHidden(true);
             ui->dateTifInputLabel->setHidden(true);
-
         }
 
         if(true == ui->recolteRadioBtn->isChecked())

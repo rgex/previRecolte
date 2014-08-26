@@ -46,6 +46,7 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                     QStringList lineColumns = line.split("!##!");
                     QStringList tempListLine;
 
+                    bool foundDate = false;
                     for(int i= 0; i < lineColumns.size(); i++)
                     {
                         QString column = lineColumns.at(i);
@@ -55,6 +56,7 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                             QDateTime qDate = QDateTime::fromString(ExpDate.cap(1), "yyyy-MM-dd");
                             QString date = qDate.toString("yyyy-MM-dd hh:mm:ss");
                             tempListLine.append(date);
+                            foundDate = true;
                         }
                         if(ExpDate2.exactMatch(column))
                         {
@@ -62,6 +64,7 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                             QDateTime qDate = QDateTime::fromString(ExpDate2.cap(1), "M/d/yyyy");
                             QString date = qDate.toString("yyyy-MM-dd hh:mm:ss");
                             tempListLine.append(date);
+                            foundDate = true;
                         }
                         if(ExpTemp.exactMatch(column))
                         {
@@ -79,7 +82,8 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                             tempListLine.append(ExpPluvio.cap(1));
                         }
                     }
-                    tempList.append(tempListLine);
+                    if(true == foundDate)
+                        tempList.append(tempListLine);
                 }
         }
     }
