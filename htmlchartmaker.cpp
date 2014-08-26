@@ -366,8 +366,8 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             avgTempMax = tempsMaxSum / (float)tempsCount;
 
             QStringList resTemps;
-            qDebug() << "will insert date : " << qDate0.toString("yyyyMMdd");
-            qDebug() << "will insert avg temp : " << QString::number(avgTempAvg);
+            //qDebug() << "will insert date : " << qDate0.toString("yyyyMMdd");
+            //qDebug() << "will insert avg temp : " << QString::number(avgTempAvg);
             resTemps.append(qDate0.toString("yyyyMMdd"));
             resTemps.append(QString::number(avgTempAvg));
             resTemps.append(QString::number(avgTempMin));
@@ -916,7 +916,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
 
     html.append("</html>\n");
 
-    qDebug() << "HTML : " << html;
+    //qDebug() << "HTML : " << html;
     return html;
 }
 
@@ -1170,6 +1170,6 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
 
     html.append("</html>\n");
 
-    qDebug() << "HTML : " << html;
+    //qDebug() << "HTML : " << html;
     return html;
 }

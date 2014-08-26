@@ -763,7 +763,6 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
         return ;
     }
 
-
         HtmlChartMaker htmlChartMaker;
         VarietesAnanas* variete = this->vDbi.getVarieteWithId(ui->previsionVarieteSelect->itemData(ui->previsionVarieteSelect->currentIndex()).toInt());
 

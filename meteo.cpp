@@ -49,9 +49,13 @@ void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, 
 
 void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, float> dayAvgTempMap, QMap<QString, float> dayMinTempMap, QMap<QString, float> dayPluvioMap, bool replace)
 {
+
     foreach(QString qMapKey, dayMaxTempMap.keys())
     {
         qDebug() << "will insert qMapKey " << qMapKey;
+        qDebug() << "will insert dayMaxTempMap " << dayMaxTempMap.value(qMapKey);
+        qDebug() << "will insert dayAvgTempMap " << dayAvgTempMap.value(qMapKey);
+        qDebug() << "will insert dayMinTempMap " << dayMinTempMap.value(qMapKey);
         if(qMapKey.length() == 8)
             this->addEntry(qMapKey,
                        dayMaxTempMap.value(qMapKey),

@@ -200,7 +200,7 @@ void editAvgMeteoForm::generateGraph(int siteId)
     QMap<QString, QStringList> avgOfTempYears = htmlChartMaker.calculateAvgOfTempYears(finalTmpAvg);
     qDebug() << "pt2";
     QString html = htmlChartMaker.generateHtmlChartWithMap(avgOfTempYears, 1, true);
-    qDebug() << html;
+    //qDebug() << html;
     ui->meteoChartWebView->setHtml(html);
 }
 
