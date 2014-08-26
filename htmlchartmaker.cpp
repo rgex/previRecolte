@@ -331,12 +331,11 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
         float avgTempAvg = 0;
         float avgTempMin = 0;
         float avgTempMax = 0;
-        float avgPluvioAvg = 0;
 
         float tempsAvgSum = 0;
         float tempsMinSum = 0;
         float tempsMaxSum = 0;
-        float pluvioAvgSum = 0;
+        float pluvioSum = 0;
 
         int tempsCount = 0;
         foreach(tempsMap, temps)
@@ -352,7 +351,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
                         tempsAvgSum += tmpList.at(1).toFloat();
                         tempsMinSum += tmpList.at(2).toFloat();
                         tempsMaxSum += tmpList.at(3).toFloat();
-                        pluvioAvgSum += tmpList.at(4).toFloat();
+                        pluvioSum += tmpList.at(4).toFloat();
                         tempsCount++;
                     }
                 }
@@ -365,7 +364,6 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             avgTempAvg = tempsAvgSum / (float)tempsCount;
             avgTempMin = tempsMinSum / (float)tempsCount;
             avgTempMax = tempsMaxSum / (float)tempsCount;
-            avgPluvioAvg = pluvioAvgSum / (float)tempsCount;
 
             QStringList resTemps;
             qDebug() << "will insert date : " << qDate0.toString("yyyyMMdd");
@@ -374,7 +372,7 @@ QMap<QString, QStringList> HtmlChartMaker::calculateAvgOfTempYears(QList<QMap<QS
             resTemps.append(QString::number(avgTempAvg));
             resTemps.append(QString::number(avgTempMin));
             resTemps.append(QString::number(avgTempMax));
-            resTemps.append(QString::number(avgPluvioAvg));
+            resTemps.append(QString::number(pluvioSum));
             avgMap.insert(qDate0.toString("yyyyMMdd"), resTemps);
         }
         qDate0 = qDate0.addDays(1);
@@ -494,6 +492,35 @@ QMap<QString, float> HtmlChartMaker::calculateMonthTempAverage(QMap<QString, flo
     return monthTempAvgFloatMap;
 }
 
+QMap<QString, float> HtmlChartMaker::calculateMonthPluvio(QMap<QString, float> dayPluvMap)
+{
+    QMap<QString, QStringList> monthPluvMap;
+    QMap<QString, float> monthPluvFloatMap;
+
+    foreach(QString qMapKey, dayPluvMap.keys())
+    {
+        QString date = QDateTime::fromString(qMapKey, "yyyyMMdd").toString("yyyyMM");
+        QString tmp;
+        tmp = tmp.setNum(dayPluvMap.value(qMapKey), 'f', 2);
+        QStringList tmpStringList = monthPluvMap.value(date);
+        tmpStringList.append(tmp);
+        monthPluvMap.insert(date, tmpStringList);
+    }
+
+    foreach(QString qMapKey, monthPluvMap.keys())
+    {
+        QStringList tmpStringList = monthPluvMap.value(qMapKey);
+        float sum = 0;
+        for(int i=0; i < tmpStringList.size(); i++)
+        {
+            sum += tmpStringList.at(i).toFloat();
+        }
+        monthPluvFloatMap.insert(qMapKey, sum);
+    }
+
+    return monthPluvFloatMap;
+}
+
 QMap<QString, float> HtmlChartMaker::calculateMaxDayTemp(QList<QStringList> temperatures)
 {
     QMap<QString, QStringList> dayTempMap;
@@ -530,7 +557,7 @@ QMap<QString, float> HtmlChartMaker::calculateMaxDayTemp(QList<QStringList> temp
         for(int i=0; i < qMapElement.size(); i++)
         {
             if(qMapElement.at(i).toFloat() > max)
-                max = qMapElement.at(i).toFloat() ;
+                max = qMapElement.at(i).toFloat();
         }
 
         dayTempMaxFloatMap.insert(qMapKey, max);
@@ -614,7 +641,7 @@ QMap<QString, float> HtmlChartMaker::calculateMinDayTemp(QList<QStringList> temp
 QMap<QString, float> HtmlChartMaker::calculateDayPluviometry(QList<QStringList> temperatures)
 {
     QMap<QString, QStringList> dayPluvioMap;
-    QMap<QString, float> dayPluvioAvgFloatMap;
+    QMap<QString, float> dayPluvioFloatMap;
 
     foreach(QStringList temperature, temperatures)
     {
@@ -646,11 +673,11 @@ QMap<QString, float> HtmlChartMaker::calculateDayPluviometry(QList<QStringList> 
         {
             sum += qMapElement.at(i).toFloat();
         }
-        float avg = sum / (float)qMapElement.size();
-        dayPluvioAvgFloatMap.insert(qMapKey, avg);
+
+        dayPluvioFloatMap.insert(qMapKey, sum);
     }
 
-    return dayPluvioAvgFloatMap;
+    return dayPluvioFloatMap;
 }
 
 QMap<QString, float> HtmlChartMaker::calculateMinMonthTemp(QMap<QString, float> dayMinTempMap)
@@ -899,7 +926,7 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     QMap<QString, float> monthMaxTempMap = this->calculateMonthTempAverage(dayMaxTempMap);
     QMap<QString, float> monthTempAvgMap = this->calculateMonthTempAverage(dayTempAvgMap);
     QMap<QString, float> monthMinTempMap = this->calculateMonthTempAverage(dayMinTempMap);
-    QMap<QString, float> monthPluviometryMap = this->calculateMonthTempAverage(dayPluviometry);
+    QMap<QString, float> monthPluviometryMap = this->calculateMonthPluvio(dayPluviometry);
 
     if(true == completeMissingMonth && 0 != year)
     for(int i = 1; i <= 12; i++)
@@ -927,79 +954,91 @@ QString HtmlChartMaker::generateHtmlChartWithMaps(QMap<QString, float> dayMaxTem
     int i = 0;
     foreach(QString qMapKey, monthTempAvgMap.keys())
     {
-        QString qsAvg;
-        qsAvg = qsAvg.setNum(monthTempAvgMap.value(qMapKey), 'f', 2);
-        if(i == 0)
+        if(qMapKey.length() == 6)
         {
-            avgValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            avgValues.append(qsAvg + "]");
+            QString qsAvg;
+            qsAvg = qsAvg.setNum(monthTempAvgMap.value(qMapKey), 'f', 2);
+            if(i == 0)
+            {
+                avgValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                avgValues.append(qsAvg + "]");
+            }
+            else
+            {
+                avgValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                avgValues.append(qsAvg + "]");
+            }
+            i++;
         }
-        else
-        {
-            avgValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            avgValues.append(qsAvg + "]");
-        }
-        i++;
     }
 
     QString maxValues = "";
     i = 0;
     foreach(QString qMapKey, monthMaxTempMap.keys())
     {
-        QString qsMax;
-        qsMax = qsMax.setNum(monthMaxTempMap.value(qMapKey), 'f', 2);
+        if(qMapKey.length() == 6)
+        {
+            QString qsMax;
+            qsMax = qsMax.setNum(monthMaxTempMap.value(qMapKey), 'f', 2);
 
-        if(i == 0)
-        {
-            maxValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            maxValues.append(qsMax + "]");
+            if(i == 0)
+            {
+                maxValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                maxValues.append(qsMax + "]");
+            }
+            else
+            {
+                maxValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                maxValues.append(qsMax + "]");
+            }
+            i++;
         }
-        else
-        {
-            maxValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            maxValues.append(qsMax + "]");
-        }
-        i++;
     }
 
     QString minValues = "";
     i = 0;
     foreach(QString qMapKey, monthMinTempMap.keys())
     {
-        QString qsMin;
-        qsMin = qsMin.setNum(monthMinTempMap.value(qMapKey), 'f', 2);
+        if(qMapKey.length() == 6)
+        {
+            QString qsMin;
+            qsMin = qsMin.setNum(monthMinTempMap.value(qMapKey), 'f', 2);
 
-        if(i == 0)
-        {
-            minValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            minValues.append(qsMin + "]");
+            if(i == 0)
+            {
+                minValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                minValues.append(qsMin + "]");
+            }
+            else
+            {
+                minValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                minValues.append(qsMin + "]");
+            }
+            i++;
         }
-        else
-        {
-            minValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            minValues.append(qsMin + "]");
-        }
-        i++;
     }
 
     QString pluvValues = "";
     i = 0;
     foreach(QString qMapKey, monthPluviometryMap.keys())
     {
-        QString qsPluv;
-        qsPluv = qsPluv.setNum(monthPluviometryMap.value(qMapKey), 'f', 2);
+        if(qMapKey.length() == 6)
+        {
+            QString qsPluv;
+            qsPluv = qsPluv.setNum(monthPluviometryMap.value(qMapKey), 'f', 2);
 
-        if(i == 0)
-        {
-            pluvValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            pluvValues.append(qsPluv + "]");
+            if(i == 0)
+            {
+                pluvValues.append("[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                pluvValues.append(qsPluv + "]");
+            }
+            else
+            {
+                pluvValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
+                pluvValues.append(qsPluv + "]");
+            }
+            i++;
         }
-        else
-        {
-            pluvValues.append(",[Date.UTC(" + qMapKey.mid(0,4) + "," + QString::number(qMapKey.mid(4,2).toInt()-1) + ",1),");
-            pluvValues.append(qsPluv + "]");
-        }
-        i++;
     }
 
 

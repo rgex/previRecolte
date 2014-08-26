@@ -19,6 +19,7 @@ void Meteo::addEntry(QString date, float maxTemp, float avgTemp, float minTemp, 
         return;
     }
     QStringList newEntry;
+    qDebug() << "addEntry date : " << date;
     newEntry.append(date);
     newEntry.append(QString::number(maxTemp));
     newEntry.append(QString::number(avgTemp));
@@ -50,7 +51,9 @@ void Meteo::addMeteoWithQMaps(QMap<QString, float> dayMaxTempMap, QMap<QString, 
 {
     foreach(QString qMapKey, dayMaxTempMap.keys())
     {
-        this->addEntry(qMapKey,
+        qDebug() << "will insert qMapKey " << qMapKey;
+        if(qMapKey.length() == 8)
+            this->addEntry(qMapKey,
                        dayMaxTempMap.value(qMapKey),
                        dayAvgTempMap.value(qMapKey),
                        dayMinTempMap.value(qMapKey),
@@ -113,7 +116,7 @@ QString Meteo::exportMeteoAsCsv2(bool includeHeaders)
     {
         qDebug() << "date : " << this->meteo.value(key).at(0);
         QDateTime date = QDateTime::fromString(this->meteo.value(key).at(0),"yyyyMMdd");
-        QString qsDate = date.toString("yyyy-MM-dd hh:mm:ss");
+        QString qsDate = date.toString("yyyy-MM-dd");
 
         if(this->meteo.value(key).count() == 4) //pas de pluviométrie
         {

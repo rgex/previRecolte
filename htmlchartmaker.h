@@ -43,6 +43,8 @@ public:
     //QMap<QString, float> calculateWeekTempAverage(QMap<QString, float> dayMinTempMap);
     QMap<QString, float> calculateMinMonthTemp(QMap<QString, float> dayMinTempMap);
 
+    QMap<QString, float> calculateMonthPluvio(QMap<QString, float> dayPluvMap);
+
     QStringList getYearsWithTempData(QList<QStringList> temperatures);
 
     QMap<QString, QStringList> calculateAvgOfTempYears(QList<QMap<QString, QStringList> > temps);

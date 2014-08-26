@@ -569,7 +569,6 @@ void MainWindow::on_sitesTreeView_clicked(const QModelIndex &index)
         qDebug() << "key  : " << key;
         qDebug() << "year : " << QString::number(year);
         qDebug() << "name : " << name;
-
     }
     else
     {
