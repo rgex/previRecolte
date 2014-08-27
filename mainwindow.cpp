@@ -850,7 +850,7 @@ void MainWindow::on_calculateDateRecolteBtn_clicked()
 
             QDate dateTif = htmlChartMaker.predictDate(selectedDate, modelYear, this, site, variete->getTBase1(), variete->getTFloraison(), variete->getTBase2(), variete->getTRecolte(), 3);
 
-            ui->dateTifInputLabel->setText(dateTif.toString("d ") + dateTif.toString("MMMM").mid(0,3) + dateTif.toString(" yyyy"));
+            ui->dateTifInputLabel->setText(dateTif.toString("d ") + dateTif.toString("MMMM").mid(0,4) + dateTif.toString(" yyyy"));
         }
 
 }
