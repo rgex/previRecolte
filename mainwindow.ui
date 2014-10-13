@@ -68,14 +68,142 @@
        <widget class="QLabel" name="label_17">
         <property name="geometry">
          <rect>
-          <x>400</x>
-          <y>180</y>
-          <width>301</width>
-          <height>201</height>
+          <x>860</x>
+          <y>10</y>
+          <width>191</width>
+          <height>61</height>
          </rect>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="projectRessources.qrc">:/images/images/cirad_cropped.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>90</y>
+          <width>411</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Actions</string>
+        </property>
+        <widget class="QPushButton" name="Accueil_AjouterVariete_BTN">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>50</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Ajouter une variété</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Accueil_ModifierSite_BTN">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Modifier une variété</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Accueil_CreerSite_BTN">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>170</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Créer un site</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Accueil_ModifierSite_BTN_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>230</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Modifier un site / ajouter des données météo</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Accueil_CalculerIntervalle_BTN">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>290</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Calculer l'intervalle TIF / Floraison / Récolte</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="Accueil_PrevoirDate_BTN">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>350</y>
+           <width>381</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Prévoir une date de récolte ou de TIF</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_19">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>60</y>
+          <width>571</width>
+          <height>571</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;Center&gt;&lt;h2&gt;PréviRécolte&lt;/h2&gt;&lt;br/&gt;&lt;/b&gt;
+&lt;i&gt;Version 1.1 (13 octobre 2014)&lt;/i&gt;&lt;/center&gt;
+&lt;br/&gt;
+
+L'écran de travail contient :&lt;br/&gt;
+&lt;br/&gt;
+* En haut un menu &lt;u&gt;fichier&lt;/u&gt; qui permet d'accéder à l'aide&lt;br/&gt; (notamment pour l'import de données météo).&lt;br/&gt;
+&lt;br/&gt;
+* A gauche les onglets &lt;u&gt;Accueil&lt;/u&gt;, &lt;u&gt;Variétés&lt;/u&gt;, &lt;u&gt;Sites&lt;/u&gt;, &lt;u&gt;Intervalles&lt;/u&gt;, &lt;u&gt;Prévisions&lt;/u&gt;.&lt;br/&gt;
+&lt;br/&gt;
+* A gauche des buttons d'action qui permettent d'accéder &lt;br/&gt;directement à l'une des fonctionnalités du logiciel.
+
+&lt;br/&gt;
+&lt;hr/&gt;
+&lt;br/&gt;
+Développé au Cirad en Guadeloupe.&lt;br/&gt;
+Département PERSYST, équipe Ananas.&lt;br/&gt;
+&lt;br/&gt;
+Contact :  Bernard Dole [bernard.dole@cirad.fr] </string>
         </property>
        </widget>
       </widget>
@@ -98,7 +226,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Variétés</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Variétés&lt;img src=&quot;:/images/images/cirad_cropped_small.png&quot; align=&quot;right&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -980,7 +1108,7 @@ QPushButton:pressed {
            </font>
           </property>
           <property name="text">
-           <string>Sites</string>
+           <string>Sites&lt;img src=&quot;:/images/images/cirad_cropped_small.png&quot; align=&quot;right&quot;/&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -1352,8 +1480,8 @@ QPushButton:disabled {
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>590</width>
-                  <height>16</height>
+                  <width>776</width>
+                  <height>541</height>
                  </rect>
                 </property>
                </widget>
@@ -1510,6 +1638,19 @@ QPushButton:disabled {
               <number>0</number>
              </property>
             </widget>
+            <widget class="QLabel" name="label_18">
+             <property name="geometry">
+              <rect>
+               <x>870</x>
+               <y>50</y>
+               <width>71</width>
+               <height>31</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>&lt;img src=&quot;:/images/images/cirad_cropped_small.png&quot; /&gt;</string>
+             </property>
+            </widget>
            </widget>
           </item>
           <item>
@@ -1548,7 +1689,7 @@ QPushButton:disabled {
            </font>
           </property>
           <property name="text">
-           <string>Prévisions</string>
+           <string>Prévisions&lt;img src=&quot;:/images/images/cirad_cropped_small.png&quot; align=&quot;right&quot;/&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

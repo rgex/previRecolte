@@ -963,3 +963,37 @@ void MainWindow::clearPrevisionsDebugPlainTextEdit()
 {
     this->ui->previsionsDebugPlainTextEdit->clear();
 }
+
+void MainWindow::on_Accueil_AjouterVariete_BTN_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(1);
+    ui->varietesTabView->setCurrentIndex(0);
+}
+
+void MainWindow::on_Accueil_ModifierSite_BTN_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(1);
+    ui->varietesTabView->setCurrentIndex(1);
+}
+
+void MainWindow::on_Accueil_CreerSite_BTN_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(2);
+    ui->sitesTabWidget->setCurrentIndex(0);
+}
+
+void MainWindow::on_Accueil_ModifierSite_BTN_2_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(2);
+    ui->sitesTabWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_Accueil_CalculerIntervalle_BTN_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(3);
+}
+
+void MainWindow::on_Accueil_PrevoirDate_BTN_clicked()
+{
+    ui->leftTabWidget->setCurrentIndex(4);
+}

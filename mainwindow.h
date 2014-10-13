@@ -70,6 +70,18 @@ private slots:
 
     void on_intervallesSubmitBtn_clicked();
 
+    void on_Accueil_AjouterVariete_BTN_clicked();
+
+    void on_Accueil_ModifierSite_BTN_clicked();
+
+    void on_Accueil_CreerSite_BTN_clicked();
+
+    void on_Accueil_ModifierSite_BTN_2_clicked();
+
+    void on_Accueil_CalculerIntervalle_BTN_clicked();
+
+    void on_Accueil_PrevoirDate_BTN_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString appStoragePath;
