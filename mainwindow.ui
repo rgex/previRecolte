@@ -38,6 +38,47 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <widget class="QWidget" name="tab_8">
+       <attribute name="title">
+        <string>Accueil</string>
+       </attribute>
+       <widget class="QLabel" name="label_16">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>1041</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>21</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>PréviRécolte 1.1</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_17">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>180</y>
+          <width>301</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="Vari">
        <property name="enabled">
         <bool>true</bool>
@@ -189,9 +230,9 @@ QPushButton:pressed {
                    <widget class="QLabel" name="label_8">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>200</y>
-                      <width>111</width>
+                      <width>131</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -202,9 +243,9 @@ QPushButton:pressed {
                    <widget class="QLabel" name="label_4">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>30</y>
-                      <width>111</width>
+                      <width>131</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -273,9 +314,9 @@ QPushButton:pressed {
                    <widget class="QLabel" name="label_5">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>90</y>
-                      <width>111</width>
+                      <width>131</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -286,9 +327,9 @@ QPushButton:pressed {
                    <widget class="QPushButton" name="ajouterVarieteBtn">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>310</y>
-                      <width>241</width>
+                      <width>261</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -361,9 +402,9 @@ QPushButton:disabled {
                    <widget class="QLabel" name="label_10">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>250</y>
-                      <width>111</width>
+                      <width>131</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -419,9 +460,9 @@ QPushButton: pressed {
                    <widget class="QLabel" name="label_9">
                     <property name="geometry">
                      <rect>
-                      <x>190</x>
+                      <x>170</x>
                       <y>150</y>
-                      <width>111</width>
+                      <width>131</width>
                       <height>31</height>
                      </rect>
                     </property>
@@ -588,9 +629,9 @@ QPushButton: pressed {
                     <widget class="QLabel" name="editTBase2Label">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>210</y>
-                       <width>111</width>
+                       <width>131</width>
                        <height>31</height>
                       </rect>
                      </property>
@@ -672,9 +713,9 @@ QPushButton:pressed {
                     <widget class="QLabel" name="editTFloraisonLabel">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>160</y>
-                       <width>111</width>
+                       <width>131</width>
                        <height>31</height>
                       </rect>
                      </property>
@@ -685,9 +726,9 @@ QPushButton:pressed {
                     <widget class="QPushButton" name="editAjouterVarieteBtn">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>330</y>
-                       <width>241</width>
+                       <width>261</width>
                        <height>31</height>
                       </rect>
                      </property>
@@ -734,9 +775,9 @@ QPushButton:disabled {
                     <widget class="QLabel" name="editTRecolteLabel">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>260</y>
-                       <width>111</width>
+                       <width>131</width>
                        <height>31</height>
                       </rect>
                      </property>
@@ -747,9 +788,9 @@ QPushButton:disabled {
                     <widget class="QLabel" name="editNomLabel">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>40</y>
-                       <width>67</width>
+                       <width>131</width>
                        <height>31</height>
                       </rect>
                      </property>
@@ -831,9 +872,9 @@ QPushButton:pressed {
                     <widget class="QLabel" name="editTBase1Label">
                      <property name="geometry">
                       <rect>
-                       <x>60</x>
+                       <x>40</x>
                        <y>100</y>
-                       <width>111</width>
+                       <width>131</width>
                        <height>31</height>
                       </rect>
                      </property>

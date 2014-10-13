@@ -31,7 +31,11 @@ int main(int argc, char *argv[])
 
     //on launch create application folder to store images and databases
     //QString appStoragePath = QDir::homePath() + "/sql-ananas-cirad";
-    QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
+
+    //QString appStoragePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/sql-ananas-cirad";
+
+    QString appStoragePath = "data";
+
     QString databasePath = appStoragePath + "/ananas.db";
 
 

@@ -8,6 +8,7 @@
 #include "meteodatabaseinterface.h"
 #include <QMessageBox>
 #include <QFile>
+#include <qmath.h>
 
 HtmlChartMaker::HtmlChartMaker()
 {
@@ -162,7 +163,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
                         errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYearString);
                     QMessageBox msgBox;
                     msgBox.warning(NULL, QString("Erreur"), errorMsg);
-                    return QDate::fromString("0001","yyyy");
+                    return QDate::fromString("1000","yyyy");
                 }
             }
             selectedDate = selectedDate.addDays(1);
@@ -221,7 +222,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
                         errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYearString);
                     QMessageBox msgBox;
                     msgBox.warning(NULL, QString("Erreur"), errorMsg);
-                    return QDate::fromString("0001","yyyy");
+                    return QDate::fromString("1000","yyyy");
                 }
             }
             selectedDate = selectedDate.addDays(-1);
@@ -284,7 +285,7 @@ QDate HtmlChartMaker::predictDate(QDate selectedDate, int modelYear, MainWindow*
                         errorMsg = QString("Valeur manquante pour la date du " + selectedDate.toString("d MMMM ") + modelYearString);
                     QMessageBox msgBox;
                     msgBox.warning(NULL, QString("Erreur"), errorMsg);
-                    return QDate::fromString("0001","yyyy");
+                    return QDate::fromString("1000","yyyy");
                 }
             }
             selectedDate = selectedDate.addDays(-1);
@@ -791,10 +792,10 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
         if(0 == i)
         {
             dataFloraison.append("['semaine " + QString::number(i+1) + "',"); //Floraison
-            dataFloraison.append("" + list.at(0) + "]");
+            dataFloraison.append("" + QString::number(round(list.at(0).toFloat()/7)) + "]");
 
             dataRecolte.append("['semaine " + QString::number(i+1) + "',"); //Récolte
-            dataRecolte.append("" + list.at(1) + "]");
+            dataRecolte.append("" + QString::number(round(list.at(1).toFloat()/7)) + "]");
 
             temperatures.append("['semaine " + QString::number(i+1) + "',"); //Témpératures
             temperatures.append("" + list.at(2) + "]");
@@ -802,10 +803,10 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
         else
         {
             dataFloraison.append(",['semaine " + QString::number(i+1) + "',"); //Floraison
-            dataFloraison.append("" + list.at(0) + "]");
+            dataFloraison.append("" + QString::number(round(list.at(0).toFloat()/7)) + "]");
 
             dataRecolte.append(",['semaine " + QString::number(i+1) + "',"); //Récolte
-            dataRecolte.append("" + list.at(1) + "]");
+            dataRecolte.append("" + QString::number(round(list.at(1).toFloat()/7)) + "]");
 
             temperatures.append(",['semaine " + QString::number(i+1) + "',"); //Témpératures
             temperatures.append("" + list.at(2) + "]");
@@ -855,7 +856,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
     html.append("yAxis: [\n");
     html.append("{\n");
     html.append("   title: {\n");
-    html.append("       text: 'nombre de jours'\n");
+    html.append("       text: 'semaine n°'\n");
     html.append("   },\n");
     //html.append("   min: 0\n");
     html.append("},\n");
@@ -888,7 +889,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
     html.append("name: 'Récolte',\n");
     html.append("tooltip: {\n");
     html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
-    html.append("   pointFormat: 'semaine {point.x}: {point.y} jours'\n");
+    html.append("   pointFormat: 'semaine {point.x}: après {point.y} semaines'\n");
     html.append("},\n");
     html.append("yAxis: 0,\n");
     html.append("data: [\n");
@@ -901,7 +902,7 @@ QString HtmlChartMaker::generateHtmlWeekIntervalle(QMap<int, QStringList> weekLi
     html.append("   yAxis: 0,\n");
     html.append("tooltip: {\n");
     html.append("   headerFormat: '<b>{series.name}</b><br>',\n");
-    html.append("   pointFormat: 'semaine {point.x}: {point.y} jours'\n");
+    html.append("   pointFormat: 'semaine {point.x}: après {point.y} semaines'\n");
     html.append("},\n");
     html.append("   data: [\n");
     html.append(dataFloraison);

@@ -22,6 +22,7 @@
     </qresource>
     <qresource prefix="/images">
         <file alias="splash.jpg">images/splash.jpg</file>
+        <file>../Documents/cirad.png</file>
     </qresource>
     <qresource prefix="/">
         <file>html/highcharts-all.js</file>
