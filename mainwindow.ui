@@ -105,6 +105,11 @@
            <height>41</height>
           </rect>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Ajouter une variété</string>
          </property>
@@ -117,6 +122,11 @@
            <width>381</width>
            <height>41</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Modifier une variété</string>
@@ -131,6 +141,11 @@
            <height>41</height>
           </rect>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Créer un site</string>
          </property>
@@ -143,6 +158,11 @@
            <width>381</width>
            <height>41</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Modifier un site / ajouter des données météo</string>
@@ -157,6 +177,11 @@
            <height>41</height>
           </rect>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>Calculer l'intervalle TIF / Floraison / Récolte</string>
          </property>
@@ -169,6 +194,11 @@
            <width>381</width>
            <height>41</height>
           </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
          </property>
          <property name="text">
           <string>Prévoir une date de récolte ou de TIF</string>
@@ -193,17 +223,17 @@ L'écran de travail contient :&lt;br/&gt;
 &lt;br/&gt;
 * En haut un menu &lt;u&gt;fichier&lt;/u&gt; qui permet d'accéder à l'aide&lt;br/&gt; (notamment pour l'import de données météo).&lt;br/&gt;
 &lt;br/&gt;
-* A gauche les onglets &lt;u&gt;Accueil&lt;/u&gt;, &lt;u&gt;Variétés&lt;/u&gt;, &lt;u&gt;Sites&lt;/u&gt;, &lt;u&gt;Intervalles&lt;/u&gt;, &lt;u&gt;Prévisions&lt;/u&gt;.&lt;br/&gt;
+* A gauche les onglets &lt;u&gt;Accueil&lt;/u&gt;, &lt;u&gt;Variétés&lt;/u&gt;, &lt;u&gt;Sites&lt;/u&gt;, &lt;u&gt;Intervalles&lt;/u&gt;,&lt;br/&gt; &lt;u&gt;Prévisions&lt;/u&gt;.&lt;br/&gt;
 &lt;br/&gt;
 * A gauche des buttons d'action qui permettent d'accéder &lt;br/&gt;directement à l'une des fonctionnalités du logiciel.
 
 &lt;br/&gt;
 &lt;hr/&gt;
-&lt;br/&gt;
-Développé au Cirad en Guadeloupe.&lt;br/&gt;
+Développé au Cirad en Guadeloupe par &lt;br/&gt;
+&lt;i/&gt;Jan Moritz Lindemann&lt;/i&gt; [124898@supinfo.com].&lt;br/&gt;
 Département PERSYST, équipe Ananas.&lt;br/&gt;
 &lt;br/&gt;
-Contact :  Bernard Dole [bernard.dole@cirad.fr] </string>
+Contact :  &lt;i&gt;Bernard Dole&lt;/i&gt; [bernard.dole@cirad.fr] </string>
         </property>
        </widget>
       </widget>
