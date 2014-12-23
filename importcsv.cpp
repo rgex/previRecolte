@@ -58,14 +58,14 @@ QList<QStringList> ImportCsv::importFile(QString fileName)
                             tempListLine.append(date);
                             foundDate = true;
                         }
-                        if(ExpDate2.exactMatch(column))
+                       /* if(ExpDate2.exactMatch(column))
                         {
                             //qDebug() << "Captured : " << ExpDate2.cap(1);
-                            QDateTime qDate = QDateTime::fromString(ExpDate2.cap(1), "M/d/yyyy");
+                            QDateTime qDate = QDateTime::fromString(ExpDate2.cap(1), "d/M/yyyy");
                             QString date = qDate.toString("yyyy-MM-dd hh:mm:ss");
                             tempListLine.append(date);
                             foundDate = true;
-                        }
+                        }*/
                         if(ExpTemp.exactMatch(column))
                         {
                             //qDebug() << "Captured2 : " << ExpTemp.cap(1);
